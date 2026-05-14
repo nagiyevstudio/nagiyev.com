@@ -3,26 +3,26 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import type { CollectionEntry } from 'astro:content';
 import { getCollection } from 'astro:content';
 
-const featured = await getCollection('projects', ({ data }) => data.featured);
+const featured = await getCollection('projects', ({ data, id }) => data.featured && id.startsWith('az/'));
 const featuredProjects = featured.map((p: CollectionEntry<'projects'>) => ({
   slug: p.slug,
-  title: p.data.title_az,
-  summary: p.data.summary_az,
+  title: p.data.title,
+  summary: p.data.summary,
   division: p.data.division,
   cover: p.data.cover,
 }));
 
-const divisionsData = await getCollection('divisions');
+const divisionsData = await getCollection('divisions', ({ id }) => id.startsWith('az/'));
 const divisions = divisionsData.map((d: CollectionEntry<'divisions'>) => ({
   key: d.data.key,
-  title: d.data.title_az,
-  subtitle: d.data.subtitle_az,
+  title: d.data.title,
+  subtitle: d.data.subtitle,
 }));
 ---
 
 <script>
 // Scroll reveal animation
-document.addEventListener('DOMContentLoaded', () => {
+const initReveal = () => {
   const observerOptions = {
     root: null,
     rootMargin: '0px 0px -50px 0px',
@@ -38,11 +38,14 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }, observerOptions);
 
-  document.querySelectorAll('.section, .division-card, .project-card').forEach(el => {
-    el.classList.add('reveal-el');
+  document.querySelectorAll('.section, .division-card, .project-card, .animate-on-scroll, .hero-title, .hero-subtitle, .cta-button').forEach(el => {
+    if (el.classList.contains('section') || el.classList.contains('division-card') || el.classList.contains('project-card')) {
+      el.classList.add('reveal-el');
+    }
     observer.observe(el);
   });
-});
+};
+initReveal();
 </script>
 
 <BaseLayout title="Nagiyev Studio" lang="az">
@@ -115,6 +118,7 @@ document.addEventListener('DOMContentLoaded', () => {
 </BaseLayout>
 
 <style>
+  :root { --reveal-transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
   .hero { position: relative; min-height: 75vh; display: flex; align-items: center; padding: var(--space-16) 0; overflow: hidden; }
   .hero-background { position: absolute; inset: 0; z-index: 0; overflow: hidden; }
   .hero-bg-image { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.85); }
@@ -122,22 +126,22 @@ document.addEventListener('DOMContentLoaded', () => {
   .hero > .container { position: relative; z-index: 2; }
   .hero-title { font-size: clamp(var(--text-4xl), 8vw, var(--text-7xl)); line-height: var(--leading-tight); letter-spacing: var(--tracking-tight); margin-bottom: var(--space-6); color: var(--color-text); opacity: 0; transform: translateY(30px); transition: opacity 0.8s ease, transform 0.8s ease; }
   .hero-subtitle { font-size: clamp(var(--text-lg), 3vw, var(--text-2xl)); color: var(--color-text-secondary); max-width: 60ch; margin-bottom: var(--space-8); line-height: var(--leading-relaxed); opacity: 0; transform: translateY(30px); transition: opacity 0.8s ease 0.2s, transform 0.8s ease 0.2s; }
-  .cta-button { display: inline-block; padding: var(--space-4) var(--space-8); background: var(--color-accent); color: var(--color-text-on-dark); font-size: var(--text-base); font-weight: var(--weight-semibold); border-radius: var(--radius-md); transition: opacity 0.8s ease 0.4s, background var(--transition-fast), transform var(--transition-fast); opacity: 0; transform: translateY(30px); }
-  .cta-button:hover { background: var(--color-accent-hover); transform: translateY(-2px); }
-  .reveal-el { opacity: 0; transform: translateY(40px); transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
-  .reveal-el.reveal-active { opacity: 1; transform: translateY(0); }
+  .cta-button { display: inline-block; padding: var(--space-4) var(--space-8); background: var(--color-accent); color: var(--color-text-on-dark); font-size: var(--text-base); font-weight: var(--weight-semibold); border-radius: var(--radius-md); transition: opacity 0.8s ease 0.4s, background var(--transition-fast), translate var(--transition-fast); opacity: 0; transform: translateY(30px); }
+  .cta-button:hover { background: var(--color-accent-hover); translate: 0 -2px; }
+  .reveal-el { opacity: 0; transform: translateY(40px); transition: var(--reveal-transition); }
+  .reveal-el.reveal-active, .hero-title.reveal-active, .hero-subtitle.reveal-active, .cta-button.reveal-active, .animate-on-scroll.reveal-active { opacity: 1; transform: translateY(0); }
   .animate-on-scroll { opacity: 0; transform: translateY(30px); transition: opacity 0.8s ease, transform 0.8s ease; }
   .section { padding: var(--space-20) 0; border-bottom: var(--border-thin); }
   .section--alt { background: var(--color-bg-card); }
   .section-title { font-size: var(--text-3xl); margin-bottom: var(--space-10); }
   .lead { font-size: var(--text-xl); line-height: var(--leading-relaxed); color: var(--color-text-secondary); }
-  .division-card { position: relative; display: block; padding: var(--space-8); background: var(--color-bg-card); border: var(--border-thin); border-radius: var(--radius-lg); overflow: hidden; transition: border-color var(--transition-fast), transform var(--transition-slow), box-shadow var(--transition-fast); }
+  .division-card { position: relative; display: block; padding: var(--space-8); background: var(--color-bg-card); border: var(--border-thin); border-radius: var(--radius-lg); overflow: hidden; transition: border-color var(--transition-fast), translate var(--transition-slow), box-shadow var(--transition-fast), var(--reveal-transition); }
   .card-accent { position: absolute; top: 0; left: 0; right: 0; height: 4px; background: linear-gradient(90deg, var(--division-ai) 0%, var(--division-design) 50%, var(--division-media) 100%); opacity: 0.5; }
-  .division-card:hover { border-color: var(--color-text); transform: translateY(-8px); box-shadow: var(--shadow-lg); }
+  .division-card:hover { border-color: var(--color-text); translate: 0 -8px; box-shadow: var(--shadow-lg); }
   .division-card h3 { font-size: var(--text-xl); margin-bottom: var(--space-3); padding-right: var(--space-6); }
   .division-card p { font-size: var(--text-base); color: var(--color-text-secondary); }
-  .project-card { position: relative; display: block; background: var(--color-bg-card); border: var(--border-thin); border-radius: var(--radius-lg); overflow: hidden; transition: border-color var(--transition-fast), transform var(--transition-slow), box-shadow var(--transition-fast); }
-  .project-card:hover { border-color: var(--color-text); transform: translateY(-8px); box-shadow: var(--shadow-lg); }
+  .project-card { position: relative; display: block; background: var(--color-bg-card); border: var(--border-thin); border-radius: var(--radius-lg); overflow: hidden; transition: border-color var(--transition-fast), translate var(--transition-slow), box-shadow var(--transition-fast), var(--reveal-transition); }
+  .project-card:hover { border-color: var(--color-text); translate: 0 -8px; box-shadow: var(--shadow-lg); }
   .project-cover { aspect-ratio: 16/9; background: var(--color-bg-hover); overflow: hidden; position: relative; }
   .project-cover img { width: 100%; height: 100%; object-fit: cover; transition: transform var(--transition-slow); }
   .project-card:hover .project-cover img { transform: scale(1.08); }
@@ -147,6 +151,6 @@ document.addEventListener('DOMContentLoaded', () => {
   .project-summary { font-size: var(--text-sm); color: var(--color-text-secondary); line-height: var(--leading-normal); }
   .cta-section { text-align: center; }
   .contact-links { display: flex; justify-content: center; gap: var(--space-4); flex-wrap: wrap; margin-top: var(--space-6); }
-  .contact-link { display: inline-block; padding: var(--space-3) var(--space-6); border: var(--border-thin); border-radius: var(--radius-md); font-size: var(--text-sm); font-weight: var(--weight-medium); transition: background var(--transition-fast), border-color var(--transition-fast), transform var(--transition-fast); }
-  .contact-link:hover { background: var(--color-text); border-color: var(--color-text); color: var(--color-text-on-dark); transform: translateY(-2px); }
+  .contact-link { display: inline-block; padding: var(--space-3) var(--space-6); border: var(--border-thin); border-radius: var(--radius-md); font-size: var(--text-sm); font-weight: var(--weight-medium); transition: background var(--transition-fast), border-color var(--transition-fast), translate var(--transition-fast); }
+  .contact-link:hover { background: var(--color-text); border-color: var(--color-text); color: var(--color-text-on-dark); translate: 0 -2px; }
 </style>

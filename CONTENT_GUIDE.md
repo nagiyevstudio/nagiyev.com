@@ -18,7 +18,7 @@ src/content/
 Картинки лежат здесь:
 
 ```
-src/assets/images/
+public/images/
 ├── projects/
 │   ├── azerscope/
 │   │   ├── cover.jpg
@@ -54,7 +54,7 @@ year: 2026
 client: "Azerbaijan Astronomical Society"
 summary: "Astronomy platform and mobile app for community, events and observation planning."
 summary_az: "Astronomiya platforması və mobil tətbiq — icma, tədbirlər və müşahidələrin planlaşdırılması."
-cover: "@assets/images/projects/azerscope/cover.jpg"
+cover: "/images/projects/azerscope/cover.jpg"
 tags:
   - AI
   - Mobile App
@@ -101,7 +101,7 @@ A comprehensive system consisting of three main parts:
 - **slug** — lowercase, латиница, дефисы вместо пробелов: `azerscope`, `finance-tracker`
 - **title_az** — обязательно, даже если совпадает с title
 - **summary_az** — обязательно
-- **cover** — путь к картинке через `@assets/images/...`
+- **cover** — абсолютный путь к картинке, начиная с `/images/...` (без указания папки public)
 - **featured: true** — проект попадёт на главную страницу (3–6 проектов)
 - **tags** — короткие, на английском
 - **Тело** — можно писать на одном языке, если контент одинаковый по смыслу. Но лучше EN + AZ в отдельных файлах (см. i18n ниже)
@@ -138,7 +138,7 @@ capabilities_az:
   - API İnteqrasiyaları
 approach: "Every system starts with understanding the problem. We map workflows, identify automation opportunities, and design architectures that grow with your organization."
 approach_az: "Hər bir sistem problemi anlamaqdan başlayır. İş axınlarını xəritələşdiririk, avtomatlaşdırma imkanlarını müəyyən edirik və təşkilatınızla birlikdə böyüyən arxitekturalar dizayn edirik."
-cover: "@assets/images/divisions/ai-hero.jpg"
+cover: "/images/divisions/ai-hero.jpg"
 ---
 ```
 
@@ -259,7 +259,7 @@ src/content/projects/azerscope-az.md      ← AZ (slug: "azerscope")
 ### Где хранить:
 
 ```
-src/assets/images/projects/<project-slug>/
+public/images/projects/<project-slug>/
   cover.jpg          ← обложка для листинга
   screen-1.jpg       ← скриншот 1
   screen-2.jpg       ← скриншот 2
@@ -268,7 +268,7 @@ src/assets/images/projects/<project-slug>/
 ### Как подключать в frontmatter:
 
 ```yaml
-cover: "@assets/images/projects/azerscope/cover.jpg"
+cover: "/images/projects/azerscope/cover.jpg"
 ```
 
 ### Формат:
@@ -279,9 +279,8 @@ cover: "@assets/images/projects/azerscope/cover.jpg"
 
 ### Не нужно:
 
-- Оптимизировать вручную — Astro сделает это при билде
 - Создавать поддомен cdn — всё в проекте
-- Использовать абсолютные URL — только относительные пути
+- Указывать папку `public` в путях — для браузера корень сайта начинается внутри `public`.
 
 ---
 
@@ -290,7 +289,7 @@ cover: "@assets/images/projects/azerscope/cover.jpg"
 Для вставки картинок прямо в тело кейса — Markdown:
 
 ```md
-![Dashboard interface showing real-time analytics](../assets/images/projects/azerscope/screen-1.jpg)
+![Dashboard interface showing real-time analytics](/images/projects/azerscope/screen-1.jpg)
 
 *The main dashboard with live data visualization.*
 ```
@@ -303,11 +302,11 @@ cover: "@assets/images/projects/azerscope/cover.jpg"
 
 | Что хочешь добавить | Куда писать                          | Пример файла            |
 | ------------------- | ------------------------------------ | ----------------------- |
-| Новый кейс          | `src/content/projects/<slug>.md`     | `azerscope.md`          |
-| Контент контура     | `src/content/divisions/<key>.md`     | `digital-systems-ai.md` |
-| О себе              | `src/content/pages/about.md`         | `about.md`              |
-| Контакты            | `src/content/pages/contact.md`       | `contact.md`            |
-| Картинку кейса      | `src/assets/images/projects/<slug>/` | `cover.jpg`             |
+| Новый кейс          | `site/src/content/projects/<slug>.md`| `azerscope.md`          |
+| Контент контура     | `site/src/content/divisions/<key>.md`| `digital-systems-ai.md` |
+| О себе              | `site/src/content/pages/about.md`    | `about.md`              |
+| Контакты            | `site/src/content/pages/contact.md`  | `contact.md`            |
+| Картинку кейса      | `site/public/images/projects/<slug>/`| `cover.jpg`             |
 
 ---
 
@@ -315,8 +314,8 @@ cover: "@assets/images/projects/azerscope/cover.jpg"
 
 ```
 1. Пишешь markdown-файл
-2. Кидаешь картинки в assets/images/projects/<slug>/
-3. Указываешь пути в frontmatter
+2. Кидаешь картинки в public/images/projects/<slug>/
+3. Указываешь пути в frontmatter (например `/images/...`)
 4. git add → git commit → git push
 5. npm run build
 6. Заливаешь /dist на хостинг

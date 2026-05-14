@@ -3,7 +3,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import type { CollectionEntry } from 'astro:content';
 import { getCollection } from 'astro:content';
 
-const featured = await getCollection('projects', ({ data }) => data.featured);
+const featured = await getCollection('projects', ({ data, id }) => data.featured && id.startsWith('en/'));
 
 const featuredProjects = featured.map((p: CollectionEntry<'projects'>) => ({
   slug: p.slug,
@@ -13,7 +13,7 @@ const featuredProjects = featured.map((p: CollectionEntry<'projects'>) => ({
   cover: p.data.cover,
 }));
 
-const divisionsData = await getCollection('divisions');
+const divisionsData = await getCollection('divisions', ({ id }) => id.startsWith('en/'));
 const divisions = divisionsData.map((d: CollectionEntry<'divisions'>) => ({
   key: d.data.key,
   title: d.data.title,
@@ -22,7 +22,8 @@ const divisions = divisionsData.map((d: CollectionEntry<'divisions'>) => ({
 ---
 
 <script>
-document.addEventListener('DOMContentLoaded', () => {
+// Scroll reveal animation
+const initReveal = () => {
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
@@ -36,7 +37,8 @@ document.addEventListener('DOMContentLoaded', () => {
     el.classList.add('reveal-el');
     observer.observe(el);
   });
-});
+};
+initReveal();
 </script>
 
 <BaseLayout title="Nagiyev Studio" lang="en">
@@ -169,20 +171,24 @@ document.addEventListener('DOMContentLoaded', () => {
     font-size: var(--text-base);
     font-weight: var(--weight-semibold);
     border-radius: var(--radius-md);
-    transition: background var(--transition-fast), transform var(--transition-fast);
+    transition: background var(--transition-fast), translate var(--transition-fast);
   }
   
   .cta-button:hover {
     background: var(--color-accent-hover);
-    transform: translateY(-2px);
+    translate: 0 -2px;
   }
   
   /* ── Scroll Reveal ── */
   
+  :root {
+    --reveal-transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
   .reveal-el {
     opacity: 0;
     transform: translateY(40px);
-    transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    transition: var(--reveal-transition);
   }
   
   .reveal-el.reveal-active {
@@ -222,7 +228,7 @@ document.addEventListener('DOMContentLoaded', () => {
     border: var(--border-thin);
     border-radius: var(--radius-lg);
     overflow: hidden;
-    transition: border-color var(--transition-fast), transform var(--transition-slow), box-shadow var(--transition-fast);
+    transition: border-color var(--transition-fast), translate var(--transition-slow), box-shadow var(--transition-fast), var(--reveal-transition);
   }
   
   .card-accent {
@@ -237,7 +243,7 @@ document.addEventListener('DOMContentLoaded', () => {
   
   .division-card:hover {
     border-color: var(--color-text);
-    transform: translateY(-8px);
+    translate: 0 -8px;
     box-shadow: var(--shadow-lg);
   }
   
@@ -260,12 +266,12 @@ document.addEventListener('DOMContentLoaded', () => {
     border: var(--border-thin);
     border-radius: var(--radius-lg);
     overflow: hidden;
-    transition: border-color var(--transition-fast), transform var(--transition-slow), box-shadow var(--transition-fast);
+    transition: border-color var(--transition-fast), translate var(--transition-slow), box-shadow var(--transition-fast), var(--reveal-transition);
   }
   
   .project-card:hover {
     border-color: var(--color-text);
-    transform: translateY(-8px);
+    translate: 0 -8px;
     box-shadow: var(--shadow-lg);
   }
   
@@ -328,13 +334,13 @@ document.addEventListener('DOMContentLoaded', () => {
     border-radius: var(--radius-md);
     font-size: var(--text-sm);
     font-weight: var(--weight-medium);
-    transition: background var(--transition-fast), border-color var(--transition-fast), transform var(--transition-fast);
+    transition: background var(--transition-fast), border-color var(--transition-fast), translate var(--transition-fast);
   }
   
   .contact-link:hover {
     background: var(--color-text);
     border-color: var(--color-text);
     color: var(--color-text-on-dark);
-    transform: translateY(-2px);
+    translate: 0 -2px;
   }
 </style>

@@ -11,3 +11,16 @@ Thumbs.db
 
 # Logs
 *.log
+
+# IDEs
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Drafts & Notes
+nagiyev_studio_general_structure.md
+nagiyev_studio_homepage_structure.md

@@ -1,5 +1,6 @@
 // @ts-check
-import { defineCollection, z } from 'astro:content';
+import { defineCollection } from 'astro:content';
+import { z } from 'astro/zod';
 import { glob } from 'astro/loaders';
 
 // ─── Projects ───
@@ -7,14 +8,12 @@ const projectsCollection = defineCollection({
   loader: glob({ pattern: '**/*.md', base: './src/content/projects' }),
   schema: z.object({
     title: z.string(),
-    title_az: z.string(),
-    slug: z.string(),
+    slug: z.string().optional(),
     division: z.enum(['digital-systems-ai', 'product-design', 'media-production']),
     type: z.enum(['case-study', 'design-showcase', 'media-portfolio']),
     year: z.number().optional(),
     client: z.string().optional(),
     summary: z.string(),
-    summary_az: z.string(),
     cover: z.string().optional(),
     tags: z.array(z.string()).optional(),
     featured: z.boolean().default(false),
@@ -27,15 +26,11 @@ const divisionsCollection = defineCollection({
   schema: z.object({
     key: z.enum(['digital-systems-ai', 'product-design', 'media-production']),
     title: z.string(),
-    title_az: z.string(),
     subtitle: z.string(),
-    subtitle_az: z.string(),
     description: z.string(),
-    description_az: z.string(),
+    services: z.array(z.string()).optional(),
     capabilities: z.array(z.string()),
-    capabilities_az: z.array(z.string()),
     approach: z.string().optional(),
-    approach_az: z.string().optional(),
     cover: z.string().optional(),
   }),
 });
@@ -46,7 +41,12 @@ const pagesCollection = defineCollection({
   schema: z.object({
     key: z.enum(['home', 'about', 'contact']),
     title: z.string(),
-    title_az: z.string(),
+    // Homepage specific fields
+    hero_headline: z.string().optional(),
+    hero_cta: z.string().optional(),
+    philosophy: z.string().optional(),
+    about_preview: z.string().optional(),
+    clients: z.array(z.string()).optional(),
   }),
 });
 

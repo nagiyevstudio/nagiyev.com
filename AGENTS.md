@@ -45,7 +45,7 @@ No subdomains. No CDN. All assets live in the project.
 - **Deploy**: Upload `/dist` to hosting root
 - **i18n**: EN at root (`/`), AZ prefixed (`/az/`)
 - **SEO**: Meta tags, OG, sitemap.xml, robots.txt, JSON-LD, canonical URLs — all static
-- **Images**: In `src/assets/images/`, optimized by Astro build
+- **Images**: In `public/images/`, served statically and referenced via absolute paths (e.g. `/images/...`)
 
 ---
 
@@ -196,12 +196,12 @@ If blocked waiting for design direction, log it: `[date] phase/task-id — BLOCK
   /styles/
     global.css
   /assets/
-    /images/
-      /projects/
-      /divisions/
-      /common/
   content.config.ts
 /public/
+  /images/
+    /projects/
+    /divisions/
+    /common/
   robots.txt
   favicon.ico
 astro.config.mjs
