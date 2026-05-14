@@ -1,0 +1,13 @@
+# Astro
+site/node_modules/
+site/dist/
+site/.astro/
+site/.env
+site/.env.local
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log

@@ -1,0 +1,295 @@
+---
+import LanguageSwitcher from '../components/LanguageSwitcher.astro';
+import '../styles/global.css';
+
+export interface Props {
+  title: string;
+  description?: string;
+  lang?: string; // 'en' | 'az'
+}
+
+const { title, description = 'Nagiyev Studio — AI-powered digital systems, product design and media production.', lang = 'en' } = Astro.props;
+const locale = lang || 'en';
+---
+
+<!doctype html>
+<html lang={locale}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content={description} />
+    
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content="/images/common/og-default.jpg" />
+    <meta property="og:url" content={`https://nagiyevstudio.com${Astro.url.pathname}`} />
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    
+    <link rel="canonical" href={`https://nagiyevstudio.com${Astro.url.pathname}`} />
+    <title>{title}</title>
+    
+    <!-- Preload fonts if needed -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    
+    <!-- JSON-LD structured data -->
+    <script type="application/ld+json" set:html={`{
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "Nagiyev Studio",
+      "url": "https://nagiyevstudio.com",
+      "logo": "https://nagiyevstudio.com/images/common/logo.svg",
+      "sameAs": []
+    }`}></script>
+  </head>
+  <body>
+    <a href="#main" class="sr-only">Skip to content</a>
+    
+    <header class="site-header">
+      <div class="container header-inner">
+        <a href="/" class="logo">
+          <span class="logo-text">Nagiyev Studio</span>
+        </a>
+        
+        <nav class="main-nav" aria-label="Main navigation">
+          <a href="/" class="nav-link">Home</a>
+          <a href="/digital-systems-ai/" class="nav-link">AI</a>
+          <a href="/product-design/" class="nav-link">Design</a>
+          <a href="/media-production/" class="nav-link">Media</a>
+          <a href="/about/" class="nav-link">About</a>
+        </nav>
+        
+        <LanguageSwitcher currentLocale={locale} />
+        
+        <button class="mobile-menu-toggle" aria-label="Toggle menu">
+          <span class="hamburger"></span>
+        </button>
+      </div>
+    </header>
+    
+    <main id="main">
+      <slot />
+    </main>
+    
+    <footer class="site-footer">
+      <div class="container footer-content">
+        <div class="footer-brand">
+          <span class="logo-text">Nagiyev Studio</span>
+          <p class="footer-tagline">AI-powered digital systems, product design and media production.</p>
+        </div>
+        
+        <nav class="footer-nav" aria-label="Footer navigation">
+          <a href="/">Home</a>
+          <a href="/digital-systems-ai/">AI</a>
+          <a href="/product-design/">Design</a>
+          <a href="/media-production/">Media</a>
+          <a href="/about/">About</a>
+          <a href="/contact/">Contact</a>
+        </nav>
+        
+        <div class="footer-contact">
+          <a href="https://wa.me/" class="contact-link">WhatsApp</a>
+          <a href="https://t.me/" class="contact-link">Telegram</a>
+          <a href="tel:+994" class="contact-link">Phone</a>
+        </div>
+        
+        <p class="footer-copyright">&copy; 2026 Nagiyev Studio. All rights reserved.</p>
+      </div>
+    </footer>
+  </body>
+</html>
+
+<style>
+  /* ── Header ── */
+  
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: var(--color-bg);
+    border-bottom: var(--border-thin);
+  }
+  
+  .header-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-6);
+    padding: var(--space-4) var(--space-6);
+  }
+  
+  .logo {
+    flex-shrink: 0;
+  }
+  
+  .logo-text {
+    font-size: var(--text-base);
+    font-weight: var(--weight-bold);
+    letter-spacing: var(--tracking-tight);
+    color: var(--color-text);
+  }
+  
+  .main-nav {
+    display: none;
+    gap: var(--space-6);
+  }
+  
+  .nav-link {
+    font-size: var(--text-sm);
+    font-weight: var(--weight-medium);
+    color: var(--color-text-secondary);
+    transition: color var(--transition-fast);
+  }
+  
+  .nav-link:hover {
+    color: var(--color-text);
+  }
+  
+  .mobile-menu-toggle {
+    display: flex;
+    padding: var(--space-2);
+    background: transparent;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .hamburger {
+    display: block;
+    width: 20px;
+    height: 2px;
+    background: var(--color-text);
+    position: relative;
+  }
+  
+  .hamburger::before,
+  .hamburger::after {
+    content: '';
+    position: absolute;
+    width: 20px;
+    height: 2px;
+    background: var(--color-text);
+    left: 0;
+  }
+  
+  .hamburger::before { top: -6px; }
+  .hamburger::after { top: 6px; }
+  
+  /* ── Footer ── */
+  
+  .site-footer {
+    margin-top: var(--space-24);
+    padding: var(--space-12) 0;
+    border-top: var(--border-thin);
+    background: var(--color-bg);
+  }
+  
+  .footer-content {
+    display: grid;
+    gap: var(--space-8);
+    text-align: center;
+  }
+  
+  .footer-brand {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+  
+  .footer-tagline {
+    font-size: var(--text-sm);
+    color: var(--color-text-secondary);
+    max-width: 40ch;
+    margin: 0 auto;
+  }
+  
+  .footer-nav {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--space-4) var(--space-6);
+  }
+  
+  .footer-nav a {
+    font-size: var(--text-sm);
+    color: var(--color-text-secondary);
+    transition: color var(--transition-fast);
+  }
+  
+  .footer-nav a:hover {
+    color: var(--color-text);
+  }
+  
+  .footer-contact {
+    display: flex;
+    justify-content: center;
+    gap: var(--space-4);
+    flex-wrap: wrap;
+  }
+  
+  .contact-link {
+    font-size: var(--text-sm);
+    padding: var(--space-2) var(--space-4);
+    border: var(--border-thin);
+    border-radius: var(--radius-sm);
+    transition: background var(--transition-fast), border-color var(--transition-fast);
+  }
+  
+  .contact-link:hover {
+    background: var(--color-bg-hover);
+    border-color: var(--color-text);
+  }
+  
+  .footer-copyright {
+    font-size: var(--text-xs);
+    color: var(--color-text-muted);
+    margin-top: var(--space-4);
+  }
+  
+  /* ── Desktop ── */
+  
+  @media (min-width: 768px) {
+    .header-inner {
+      padding: var(--space-5) var(--space-6);
+    }
+    
+    .main-nav {
+      display: flex;
+    }
+    
+    .mobile-menu-toggle {
+      display: none;
+    }
+    
+    .footer-content {
+      text-align: left;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-12);
+    }
+    
+    .footer-brand {
+      grid-column: 1 / -1;
+      text-align: center;
+    }
+    
+    .footer-nav {
+      justify-content: flex-start;
+    }
+    
+    .footer-contact {
+      justify-content: flex-end;
+    }
+    
+    .footer-copyright {
+      grid-column: 1 / -1;
+      text-align: center;
+      margin-top: var(--space-8);
+    }
+  }
+</style>

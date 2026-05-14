@@ -1,0 +1,71 @@
+---
+interface Props {
+  currentLocale: string; // 'en' | 'az'
+}
+
+const { currentLocale } = Astro.props;
+const path = Astro.url.pathname;
+
+// Generate alternate locale path
+function getAlternatePath(locale: string, currentPath: string): string {
+  if (locale === 'en') {
+    // From AZ to EN: remove /az prefix
+    return currentPath.replace(/^\/az/, '') || '/';
+  } else {
+    // From EN to AZ: add /az prefix
+    return currentPath === '/' ? '/az' : `/az${currentPath}`;
+  }
+}
+
+const alternatePath = getAlternatePath(currentLocale === 'en' ? 'az' : 'en', path);
+---
+
+<div class="lang-switcher">
+  <a 
+    href={alternatePath} 
+    class={`lang-link ${currentLocale === 'en' ? '' : ''}`}
+    aria-label="Switch to Azerbaijani"
+  >
+    AZ
+  </a>
+  <span class="divider">/</span>
+  <a 
+    href={currentLocale === 'en' ? path : getAlternatePath('en', path)} 
+    class={`lang-link ${currentLocale === 'en' ? 'active' : ''}`}
+    aria-label="Switch to English"
+  >
+    EN
+  </a>
+</div>
+
+<style>
+  .lang-switcher {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    font-size: var(--text-sm);
+    font-weight: var(--weight-semibold);
+  }
+
+  .lang-link {
+    padding: var(--space-1) var(--space-2);
+    border-radius: var(--radius-sm);
+    color: var(--color-text-secondary);
+    transition: color var(--transition-fast), background var(--transition-fast);
+  }
+
+  .lang-link:hover {
+    color: var(--color-text);
+    background: var(--color-bg-hover);
+  }
+
+  .lang-link.active {
+    color: var(--color-text);
+    background: var(--color-bg-hover);
+  }
+
+  .divider {
+    color: var(--color-border);
+    font-weight: var(--weight-normal);
+  }
+</style>
