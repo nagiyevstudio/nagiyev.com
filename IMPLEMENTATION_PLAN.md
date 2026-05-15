@@ -89,13 +89,13 @@
     featured: z.boolean().default(false),
   }
   ```
-- [ ] Markdown body = project description (supports MDX if needed)
+- [x] Markdown body = project description (supports MDX if needed)
 - [x] Create 2 sample projects (one AI, one design) for development
 
 ### 0.3 Content Collections — Divisions
 
 - [x] Define `divisions` collection
-- [ ] Schema:
+- [x] Schema:
   
   ```ts
   {
@@ -118,7 +118,7 @@
 ### 0.4 Content Collections — Pages
 
 - [x] Define `pages` collection for about, contact, homepage
-- [ ] Schema:
+- [x] Schema:
   
   ```ts
   {
@@ -234,10 +234,10 @@
 
 ### 2.1 Homepage
 
-- [ ] Build from `home.md` content + collections
+- [x] Build from `home.md` content + collections
 - [ ] Sections:
-  1. Hero (headline, subtitle, single CTA, CSS animation)
-  2. Core Divisions (3 division cards → link to division landings)
+  1. Hero (headline, subtitle, single CTA, CSS animation) [x]
+  2. Core Divisions (3 division cards → link to division landings) [x]
   3. Selected Work (3–6 featured projects from collections)
   4. Studio Approach (philosophy block)
   5. Clients / Collaborations (logo grid)

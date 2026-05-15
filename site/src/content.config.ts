@@ -11,6 +11,7 @@ const projectsCollection = defineCollection({
     slug: z.string().optional(),
     division: z.enum(['digital-systems-ai', 'product-design', 'media-production']),
     type: z.enum(['case-study', 'design-showcase', 'media-portfolio']),
+    category: z.string().optional(),
     year: z.number().optional(),
     client: z.string().optional(),
     summary: z.string(),
@@ -43,9 +44,13 @@ const pagesCollection = defineCollection({
     title: z.string(),
     // Homepage specific fields
     hero_headline: z.string().optional(),
+    hero_supporting_text: z.string().optional(),
     hero_cta: z.string().optional(),
     philosophy: z.string().optional(),
     about_preview: z.string().optional(),
+    bottom_cta_title: z.string().optional(),
+    bottom_cta_text: z.string().optional(),
+    bottom_cta_button: z.string().optional(),
     clients: z.array(z.string()).optional(),
   }),
 });

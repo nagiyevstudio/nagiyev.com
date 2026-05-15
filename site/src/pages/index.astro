@@ -1,25 +1,152 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import type { CollectionEntry } from 'astro:content';
-import { getCollection } from 'astro:content';
+import { getCollection, getEntry } from 'astro:content';
+import { Icon } from 'astro-icon/components';
 
+// Fetch Homepage Content
+const homePage = await getEntry('pages', 'en/home');
+if (!homePage) {
+  throw new Error('Homepage content not found');
+}
+const { data: home } = homePage;
+
+// Fetch Featured Projects
 const featured = await getCollection('projects', ({ data, id }) => data.featured && id.startsWith('en/'));
-
-const featuredProjects = featured.map((p: CollectionEntry<'projects'>) => ({
-  slug: p.slug,
+const featuredProjects = featured.map((p) => ({
+  slug: p.id.replace(/^en\//, '').replace(/\.md$/, ''),
   title: p.data.title,
   summary: p.data.summary,
   division: p.data.division,
   cover: p.data.cover,
 }));
 
+// Fetch Divisions
 const divisionsData = await getCollection('divisions', ({ id }) => id.startsWith('en/'));
-const divisions = divisionsData.map((d: CollectionEntry<'divisions'>) => ({
+const divisions = divisionsData.map((d) => ({
   key: d.data.key,
   title: d.data.title,
   subtitle: d.data.subtitle,
+  description: d.data.description,
+  icon: d.data.key === 'digital-systems-ai' ? 'lucide:cpu' : 
+        d.data.key === 'product-design' ? 'lucide:layers' : 'lucide:video'
 }));
 ---
+
+<BaseLayout title={home.title} lang="en">
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-background">
+      <img src="/images/common/hero-bg.jpg" alt="" class="hero-bg-image" />
+    </div>
+    <div class="hero-overlay"></div>
+    
+    <div class="container">
+      <div class="hero-content">
+        <div class="hero-badge reveal-el">Nagiyev Studio</div>
+        <h1 class="hero-title reveal-el" style="transition-delay: 100ms;">
+          {home.hero_headline}
+        </h1>
+        <p class="hero-subtitle reveal-el" style="transition-delay: 200ms;">
+          {home.hero_supporting_text}
+        </p>
+        <div class="hero-actions reveal-el" style="transition-delay: 300ms;">
+          <a href="/contact" class="btn btn--primary">
+            {home.hero_cta}
+            <Icon name="lucide:arrow-right" class="icon" />
+          </a>
+          <a href="#work" class="btn btn--secondary">See Selected Work</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Directions Section -->
+  <section id="directions" class="section section--directions">
+    <div class="container">
+      <div class="section-header reveal-el">
+        <span class="section-tag">Expertise</span>
+        <h2 class="section-title">Core Directions</h2>
+      </div>
+      
+      <div class="grid grid--3">
+        {divisions.map((d, i) => (
+          <a href={`/${d.key}`} class="division-card reveal-el" style={`transition-delay: ${i * 100}ms;`}>
+            <div class="division-card__icon">
+              <Icon name={d.icon} />
+            </div>
+            <div class="division-card__content">
+              <h3>{d.title}</h3>
+              <p>{d.subtitle}</p>
+            </div>
+            <div class="division-card__footer">
+              <span class="learn-more">Learn more <Icon name="lucide:chevron-right" /></span>
+            </div>
+            <div class={`division-card__accent division-card__accent--${d.key}`}></div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Selected Work -->
+  <section id="work" class="section section--alt">
+    <div class="container">
+      <div class="section-header reveal-el">
+        <span class="section-tag">Case Studies</span>
+        <h2 class="section-title">Selected Work</h2>
+      </div>
+      
+      <div class="grid grid--3">
+        {featuredProjects.map((p, i) => (
+          <a href={`/projects/${p.slug}`} class="project-card reveal-el" style={`transition-delay: ${i * 100}ms;`}>
+            {p.cover ? (
+              <div class="project-card__image">
+                <img src={p.cover} alt={p.title} loading="lazy" />
+              </div>
+            ) : (
+              <div class="project-card__placeholder"></div>
+            )}
+            <div class="project-card__content">
+              <span class="project-card__division">{p.division.replace('-', ' ')}</span>
+              <h3>{p.title}</h3>
+              <p>{p.summary}</p>
+            </div>
+          </a>
+        ))}
+      </div>
+      
+      <div class="section-footer reveal-el">
+        <a href="/work" class="btn btn--outline">View All Projects</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Approach / Philosophy -->
+  <section class="section section--philosophy">
+    <div class="container container--narrow reveal-el">
+      <div class="philosophy-content">
+        <Icon name="lucide:quote" class="quote-icon" />
+        <p class="philosophy-text">{home.philosophy}</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact CTA -->
+  <section class="section section--cta">
+    <div class="container reveal-el">
+      <div class="cta-card">
+        <div class="cta-card__content">
+          <h2>{home.bottom_cta_title}</h2>
+          <p>{home.bottom_cta_text}</p>
+          <a href="/contact" class="btn btn--primary btn--large">
+            {home.bottom_cta_button}
+            <Icon name="lucide:message-square" class="icon" />
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
 
 <script>
 // Scroll reveal animation
@@ -33,314 +160,390 @@ const initReveal = () => {
     });
   }, { rootMargin: '0px 0px -50px 0px', threshold: 0.1 });
 
-  document.querySelectorAll('.section, .division-card, .project-card').forEach(el => {
-    el.classList.add('reveal-el');
+  document.querySelectorAll('.reveal-el').forEach(el => {
     observer.observe(el);
   });
 };
-initReveal();
+
+// Handle transitions
+document.addEventListener('astro:page-load', initReveal);
+initReveal(); // Initial call
 </script>
 
-<BaseLayout title="Nagiyev Studio" lang="en">
-  <section class="hero">
-    <div class="hero-background">
-      <img src="/images/common/hero-bg.jpg" alt="" class="hero-bg-image" />
-    </div>
-    <div class="hero-overlay"></div>
-    <div class="container">
-      <h1 class="hero-title">Nagiyev Studio</h1>
-      <p class="hero-subtitle">AI-powered digital systems, product design and media production for modern organizations.</p>
-      <a href="#divisions" class="cta-button">Explore our work</a>
-    </div>
-  </section>
-
-  <section id="divisions" class="section">
-    <div class="container">
-      <h2 class="section-title">Core Divisions</h2>
-      <div class="grid grid--3">
-        {divisions.map((d, i) => (
-          <a href={`/${d.key}/`} class="division-card reveal-el">
-            <div class="card-accent"></div>
-            <h3>{d.title}</h3>
-            <p>{d.subtitle}</p>
-          </a>
-        ))}
-      </div>
-    </div>
-  </section>
-
-  <section class="section">
-    <div class="container">
-      <h2 class="section-title">Selected Work</h2>
-      <div class="grid grid--3">
-        {featuredProjects.map((p, i) => (
-          <a href={`/projects/${p.slug}/`} class="project-card reveal-el">
-            {p.cover && (
-              <div class="project-cover">
-                <img src={p.cover} alt={p.title} loading="lazy" />
-              </div>
-            )}
-            {!p.cover && <div class="project-cover-placeholder"></div>}
-            <div class="project-content">
-              <h3>{p.title}</h3>
-              <p class="project-summary">{p.summary}</p>
-            </div>
-          </a>
-        ))}
-      </div>
-    </div>
-  </section>
-
-  <section class="section section--alt">
-    <div class="container container--narrow">
-      <h2 class="section-title">Our Approach</h2>
-      <p class="lead">We build complete digital ecosystems — not just websites or apps. Every project combines strategic thinking, technical excellence and design craft.</p>
-    </div>
-  </section>
-
-  <section class="section cta-section">
-    <div class="container">
-      <h2 class="section-title">Discuss a project</h2>
-      <div class="contact-links">
-        <a href="https://wa.me/" class="contact-link">WhatsApp</a>
-        <a href="https://t.me/" class="contact-link">Telegram</a>
-        <a href="tel:+994" class="contact-link">Phone</a>
-      </div>
-    </div>
-  </section>
-</BaseLayout>
-
 <style>
-  /* ── Hero ── */
-  
+  /* ── Hero Section ── */
   .hero {
     position: relative;
-    min-height: 80vh;
+    padding: var(--space-32) 0 var(--space-24);
+    color: var(--color-text-on-dark);
+    overflow: hidden;
+    min-height: 90vh;
     display: flex;
     align-items: center;
-    padding: var(--space-16) 0;
-    overflow: hidden;
   }
-  
+
   .hero-background {
     position: absolute;
     inset: 0;
     z-index: 0;
   }
-  
+
   .hero-bg-image {
     width: 100%;
     height: 100%;
     object-fit: cover;
     object-position: center;
   }
-  
+
   .hero-overlay {
     position: absolute;
     inset: 0;
-    background: rgba(0, 0, 0, 0.35);
+    background: linear-gradient(to right, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.3) 100%);
     z-index: 1;
   }
-  
-  .hero > .container {
+
+  .hero-content {
     position: relative;
     z-index: 2;
-  }
-  
-  .hero-title {
-    font-size: clamp(var(--text-4xl), 8vw, var(--text-7xl));
-    line-height: var(--leading-tight);
-    letter-spacing: var(--tracking-tight);
-    margin-bottom: var(--space-6);
-    color: #fff;
-  }
-  
-  .hero-subtitle {
-    font-size: clamp(var(--text-lg), 3vw, var(--text-2xl));
-    color: rgba(255, 255, 255, 0.9);
-    max-width: 60ch;
-    margin-bottom: var(--space-8);
-    line-height: var(--leading-relaxed);
-  }
-  
-  .cta-button {
-    display: inline-block;
-    padding: var(--space-4) var(--space-8);
-    background: var(--color-accent);
-    color: #fff;
-    font-size: var(--text-base);
-    font-weight: var(--weight-semibold);
-    border-radius: var(--radius-md);
-    transition: background var(--transition-fast), translate var(--transition-fast);
-  }
-  
-  .cta-button:hover {
-    background: var(--color-accent-hover);
-    translate: 0 -2px;
-  }
-  
-  /* ── Scroll Reveal ── */
-  
-  :root {
-    --reveal-transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    max-width: 800px;
   }
 
-  .reveal-el {
-    opacity: 0;
-    transform: translateY(40px);
-    transition: var(--reveal-transition);
+  .hero-badge {
+    display: inline-block;
+    padding: var(--space-1) var(--space-3);
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: var(--radius-full);
+    font-size: var(--text-xs);
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-wide);
+    margin-bottom: var(--space-6);
   }
-  
-  .reveal-el.reveal-active {
-    opacity: 1;
-    transform: translateY(0);
+
+  .hero-title {
+    font-size: clamp(var(--text-4xl), 6vw, var(--text-7xl));
+    font-weight: var(--weight-bold);
+    line-height: var(--leading-tight);
+    margin-bottom: var(--space-8);
+    letter-spacing: var(--tracking-tight);
   }
-  
-  /* ── Sections ── */
-  
-  .section {
-    padding: var(--space-20) 0;
-    border-bottom: var(--border-thin);
-  }
-  
-  .section--alt {
-    background: var(--color-bg-card);
-  }
-  
-  .section-title {
-    font-size: var(--text-3xl);
-    margin-bottom: var(--space-10);
-  }
-  
-  .lead {
+
+  .hero-subtitle {
     font-size: var(--text-xl);
     line-height: var(--leading-relaxed);
-    color: var(--color-text-secondary);
+    color: var(--color-text-muted);
+    margin-bottom: var(--space-10);
+    max-width: 600px;
   }
-  
+
+  .hero-actions {
+    display: flex;
+    gap: var(--space-4);
+    flex-wrap: wrap;
+  }
+
+  /* ── Buttons ── */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    padding: var(--space-3) var(--space-6);
+    border-radius: var(--radius-md);
+    font-weight: var(--weight-medium);
+    transition: all var(--transition-base);
+    cursor: pointer;
+  }
+
+  .btn--primary {
+    background: var(--color-accent);
+    color: #fff;
+  }
+
+  .btn--primary:hover {
+    background: var(--color-accent-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px -10px rgba(0, 85, 255, 0.5);
+  }
+
+  .btn--secondary {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #fff;
+  }
+
+  .btn--secondary:hover {
+    background: rgba(255, 255, 255, 0.1);
+    transform: translateY(-2px);
+  }
+
+  .btn--outline {
+    border: var(--border-thin);
+    color: var(--color-text);
+  }
+
+  .btn--outline:hover {
+    background: var(--color-text);
+    color: var(--color-text-on-dark);
+  }
+
+  .btn .icon {
+    width: 18px;
+    height: 18px;
+    transition: transform var(--transition-fast);
+  }
+
+  .btn:hover .icon {
+    transform: translateX(3px);
+  }
+
+  /* ── Sections ── */
+  .section {
+    padding: var(--space-24) 0;
+  }
+
+  .section--alt {
+    background: var(--color-bg-hover);
+  }
+
+  .section-header {
+    margin-bottom: var(--space-16);
+  }
+
+  .section-tag {
+    display: block;
+    font-size: var(--text-xs);
+    text-transform: uppercase;
+    color: var(--color-accent);
+    font-weight: var(--weight-bold);
+    letter-spacing: var(--tracking-wide);
+    margin-bottom: var(--space-2);
+  }
+
+  .section-title {
+    font-size: var(--text-4xl);
+    font-weight: var(--weight-bold);
+  }
+
   /* ── Division Cards ── */
-  
   .division-card {
     position: relative;
-    display: block;
-    padding: var(--space-8);
     background: var(--color-bg-card);
     border: var(--border-thin);
+    padding: var(--space-10);
     border-radius: var(--radius-lg);
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    transition: all var(--transition-slow);
     overflow: hidden;
-    transition: border-color var(--transition-fast), translate var(--transition-slow), box-shadow var(--transition-fast), var(--reveal-transition);
   }
-  
-  .card-accent {
+
+  .division-card:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-lg);
+    border-color: var(--color-text);
+  }
+
+  .division-card__icon {
+    width: 48px;
+    height: 48px;
+    background: var(--color-bg-hover);
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: var(--space-6);
+    color: var(--color-text);
+  }
+
+  .division-card__icon :global(svg) {
+    width: 24px;
+    height: 24px;
+  }
+
+  .division-card h3 {
+    font-size: var(--text-2xl);
+    margin-bottom: var(--space-4);
+  }
+
+  .division-card p {
+    color: var(--color-text-secondary);
+    font-size: var(--text-base);
+    line-height: var(--leading-normal);
+    flex-grow: 1;
+  }
+
+  .division-card__footer {
+    margin-top: var(--space-8);
+  }
+
+  .learn-more {
+    font-size: var(--text-sm);
+    font-weight: var(--weight-semibold);
+    display: flex;
+    align-items: center;
+    gap: var(--space-1);
+    color: var(--color-text);
+  }
+
+  .learn-more :global(svg) {
+    width: 14px;
+    height: 14px;
+    transition: transform var(--transition-fast);
+  }
+
+  .division-card:hover .learn-more :global(svg) {
+    transform: translateX(4px);
+  }
+
+  .division-card__accent {
     position: absolute;
-    top: 0;
+    bottom: 0;
     left: 0;
     right: 0;
     height: 4px;
-    background: linear-gradient(90deg, var(--division-ai) 0%, var(--division-design) 50%, var(--division-media) 100%);
-    opacity: 0.5;
+    opacity: 0.3;
   }
-  
-  .division-card:hover {
-    border-color: var(--color-text);
-    translate: 0 -8px;
-    box-shadow: var(--shadow-lg);
-  }
-  
-  .division-card h3 {
-    font-size: var(--text-xl);
-    margin-bottom: var(--space-3);
-  }
-  
-  .division-card p {
-    font-size: var(--text-base);
-    color: var(--color-text-secondary);
-  }
-  
+
+  .division-card__accent--digital-systems-ai { background: var(--division-ai); }
+  .division-card__accent--product-design { background: var(--division-design); }
+  .division-card__accent--media-production { background: var(--division-media); }
+
   /* ── Project Cards ── */
-  
   .project-card {
-    position: relative;
-    display: block;
     background: var(--color-bg-card);
-    border: var(--border-thin);
     border-radius: var(--radius-lg);
     overflow: hidden;
-    transition: border-color var(--transition-fast), translate var(--transition-slow), box-shadow var(--transition-fast), var(--reveal-transition);
+    border: var(--border-thin);
+    transition: all var(--transition-base);
   }
-  
+
   .project-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-md);
     border-color: var(--color-text);
-    translate: 0 -8px;
-    box-shadow: var(--shadow-lg);
   }
-  
-  .project-cover {
-    aspect-ratio: 16 / 9;
-    background: var(--color-bg-hover);
+
+  .project-card__image {
+    aspect-ratio: 16/9;
     overflow: hidden;
   }
-  
-  .project-cover img {
+
+  .project-card__image img {
     width: 100%;
     height: 100%;
     object-fit: cover;
     transition: transform var(--transition-slow);
   }
-  
-  .project-card:hover .project-cover img {
-    transform: scale(1.08);
+
+  .project-card:hover .project-card__image img {
+    transform: scale(1.05);
   }
-  
-  .project-cover-placeholder {
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(135deg, var(--color-bg-hover) 0%, var(--color-border-light) 100%);
-  }
-  
-  .project-content {
+
+  .project-card__content {
     padding: var(--space-6);
   }
-  
-  .project-content h3 {
-    font-size: var(--text-lg);
+
+  .project-card__division {
+    font-size: var(--text-xs);
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+    font-weight: var(--weight-bold);
+    margin-bottom: var(--space-2);
+    display: block;
+  }
+
+  .project-card h3 {
+    font-size: var(--text-xl);
     margin-bottom: var(--space-2);
   }
-  
-  .project-summary {
+
+  .project-card p {
     font-size: var(--text-sm);
     color: var(--color-text-secondary);
-    line-height: var(--leading-normal);
   }
-  
-  /* ── CTA Section ── */
-  
-  .cta-section {
+
+  .section-footer {
+    margin-top: var(--space-12);
     text-align: center;
   }
-  
-  .contact-links {
-    display: flex;
-    justify-content: center;
-    gap: var(--space-4);
-    flex-wrap: wrap;
-    margin-top: var(--space-6);
+
+  /* ── Philosophy ── */
+  .section--philosophy {
+    border-top: var(--border-thin);
+    border-bottom: var(--border-thin);
   }
-  
-  .contact-link {
-    display: inline-block;
-    padding: var(--space-3) var(--space-6);
-    border: var(--border-thin);
-    border-radius: var(--radius-md);
-    font-size: var(--text-sm);
+
+  .philosophy-content {
+    text-align: center;
+    padding: var(--space-10) 0;
+  }
+
+  .quote-icon {
+    width: 40px;
+    height: 40px;
+    color: var(--color-border);
+    margin-bottom: var(--space-6);
+  }
+
+  .philosophy-text {
+    font-size: var(--text-2xl);
+    line-height: var(--leading-relaxed);
+    color: var(--color-text);
     font-weight: var(--weight-medium);
-    transition: background var(--transition-fast), border-color var(--transition-fast), translate var(--transition-fast);
   }
-  
-  .contact-link:hover {
-    background: var(--color-text);
-    border-color: var(--color-text);
+
+  /* ── CTA Card ── */
+  .cta-card {
+    background: var(--color-bg-inverted);
     color: var(--color-text-on-dark);
-    translate: 0 -2px;
+    padding: var(--space-16) var(--space-10);
+    border-radius: var(--radius-xl);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cta-card h2 {
+    font-size: var(--text-4xl);
+    margin-bottom: var(--space-4);
+  }
+
+  .cta-card p {
+    color: var(--color-text-muted);
+    font-size: var(--text-lg);
+    margin: 0 auto var(--space-10);
+  }
+
+  .btn--large {
+    padding: var(--space-4) var(--space-10);
+    font-size: var(--text-lg);
+  }
+
+  /* ── Scroll Reveal ── */
+  .reveal-el {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1), transform 1s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .reveal-active {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  @media (max-width: 768px) {
+    .hero {
+      padding: var(--space-24) 0;
+    }
+    .hero-title {
+      font-size: var(--text-4xl);
+    }
+    .philosophy-text {
+      font-size: var(--text-xl);
+    }
+    .cta-card {
+      padding: var(--space-12) var(--space-6);
+    }
   }
 </style>
