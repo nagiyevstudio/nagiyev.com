@@ -1,194 +1,808 @@
 ---
-import DivisionLayout from '../layouts/DivisionLayout.astro';
-import { getCollection } from 'astro:content';
-import type { CollectionEntry } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getCollection, getEntry } from 'astro:content';
+import { Icon } from 'astro-icon/components';
 
-const division = await getCollection('divisions', ({ data }) => data.key === 'digital-systems-ai');
-const divisionData = division[0]?.data;
+const divisionEntries = await getCollection('divisions', ({ data, id }) => data.key === 'digital-systems-ai' && id.startsWith('en/'));
+const divisionEntry = divisionEntries[0];
+const d = divisionEntry?.data;
 
-const aiProjects = await getCollection('projects', ({ data }) => 
-  data.division === 'digital-systems-ai' && data.published !== false
+const aiProjects = await getCollection('projects', ({ data }) =>
+  data.division === 'digital-systems-ai'
 );
 
-const projects = aiProjects.map((p: CollectionEntry<'projects'>) => ({
-  slug: p.slug,
+const projects = aiProjects.map((p) => ({
+  slug: p.id,
   title: p.data.title,
-  subtitle: p.data.subtitle,
+  summary: p.data.summary,
   client: p.data.client,
   year: p.data.year,
   cover: p.data.cover,
+  tags: p.data.tags,
 }));
 ---
 
-<DivisionLayout title={divisionData?.title || 'Digital Systems & AI'} divisionKey="digital-systems-ai" lang="en">
-  <fragment slot="hero">
-    <h1>{divisionData?.title}</h1>
-    <p class="hero-lead">{divisionData?.subtitle}</p>
-  </fragment>
-  
-  <section class="section">
+<BaseLayout title={d?.title || 'Digital Systems & AI'} lang="en">
+  <!-- ── Hero Section ── -->
+  <section class="hero">
+    <div class="hero-background">
+      <img src={d?.cover || "/images/divisions/ai-hero.jpg"} alt="Digital Systems & AI Background" class="hero-bg-image" />
+    </div>
+    <div class="hero-overlay"></div>
+    
     <div class="container">
-      <h2 class="section-title">What We Build</h2>
-      <div class="content-block">
-        <p>{divisionData?.description}</p>
+      <div class="hero-content">
+        <div class="hero-badge reveal-el">Division</div>
+        <h1 class="hero-title reveal-el" style="transition-delay: 100ms;">
+          {d?.hero_headline || "Digital systems built around real business logic."}
+        </h1>
+        <p class="hero-subtitle reveal-el" style="transition-delay: 200ms;">
+          {d?.hero_supporting || "We design and develop websites, platforms, internal tools, automation workflows and AI-assisted systems for businesses and organizations that need more than a visual online presence."}
+        </p>
       </div>
     </div>
   </section>
-  
-  <section class="section section--alt">
-    <div class="container">
-      <h2 class="section-title">Capabilities</h2>
-      <ul class="capabilities-list">
-        {divisionData?.capabilities.map(cap => (
-          <li class="capability-item">
-            <span class="capability-bullet"></span>
-            <span>{cap}</span>
-          </li>
-        ))}
-      </ul>
+
+  <!-- ── Main Positioning ── -->
+  <section class="section section--philosophy">
+    <div class="container container--narrow reveal-el">
+      <div class="philosophy-content" style="display: flex; flex-direction: column; align-items: center; text-align: center;">
+        <Icon name="lucide:cpu" class="quote-icon" style="color: var(--division-ai);" />
+        <p class="philosophy-text" style="max-width: 800px; margin: 0 auto;">
+          Digital Systems is about building practical digital infrastructure for businesses, organizations and public projects.
+        </p>
+        <div class="prose-text mt-8" style="max-width: 700px; margin: 2rem auto 0 auto; font-size: var(--text-lg); color: var(--color-text-secondary); line-height: var(--leading-relaxed);">
+          <p>This work is not limited to writing code or creating websites. In many cases, it includes understanding the client's real processes, designing business logic, structuring workflows, consulting, digitizing manual operations and building the software layer around those needs.</p>
+          <p style="margin-top: 1rem;"><strong>The goal is to create systems that are useful, maintainable and connected to how the organization actually works.</strong></p>
+        </div>
+      </div>
     </div>
   </section>
-  
+
+  <!-- ── Services Strip ── -->
+  {d?.services && d.services.length > 0 && (
+    <section class="services-strip reveal-el">
+      <div class="container">
+        <div class="services-list">
+          {d.services.map(s => (
+            <span class="service-tag">{s}</span>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <!-- ── Capabilities ── -->
+  <section class="section section--alt">
+    <div class="container">
+      <div class="section-header reveal-el">
+        <span class="section-tag" style="color: var(--division-ai);">Scope</span>
+        <h2 class="section-title">What This Direction Covers</h2>
+        <p class="section-subtitle">From websites and portals to CRM logic, production reporting, fintech products and AI workflows — Nagiyev Studio builds digital systems that support real operations.</p>
+      </div>
+      
+      {d?.capabilities && (
+        <div class="capabilities-grid reveal-el" style="transition-delay: 100ms;">
+          {d.capabilities.map(cap => (
+            <div class="capability-item">
+              <Icon name="lucide:check-circle-2" class="cap-icon" />
+              <span>{cap}</span>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  </section>
+
+  <!-- ── Deep Dive: Experience & Focus Areas ── -->
   <section class="section">
     <div class="container">
-      <h2 class="section-title">Selected Work</h2>
+      <div class="section-header reveal-el">
+        <span class="section-tag" style="color: var(--division-ai);">Background</span>
+        <h2 class="section-title">Experience & Focus Areas</h2>
+      </div>
+
+      <div class="focus-areas">
+        <!-- Area 1 -->
+        <div class="focus-card reveal-el">
+          <div class="focus-icon"><Icon name="lucide:history" /></div>
+          <h3>Experience Background</h3>
+          <p>{d?.experience_summary}</p>
+        </div>
+
+        <!-- Area 2 -->
+        <div class="focus-card reveal-el" style="transition-delay: 100ms;">
+          <div class="focus-icon"><Icon name="lucide:factory" /></div>
+          <h3>Industrial & Business Systems</h3>
+          <p>Informed by experience in complex operational environments, including systems for large production enterprises to track production, quality, quantity, technical progress and reporting for senior management.</p>
+          <p class="mt-4">Includes standardization work connected to ISO 9001 quality management and laboratory processes.</p>
+        </div>
+
+        <!-- Area 3 -->
+        <div class="focus-card reveal-el" style="transition-delay: 200ms;">
+          <div class="focus-icon"><Icon name="lucide:workflow" /></div>
+          <h3>CRM & Process Logic</h3>
+          <p>Many organizations don't just need a website; they need structured flows: requests, users, records, statuses, communication, reports, approvals and internal control.</p>
+          <p class="mt-4">We build business logic for CRM and educational management systems, internal workflows and structured operational tools.</p>
+        </div>
+
+        <!-- Area 4 -->
+        <div class="focus-card reveal-el">
+          <div class="focus-icon"><Icon name="lucide:bot" /></div>
+          <h3>AI & Automation</h3>
+          <p>AI is positioned as a practical layer inside a digital system, not as a separate magical product. We build AI workflows, AI assistant-based systems, and automated chains.</p>
+          <ul class="clean-list mt-4">
+            <li>AI assistants for internal workflows</li>
+            <li>Document and text processing</li>
+            <li>Knowledge-base systems & summarization</li>
+            <li>AI-assisted financial tracking</li>
+            <li>Agent-based business systems & n8n automation</li>
+          </ul>
+        </div>
+
+        <!-- Area 5 -->
+        <div class="focus-card reveal-el" style="transition-delay: 100ms;">
+          <div class="focus-icon"><Icon name="lucide:layout-template" /></div>
+          <h3>Product & Platform Experience</h3>
+          <p>Shaped by internal product work across various scopes:</p>
+          <ul class="clean-list mt-4">
+            <li>Educational and scientific digital systems</li>
+            <li>Astronomy-related platforms</li>
+            <li>NGO digital transformation</li>
+            <li>Agent-agnostic AI-based operating systems</li>
+            <li>Automated AI chains for marketing</li>
+          </ul>
+        </div>
+
+        <!-- Area 6 -->
+        <div class="focus-card reveal-el" style="transition-delay: 200ms;">
+          <div class="focus-icon"><Icon name="lucide:shield-alert" /></div>
+          <h3>What Not to Promise</h3>
+          <p>We do not present the studio as a bank-core developer, cybersecurity company, SAP/Oracle integrator or high-load enterprise infrastructure provider.</p>
+          <p class="mt-4">Complex integrations, regulated fintech, and enterprise ERP-level projects are presented only as custom-scoped work after rigorous analysis. We stay grounded and realistic.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Main Value ── -->
+  <section class="section section--philosophy">
+    <div class="container container--narrow reveal-el">
+      <div class="philosophy-content">
+        <h2 class="section-title mb-8" style="text-align: center;">Main Value for Clients</h2>
+        <ul class="value-list">
+          <li><Icon name="lucide:arrow-right" class="value-icon" /> Turning business logic into a working digital system</li>
+          <li><Icon name="lucide:arrow-right" class="value-icon" /> Replacing manual, paper-based or chaotic processes with structured tools</li>
+          <li><Icon name="lucide:arrow-right" class="value-icon" /> Creating websites and platforms that can grow with the organization</li>
+          <li><Icon name="lucide:arrow-right" class="value-icon" /> Connecting content, users, operations and reporting</li>
+          <li><Icon name="lucide:arrow-right" class="value-icon" /> Using AI where it brings practical benefit</li>
+          <li><Icon name="lucide:arrow-right" class="value-icon" /> Building systems that are understandable and maintainable</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Selected Work ── -->
+  <section class="section section--alt">
+    <div class="container">
+      <div class="section-header reveal-el">
+        <span class="section-tag" style="color: var(--division-ai);">Case Studies</span>
+        <h2 class="section-title">Selected Work</h2>
+      </div>
+      
       {projects.length > 0 ? (
         <div class="grid grid--3">
-          {projects.map(p => (
-            <a href={`/projects/${p.slug}/`} class="project-card">
-              {p.cover && (
-                <div class="project-cover">
+          {projects.map((p, i) => (
+            <a href={`/projects/${p.slug}`} class="project-card reveal-el" style={`transition-delay: ${i * 100}ms;`}>
+              {p.cover ? (
+                <div class="project-card__image">
                   <img src={p.cover} alt={p.title} loading="lazy" />
                 </div>
+              ) : (
+                <div class="project-card__placeholder">
+                  <Icon name="lucide:image" class="placeholder-icon" />
+                </div>
               )}
-              <div class="project-content">
-                <h3>{p.title}</h3>
-                <p class="project-subtitle">{p.subtitle}</p>
-                {p.client && <p class="project-meta">{p.client}{p.year && `, ${p.year}`}</p>}
+              <div class="project-card__content">
+                <div class="project-card__header">
+                  <h3>{p.title}</h3>
+                  {p.year && <span class="project-year">{p.year}</span>}
+                </div>
+                {p.client && <span class="project-client">{p.client}</span>}
+                <p>{p.summary}</p>
+                {p.tags && p.tags.length > 0 && (
+                  <div class="project-tags">
+                    {p.tags.slice(0, 3).map(tag => (
+                      <span class="project-tag">{tag}</span>
+                    ))}
+                  </div>
+                )}
               </div>
             </a>
           ))}
         </div>
       ) : (
-        <p class="no-content">No projects yet. Check back soon.</p>
+        <div class="reveal-el">
+          <p class="text-muted italic">Case studies coming soon.</p>
+        </div>
       )}
     </div>
   </section>
-  
-  <section class="section section--alt">
-    <div class="container container--narrow">
-      <h2 class="section-title">Our Approach</h2>
-      <p class="lead">{divisionData?.approach || 'We start by understanding your challenge, then design and build systems that scale.'}</p>
+
+  <!-- ── Good Fit ── -->
+  {d?.good_fit && d.good_fit.length > 0 && (
+    <section class="section">
+      <div class="container">
+        <div class="two-col-layout reveal-el">
+          <div class="two-col-left">
+            <span class="section-tag" style="color: var(--division-ai);">Fit</span>
+            <h2 class="section-title">When this is a good fit</h2>
+            <p class="section-subtitle">This direction is suitable for clients who need:</p>
+          </div>
+          <div class="two-col-right">
+            <ul class="fit-list">
+              {d.good_fit.map((item, i) => (
+                <li class="fit-item reveal-el" style={`transition-delay: ${i * 50}ms;`}>
+                  <Icon name="lucide:check" class="fit-check" />
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+  )}
+
+  <!-- ── Contact CTA ── -->
+  <section class="section section--cta">
+    <div class="container reveal-el">
+      <div class="cta-card">
+        <div class="cta-card__content">
+          <span class="section-tag" style="color: rgba(255,255,255,0.7); margin-bottom: 1rem; display: block; text-align: center;">Contact</span>
+          <h2>{d?.cta_text || "Let's build something together"}</h2>
+          <p>{d?.cta_supporting || "Tell us what process, product or system you want to build. We can help structure the idea and turn it into a practical digital solution."}</p>
+          <a href="/contact" class="btn btn--primary btn--large" style="background: var(--division-ai);">
+            Get in touch
+            <Icon name="lucide:arrow-right" class="icon" />
+          </a>
+        </div>
+      </div>
     </div>
   </section>
-  
-  <section class="section cta-section">
-    <div class="container">
-      <h2 class="section-title">Let's build something together</h2>
-      <a href="/contact/" class="cta-button">Get in touch</a>
-    </div>
-  </section>
-</DivisionLayout>
+
+</BaseLayout>
+
+<script>
+// Scroll reveal animation (same as homepage)
+const initReveal = () => {
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('reveal-active');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { rootMargin: '0px 0px -50px 0px', threshold: 0.1 });
+
+  document.querySelectorAll('.reveal-el').forEach(el => {
+    observer.observe(el);
+  });
+};
+
+document.addEventListener('astro:page-load', initReveal);
+initReveal();
+</script>
 
 <style>
-  .section { padding: var(--space-16) 0; border-bottom: var(--border-thin); }
-  .section--alt { background: var(--color-bg-card); }
-  .section-title { font-size: var(--text-3xl); margin-bottom: var(--space-8); }
-  .content-block { max-width: 70ch; }
-  .content-block p { font-size: var(--text-lg); line-height: var(--leading-relaxed); color: var(--color-text-secondary); }
-  
-  .capabilities-list {
+  /* ── Hero Section (Matches Homepage) ── */
+  .hero {
+    position: relative;
+    padding: var(--space-32) 0 var(--space-24);
+    color: var(--color-text-on-dark);
+    overflow: hidden;
+    min-height: 70vh; /* Slightly shorter than homepage */
+    display: flex;
+    align-items: center;
+  }
+
+  .hero-background {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+  }
+
+  .hero-bg-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+
+  .hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0.8) 100%);
+    z-index: 1;
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 800px;
+  }
+
+  .hero-badge {
+    display: inline-block;
+    padding: var(--space-1) var(--space-3);
+    background: var(--division-ai);
+    color: #fff;
+    border-radius: var(--radius-full);
+    font-size: var(--text-xs);
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-wide);
+    margin-bottom: var(--space-6);
+  }
+
+  .hero-title {
+    font-size: clamp(var(--text-4xl), 5vw, var(--text-6xl));
+    font-weight: var(--weight-bold);
+    line-height: var(--leading-tight);
+    margin-bottom: var(--space-6);
+    letter-spacing: var(--tracking-tight);
+    text-wrap: balance;
+  }
+
+  .hero-subtitle {
+    font-size: var(--text-xl);
+    line-height: var(--leading-relaxed);
+    color: rgba(255, 255, 255, 0.8);
+    max-width: 700px;
+  }
+
+  /* ── Sections ── */
+  .section {
+    padding: var(--space-24) 0;
+  }
+
+  .section--alt {
+    background: var(--color-bg-hover);
+  }
+
+  .section-header {
+    margin-bottom: var(--space-16);
+    max-width: 800px;
+  }
+
+  .section-tag {
+    display: block;
+    font-size: var(--text-xs);
+    text-transform: uppercase;
+    font-weight: var(--weight-bold);
+    letter-spacing: var(--tracking-wide);
+    margin-bottom: var(--space-2);
+  }
+
+  .section-title {
+    font-size: var(--text-4xl);
+    font-weight: var(--weight-bold);
+    margin-bottom: var(--space-4);
+  }
+
+  .section-subtitle {
+    font-size: var(--text-lg);
+    color: var(--color-text-secondary);
+    line-height: var(--leading-relaxed);
+  }
+
+  /* ── Philosophy ── */
+  .section--philosophy {
+    border-top: var(--border-thin);
+    border-bottom: var(--border-thin);
+    background: var(--color-bg-card);
+  }
+
+  .philosophy-content {
+    padding: var(--space-10) 0;
+  }
+
+  .quote-icon {
+    width: 48px;
+    height: 48px;
+    margin: 0 auto var(--space-6);
+    display: block;
+  }
+
+  .philosophy-text {
+    font-size: var(--text-2xl);
+    line-height: var(--leading-relaxed);
+    color: var(--color-text);
+    font-weight: var(--weight-medium);
+    text-align: center;
+  }
+
+  .prose-text p {
+    font-size: var(--text-lg);
+    color: var(--color-text-secondary);
+    line-height: var(--leading-relaxed);
+    margin-bottom: var(--space-4);
+  }
+
+  .value-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+
+  .value-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-4);
+    font-size: var(--text-lg);
+    color: var(--color-text-secondary);
+    line-height: var(--leading-relaxed);
+    padding: var(--space-4);
+    background: var(--color-bg-hover);
+    border-radius: var(--radius-md);
+  }
+
+  .value-icon {
+    width: 24px;
+    height: 24px;
+    color: var(--division-ai);
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .mt-8 { margin-top: var(--space-8); }
+  .mt-4 { margin-top: var(--space-4); }
+  .mb-8 { margin-bottom: var(--space-8); }
+  .text-center { text-align: center; }
+
+  /* ── Services Strip ── */
+  .services-strip {
+    padding: var(--space-8) 0;
+    background: var(--color-bg);
+    border-bottom: var(--border-thin);
+  }
+
+  .services-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+    justify-content: center;
+  }
+
+  .service-tag {
+    display: inline-block;
+    padding: var(--space-2) var(--space-4);
+    background: var(--color-bg-card);
+    border: var(--border-thin);
+    border-radius: var(--radius-full);
+    font-size: var(--text-sm);
+    color: var(--color-text-secondary);
+    font-weight: var(--weight-medium);
+  }
+
+  /* ── Capabilities Grid ── */
+  .capabilities-grid {
     display: grid;
     grid-template-columns: 1fr;
     gap: var(--space-4);
   }
   @media (min-width: 640px) {
-    .capabilities-list { grid-template-columns: repeat(2, 1fr); }
+    .capabilities-grid { grid-template-columns: repeat(2, 1fr); }
   }
-  
+  @media (min-width: 1024px) {
+    .capabilities-grid { grid-template-columns: repeat(3, 1fr); }
+  }
+
   .capability-item {
     display: flex;
     align-items: center;
     gap: var(--space-3);
-    font-size: var(--text-base);
-  }
-  
-  .capability-bullet {
-    width: 8px;
-    height: 8px;
-    background: var(--division-ai);
-    border-radius: 50%;
-    flex-shrink: 0;
-  }
-  
-  .grid { display: grid; gap: var(--space-6); }
-  .grid--3 { grid-template-columns: 1fr; }
-  @media (min-width: 640px) {
-    .grid--3 { grid-template-columns: repeat(2, 1fr); }
-  }
-  @media (min-width: 1024px) {
-    .grid--3 { grid-template-columns: repeat(3, 1fr); }
-  }
-  
-  .project-card {
-    display: block;
+    padding: var(--space-4);
     background: var(--color-bg-card);
     border: var(--border-thin);
+    border-radius: var(--radius-md);
+    font-size: var(--text-sm);
+    font-weight: var(--weight-medium);
+  }
+
+  .cap-icon {
+    width: 20px;
+    height: 20px;
+    color: var(--division-ai);
+    flex-shrink: 0;
+  }
+
+  /* ── Focus Areas ── */
+  .focus-areas {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-6);
+  }
+  @media (min-width: 768px) {
+    .focus-areas { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  .focus-card {
+    background: var(--color-bg-card);
+    border: var(--border-thin);
+    padding: var(--space-8);
+    border-radius: var(--radius-lg);
+  }
+
+  .focus-icon {
+    width: 48px;
+    height: 48px;
+    background: color-mix(in srgb, var(--division-ai) 10%, var(--color-bg-card));
+    color: var(--division-ai);
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: var(--space-6);
+  }
+
+  .focus-icon :global(svg) {
+    width: 24px;
+    height: 24px;
+  }
+
+  .focus-card h3 {
+    font-size: var(--text-xl);
+    margin-bottom: var(--space-4);
+  }
+
+  .focus-card p {
+    color: var(--color-text-secondary);
+    font-size: var(--text-base);
+    line-height: var(--leading-relaxed);
+  }
+
+  .clean-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  .clean-list li {
+    position: relative;
+    padding-left: var(--space-4);
+    color: var(--color-text-secondary);
+    font-size: var(--text-sm);
+  }
+
+  .clean-list li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 8px;
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: var(--division-ai);
+  }
+
+  /* ── Selected Work Cards ── */
+  .grid--3 {
+    display: grid;
+    gap: var(--space-6);
+    grid-template-columns: 1fr;
+  }
+  @media (min-width: 640px) { .grid--3 { grid-template-columns: repeat(2, 1fr); } }
+  @media (min-width: 1024px) { .grid--3 { grid-template-columns: repeat(3, 1fr); } }
+
+  .project-card {
+    background: var(--color-bg-card);
     border-radius: var(--radius-lg);
     overflow: hidden;
-    transition: border-color var(--transition-fast), transform var(--transition-fast), box-shadow var(--transition-fast);
+    border: var(--border-thin);
+    transition: all var(--transition-base);
+    display: flex;
+    flex-direction: column;
   }
+
   .project-card:hover {
-    border-color: var(--color-text);
     transform: translateY(-4px);
-    box-shadow: var(--shadow-lg);
+    box-shadow: var(--shadow-md);
+    border-color: var(--division-ai);
   }
-  
-  .project-cover {
+
+  .project-card__image {
     aspect-ratio: 16/9;
-    background: var(--color-bg-hover);
     overflow: hidden;
   }
-  .project-cover img {
+
+  .project-card__image img {
     width: 100%;
     height: 100%;
     object-fit: cover;
     transition: transform var(--transition-slow);
   }
-  .project-card:hover .project-cover img {
+
+  .project-card:hover .project-card__image img {
     transform: scale(1.05);
   }
-  
-  .project-content { padding: var(--space-6); }
-  .project-content h3 { font-size: var(--text-lg); margin-bottom: var(--space-2); }
-  .project-subtitle { font-size: var(--text-sm); color: var(--color-text-secondary); margin-bottom: var(--space-3); }
-  .project-meta { font-size: var(--text-xs); color: var(--color-text-muted); }
-  
-  .no-content {
-    color: var(--color-text-secondary);
-    font-style: italic;
+
+  .project-card__placeholder {
+    aspect-ratio: 16/9;
+    background: var(--color-bg-hover);
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
-  
-  .lead {
+
+  .placeholder-icon {
+    width: 48px;
+    height: 48px;
+    color: var(--color-border);
+  }
+
+  .project-card__content {
+    padding: var(--space-6);
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .project-card__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: var(--space-2);
+  }
+
+  .project-card h3 {
     font-size: var(--text-xl);
-    line-height: var(--leading-relaxed);
+    margin: 0;
+  }
+
+  .project-year {
+    font-size: var(--text-xs);
+    color: var(--color-text-muted);
+    font-weight: var(--weight-medium);
+  }
+
+  .project-client {
+    font-size: var(--text-xs);
+    text-transform: uppercase;
+    color: var(--division-ai);
+    font-weight: var(--weight-bold);
+    margin-bottom: var(--space-3);
+    display: block;
+  }
+
+  .project-card p {
+    font-size: var(--text-sm);
     color: var(--color-text-secondary);
+    margin-bottom: var(--space-4);
+    flex-grow: 1;
   }
-  
-  .cta-section { text-align: center; }
-  .cta-button {
-    display: inline-block;
-    padding: var(--space-4) var(--space-8);
-    background: var(--division-ai);
-    color: var(--color-text-on-dark);
-    font-size: var(--text-base);
-    font-weight: var(--weight-semibold);
+
+  .project-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    margin-top: auto;
+  }
+
+  .project-tag {
+    font-size: var(--text-xs);
+    padding: 2px var(--space-2);
+    background: var(--color-bg-hover);
+    color: var(--color-text-secondary);
+    border-radius: var(--radius-sm);
+  }
+
+  /* ── Two Column (Good Fit) ── */
+  .two-col-layout {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-12);
+  }
+  @media (min-width: 768px) {
+    .two-col-layout { grid-template-columns: 1fr 1fr; }
+  }
+
+  .fit-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+
+  .fit-item {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-4);
+    padding: var(--space-4);
+    background: var(--color-bg-card);
+    border: var(--border-thin);
     border-radius: var(--radius-md);
-    transition: background var(--transition-fast), transform var(--transition-fast);
   }
-  .cta-button:hover {
-    background: var(--division-ai);
-    filter: brightness(0.9);
+
+  .fit-check {
+    width: 24px;
+    height: 24px;
+    color: var(--division-ai);
+    flex-shrink: 0;
+  }
+
+  .fit-item span {
+    font-size: var(--text-base);
+    color: var(--color-text);
+    line-height: var(--leading-snug);
+  }
+
+  /* ── CTA Card ── */
+  .cta-card {
+    background: var(--color-bg-inverted);
+    color: var(--color-text-on-dark);
+    padding: var(--space-16) var(--space-10);
+    border-radius: var(--radius-xl);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cta-card h2 {
+    font-size: var(--text-4xl);
+    margin-bottom: var(--space-4);
+  }
+
+  .cta-card p {
+    color: var(--color-text-muted);
+    font-size: var(--text-lg);
+    margin: 0 auto var(--space-10);
+    max-width: 600px;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    padding: var(--space-3) var(--space-6);
+    border-radius: var(--radius-md);
+    font-weight: var(--weight-medium);
+    transition: all var(--transition-base);
+    cursor: pointer;
+    text-decoration: none;
+  }
+
+  .btn--primary:hover {
+    filter: brightness(1.2);
     transform: translateY(-2px);
+    box-shadow: 0 10px 20px -10px var(--division-ai);
+  }
+
+  .btn--large {
+    padding: var(--space-4) var(--space-10);
+    font-size: var(--text-lg);
+  }
+
+  .btn .icon {
+    width: 18px;
+    height: 18px;
+    transition: transform var(--transition-fast);
+  }
+
+  .btn:hover .icon {
+    transform: translateX(3px);
+  }
+
+  /* ── Scroll Reveal ── */
+  .reveal-el {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1), transform 1s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .reveal-active {
+    opacity: 1;
+    transform: translateY(0);
   }
 </style>

@@ -29,9 +29,21 @@ const divisionsCollection = defineCollection({
     title: z.string(),
     subtitle: z.string(),
     description: z.string(),
+    // Hero
+    hero_headline: z.string().optional(),
+    hero_supporting: z.string().optional(),
+    // Services grid
     services: z.array(z.string()).optional(),
+    // Capabilities tags
     capabilities: z.array(z.string()),
-    approach: z.string().optional(),
+    // "Good fit" checklist
+    good_fit: z.array(z.string()).optional(),
+    // Experience / approach block
+    experience_summary: z.string().optional(),
+    // CTA
+    cta_text: z.string().optional(),
+    cta_supporting: z.string().optional(),
+    // Cover image
     cover: z.string().optional(),
   }),
 });

@@ -1,5 +1,5 @@
 ---
-title: "Logitaca"
+title: "Logitaka"
 division: "digital-systems-ai"
 type: "case-study"
 category: "Product"
