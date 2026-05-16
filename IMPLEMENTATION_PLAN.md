@@ -195,15 +195,14 @@
 - [ ] Division-specific accent styling (border, subtle background tint)
 
 ### 1.4 Project Layout
-
-- [ ] Create `ProjectLayout.astro`:
+- [x] Create `ProjectLayout.astro`:
   - Cover image + title + subtitle
   - Client / year / tags bar
   - Body content (from markdown)
   - Gallery/screenshots section (division-specific)
   - Related projects (3 projects, same division)
   - Back to listing link
-- [ ] Division-specific case study variants:
+- [x] Division-specific case study variants:
   - AI: Problem → Solution → Architecture → Screenshots → Result
   - Design: Context → Screens → Design System → Outcome
   - Media: Client → Scope → Gallery → Deliverables
@@ -270,12 +269,11 @@
 - [ ] Sort by year descending, featured first
 
 ### 2.4 Project Detail Pages
-
-- [ ] Dynamic route: `/projects/[slug].astro`
-- [ ] Render from `projects` collection using `ProjectLayout`
-- [ ] Related projects (3 from same division)
-- [ ] SEO: unique meta per project (title, description, OG image from cover)
-- [ ] Test: AI case study, design case study, media case study
+- [x] Dynamic route: `/projects/[slug].astro`
+- [x] Render from `projects` collection using `ProjectLayout`
+- [x] Related projects (3 from same division)
+- [x] SEO: unique meta per project (title, description, OG image from cover)
+- [x] Test: AI case study, design case study, media case study
 
 ### 2.5 About Page 🎨
 

@@ -5,7 +5,7 @@ import { getCollection } from 'astro:content';
 
 const featured = await getCollection('projects', ({ data, id }) => data.featured && id.startsWith('az/'));
 const featuredProjects = featured.map((p: CollectionEntry<'projects'>) => ({
-  slug: p.slug,
+  slug: p.id.replace(/^az\//, '').replace(/\.md$/, ''),
   title: p.data.title,
   summary: p.data.summary,
   division: p.data.division,

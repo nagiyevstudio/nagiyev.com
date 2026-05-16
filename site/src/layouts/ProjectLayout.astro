@@ -1,0 +1,818 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import { Icon } from 'astro-icon/components';
+
+const { entry } = Astro.props;
+const { data, body } = entry;
+const d = data;
+---
+
+<BaseLayout title={d.title} description={d.summary} lang={entry.id.startsWith('az/') ? 'az' : 'en'}>
+  
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-background">
+      <img src={d.cover || "/images/common/hero-bg.jpg"} alt={d.title} class="hero-bg-image" />
+    </div>
+    <div class="hero-overlay"></div>
+    
+    <div class="container">
+      <div class="hero-content">
+        <div class="hero-meta reveal-el">
+          <span class="hero-badge">{d.division.replace('-', ' ')}</span>
+          {d.year && <span class="hero-year">{d.year}</span>}
+          {d.client && <span class="hero-client">{d.client}</span>}
+        </div>
+        
+        <h1 class="hero-title reveal-el" style="transition-delay: 100ms;">
+          {d.title}
+        </h1>
+        
+        <p class="hero-subtitle reveal-el" style="transition-delay: 200ms;">
+          {d.hero_description || d.summary}
+        </p>
+        
+        {d.tags && d.tags.length > 0 && (
+          <div class="hero-tags reveal-el" style="transition-delay: 300ms;">
+            {d.tags.map(tag => (
+              <span class="hero-tag">{tag}</span>
+            ))}
+          </div>
+        )}
+      </div>
+    </div>
+  </section>
+
+  <!-- Project Meta Strip -->
+  <section class="meta-strip reveal-el">
+    <div class="container">
+      <div class="meta-grid">
+        {d.company && (
+          <div class="meta-item">
+            <span class="meta-label">Studio</span>
+            <span class="meta-value">{d.company}</span>
+          </div>
+        )}
+        {d.role && (
+          <div class="meta-item">
+            <span class="meta-label">Role</span>
+            <span class="meta-value">{d.role}</span>
+          </div>
+        )}
+        {d.platforms && d.platforms.length > 0 && (
+          <div class="meta-item">
+            <span class="meta-label">Platforms</span>
+            <span class="meta-value">{d.platforms.join(', ')}</span>
+          </div>
+        )}
+        {d.status && (
+          <div class="meta-item">
+            <span class="meta-label">Status</span>
+            <span class="meta-value">{d.status}</span>
+          </div>
+        )}
+      </div>
+    </div>
+  </section>
+
+  <!-- Positioning Statement -->
+  {d.positioning_statement && (
+    <section class="section section--philosophy">
+      <div class="container container--narrow reveal-el">
+        <div class="philosophy-content">
+          <Icon name="lucide:cpu" class="quote-icon" style="color: var(--division-ai);" />
+          <p class="philosophy-text">{d.positioning_statement}</p>
+        </div>
+      </div>
+    </section>
+  )}
+
+  <!-- Prose Content (What we built) -->
+  <section class="section">
+    <div class="container container--narrow reveal-el">
+      <div class="prose-content">
+        <slot />
+      </div>
+    </div>
+  </section>
+
+  <!-- Core Systems -->
+  {d.core_systems && d.core_systems.length > 0 && (
+    <section class="section section--alt">
+      <div class="container">
+        <div class="section-header reveal-el">
+          <span class="section-tag" style="color: var(--division-ai);">Architecture</span>
+          <h2 class="section-title">Core Systems</h2>
+        </div>
+        
+        <div class="grid grid--3">
+          {d.core_systems.map((system, i) => (
+            <div class="system-card reveal-el" style={`transition-delay: ${i * 100}ms;`}>
+              <h3 class="system-title">{system.title}</h3>
+              <p class="system-desc">{system.description}</p>
+              {system.items && system.items.length > 0 && (
+                <ul class="system-list">
+                  {system.items.map(item => (
+                    <li><Icon name="lucide:check" class="list-icon" /> {item}</li>
+                  ))}
+                </ul>
+              )}
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <!-- Screenshots -->
+  {d.screenshots && d.screenshots.length > 0 && (
+    <section class="section">
+      <div class="container">
+        <div class="section-header reveal-el">
+          <span class="section-tag" style="color: var(--division-ai);">Interface</span>
+          <h2 class="section-title">Product Screens</h2>
+        </div>
+        
+        <div class="screenshot-grid">
+          {d.screenshots.map((screen, i) => (
+            <div class="screenshot-item reveal-el" style={`transition-delay: ${i * 100}ms;`}>
+              <div class="screenshot-wrapper">
+                <img src={screen.image} alt={screen.caption} class="screenshot-img" loading="lazy" />
+              </div>
+              <p class="screenshot-caption">{screen.caption}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <!-- Behind the interface / Technical Layers -->
+  {d.technical_layers && d.technical_layers.length > 0 && (
+    <section class="section section--alt">
+      <div class="container">
+        <div class="two-col-layout reveal-el">
+          <div class="two-col-left">
+            <span class="section-tag" style="color: var(--division-ai);">Technical Depth</span>
+            <h2 class="section-title">Behind the Interface</h2>
+            <p class="section-subtitle">This is a working digital system with data, logic, and content behind it.</p>
+            <div class="decorative-image-wrapper mt-8 reveal-el">
+              <img src={d.architecture_image || "https://placehold.co/800x1000/1c1917/a8a29e?text=System\\nArchitecture"} alt="Architecture" class="decorative-image" loading="lazy" />
+            </div>
+          </div>
+          <div class="two-col-right">
+            <ul class="technical-list">
+              {d.technical_layers.map((layer, i) => (
+                <li class="technical-item reveal-el" style={`transition-delay: ${i * 50}ms;`}>
+                  <Icon name="lucide:layers" class="tech-icon" />
+                  <span>{layer}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+  )}
+
+  <!-- AI Layer -->
+  {d.ai_description && (
+    <section class="section">
+      <div class="container container--narrow reveal-el">
+        <div class="ai-box">
+          <div class="ai-header">
+            <Icon name="lucide:bot" class="ai-icon" />
+            <h3>AI-Assisted Layer</h3>
+          </div>
+          <p class="ai-desc">{d.ai_description}</p>
+          {d.ai_features && d.ai_features.length > 0 && (
+            <ul class="ai-list">
+              {d.ai_features.map(feature => (
+                <li><Icon name="lucide:sparkles" class="sparkle-icon" /> {feature}</li>
+              ))}
+            </ul>
+          )}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <!-- Design Direction -->
+  {d.design_description && (
+    <section class="section section--alt">
+      <div class="container">
+        <div class="two-col-layout reveal-el">
+          <div class="two-col-left">
+            <span class="section-tag" style="color: var(--division-design);">Design</span>
+            <h2 class="section-title">Design Direction</h2>
+            <p class="section-subtitle">{d.design_description}</p>
+            <div class="decorative-image-wrapper mt-8 reveal-el">
+              <img src={d.design_image || "https://placehold.co/800x1000/1c1917/a8a29e?text=Design\\nSystem"} alt="Design System" class="decorative-image" loading="lazy" />
+            </div>
+          </div>
+          <div class="two-col-right">
+            {d.design_principles && d.design_principles.length > 0 && (
+              <ul class="design-list">
+                {d.design_principles.map((principle, i) => (
+                  <li class="design-item reveal-el" style={`transition-delay: ${i * 50}ms;`}>
+                    <Icon name="lucide:palette" class="design-icon" />
+                    <span>{principle}</span>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
+        </div>
+      </div>
+    </section>
+  )}
+
+  <!-- Value Delivered -->
+  {d.value_delivered && d.value_delivered.length > 0 && (
+    <section class="section section--philosophy">
+      <div class="container container--narrow reveal-el">
+        <div class="philosophy-content">
+          <h2 class="section-title mb-8 text-center">Why It Matters</h2>
+          <ul class="value-list">
+            {d.value_delivered.map((val, i) => (
+              <li class="reveal-el" style={`transition-delay: ${i * 100}ms;`}><Icon name="lucide:arrow-right" class="value-icon" /> {val}</li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </section>
+  )}
+
+  <!-- Studio Role & CTA -->
+  <section class="section section--cta">
+    <div class="container reveal-el">
+      <div class="cta-card">
+        <div class="cta-card__content">
+          <span class="section-tag" style="color: rgba(255,255,255,0.7); margin-bottom: 1rem; display: block; text-align: center;">Project Meta</span>
+          <h2>Nagiyev Studio Role</h2>
+          <p>{d.studio_role_summary}</p>
+          
+          {d.studio_areas && d.studio_areas.length > 0 && (
+             <div class="studio-areas">
+               {d.studio_areas.map(area => (
+                 <span class="studio-area-tag">{area}</span>
+               ))}
+             </div>
+          )}
+          
+          <div class="mt-8">
+            <a href={d.cta_link || "/digital-systems-ai/"} class="btn btn--primary btn--large" style="background: var(--division-ai);">
+              {d.cta_text || "View more projects"}
+              <Icon name="lucide:arrow-right" class="icon" />
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<script>
+const initReveal = () => {
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('reveal-active');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { rootMargin: '0px 0px -50px 0px', threshold: 0.1 });
+
+  document.querySelectorAll('.reveal-el').forEach(el => {
+    observer.observe(el);
+  });
+};
+
+document.addEventListener('astro:page-load', initReveal);
+initReveal();
+</script>
+
+<style>
+  /* ── Hero Section ── */
+  .hero {
+    position: relative;
+    padding: var(--space-32) 0 var(--space-24);
+    color: var(--color-text-on-dark);
+    overflow: hidden;
+    min-height: 80vh;
+    display: flex;
+    align-items: center;
+  }
+
+  .hero-background {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+  }
+
+  .hero-bg-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+
+  .hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0.8) 100%);
+    z-index: 1;
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 900px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .hero-meta {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-4);
+    margin-bottom: var(--space-6);
+    flex-wrap: wrap;
+  }
+
+  .hero-badge {
+    display: inline-block;
+    padding: var(--space-1) var(--space-3);
+    background: var(--division-ai);
+    color: #fff;
+    border-radius: var(--radius-full);
+    font-size: var(--text-xs);
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-wide);
+  }
+  
+  .hero-year, .hero-client {
+    font-size: var(--text-sm);
+    color: rgba(255, 255, 255, 0.8);
+    font-weight: var(--weight-medium);
+  }
+
+  .hero-title {
+    font-size: clamp(var(--text-4xl), 6vw, var(--text-7xl));
+    font-weight: var(--weight-bold);
+    line-height: var(--leading-tight);
+    margin-bottom: var(--space-6);
+    letter-spacing: var(--tracking-tight);
+    text-wrap: balance;
+  }
+
+  .hero-subtitle {
+    font-size: var(--text-xl);
+    line-height: var(--leading-relaxed);
+    color: rgba(255, 255, 255, 0.8);
+    max-width: 700px;
+    margin: 0 auto;
+  }
+  
+  .hero-tags {
+    margin-top: var(--space-8);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--space-2);
+  }
+  
+  .hero-tag {
+    font-size: var(--text-xs);
+    padding: var(--space-1) var(--space-3);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: var(--radius-full);
+    background: rgba(255, 255, 255, 0.1);
+  }
+
+  /* ── Meta Strip ── */
+  .meta-strip {
+    padding: var(--space-6) 0;
+    border-bottom: var(--border-thin);
+    background: var(--color-bg);
+  }
+  
+  .meta-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-8);
+    justify-content: space-between;
+  }
+  
+  .meta-item {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+  }
+  
+  .meta-label {
+    font-size: var(--text-xs);
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+    font-weight: var(--weight-bold);
+    letter-spacing: var(--tracking-wide);
+  }
+  
+  .meta-value {
+    font-size: var(--text-sm);
+    font-weight: var(--weight-medium);
+    color: var(--color-text);
+  }
+
+  /* ── Sections ── */
+  .section { padding: var(--space-24) 0; }
+  .section--alt { background: var(--color-bg-hover); }
+  
+  .section-header {
+    margin-bottom: var(--space-16);
+    max-width: 800px;
+  }
+  .section-tag {
+    display: block;
+    font-size: var(--text-xs);
+    text-transform: uppercase;
+    font-weight: var(--weight-bold);
+    letter-spacing: var(--tracking-wide);
+    margin-bottom: var(--space-2);
+  }
+  .section-title {
+    font-size: var(--text-4xl);
+    font-weight: var(--weight-bold);
+    margin-bottom: var(--space-4);
+  }
+  .section-subtitle {
+    font-size: var(--text-lg);
+    color: var(--color-text-secondary);
+    line-height: var(--leading-relaxed);
+  }
+
+  /* ── Philosophy / Prose ── */
+  .section--philosophy {
+    border-top: var(--border-thin);
+    border-bottom: var(--border-thin);
+    background: var(--color-bg-card);
+  }
+
+  .philosophy-content {
+    padding: var(--space-10) 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .quote-icon {
+    width: 48px;
+    height: 48px;
+    margin: 0 auto var(--space-6);
+  }
+
+  .philosophy-text {
+    font-size: var(--text-2xl);
+    line-height: var(--leading-relaxed);
+    color: var(--color-text);
+    font-weight: var(--weight-medium);
+    max-width: 800px;
+  }
+  
+  .prose-content {
+    font-size: var(--text-lg);
+    line-height: var(--leading-relaxed);
+    color: var(--color-text-secondary);
+  }
+  
+  .prose-content :global(p) { margin-bottom: var(--space-4); }
+  .prose-content :global(p:last-child) { margin-bottom: 0; }
+  .prose-content :global(h2) { 
+    color: var(--color-text);
+    margin: var(--space-10) 0 var(--space-4) 0;
+  }
+
+  /* ── Core Systems ── */
+  .system-card {
+    background: var(--color-bg-card);
+    border: var(--border-thin);
+    padding: var(--space-8);
+    border-radius: var(--radius-lg);
+    height: 100%;
+  }
+  
+  .system-title {
+    font-size: var(--text-xl);
+    margin-bottom: var(--space-4);
+    color: var(--color-text);
+  }
+  
+  .system-desc {
+    font-size: var(--text-sm);
+    color: var(--color-text-secondary);
+    margin-bottom: var(--space-6);
+  }
+  
+  .system-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+  
+  .system-list li {
+    font-size: var(--text-sm);
+    color: var(--color-text);
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-2);
+  }
+  
+  .list-icon {
+    width: 16px;
+    height: 16px;
+    color: var(--division-ai);
+    flex-shrink: 0;
+    margin-top: 3px;
+  }
+
+  /* ── Screenshots ── */
+  .screenshot-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-8);
+  }
+  @media (min-width: 768px) {
+    .screenshot-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  
+  .screenshot-item {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+  
+  .screenshot-wrapper {
+    background: var(--color-bg-inverted);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    aspect-ratio: 9/16;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .screenshot-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform var(--transition-slow);
+  }
+  
+  .screenshot-wrapper:hover .screenshot-img {
+    transform: scale(1.02);
+  }
+  
+  .screenshot-caption {
+    font-size: var(--text-sm);
+    color: var(--color-text-secondary);
+    line-height: var(--leading-relaxed);
+  }
+
+  /* ── Two Column Lists ── */
+  .two-col-layout {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-12);
+  }
+  @media (min-width: 768px) {
+    .two-col-layout { 
+      grid-template-columns: 4fr 6fr; 
+      align-items: stretch; /* Stretch to equal height */
+    }
+    .two-col-left {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      min-height: 0;
+    }
+  }
+
+  .decorative-image-wrapper {
+    flex-grow: 1;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    background: var(--color-bg-inverted);
+    width: 100%;
+    position: relative;
+    min-height: 0;
+  }
+  
+  .decorative-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.9;
+    transition: transform var(--transition-slow);
+  }
+  
+  .decorative-image-wrapper:hover .decorative-image {
+    transform: scale(1.05);
+  }
+
+  .technical-list, .design-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+
+  .technical-item, .design-item {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+    padding: var(--space-4);
+    background: var(--color-bg-card);
+    border: var(--border-thin);
+    border-radius: var(--radius-md);
+  }
+
+  .tech-icon { color: var(--division-ai); }
+  .design-icon { color: var(--division-design); }
+  .tech-icon, .design-icon { width: 24px; height: 24px; flex-shrink: 0; }
+
+  /* ── AI Box ── */
+  .ai-box {
+    background: color-mix(in srgb, var(--division-ai) 5%, var(--color-bg-card));
+    border: 1px solid color-mix(in srgb, var(--division-ai) 20%, transparent);
+    padding: var(--space-10);
+    border-radius: var(--radius-xl);
+  }
+  
+  .ai-header {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+    margin-bottom: var(--space-4);
+  }
+  
+  .ai-icon {
+    width: 32px;
+    height: 32px;
+    color: var(--division-ai);
+  }
+  
+  .ai-header h3 {
+    font-size: var(--text-2xl);
+    color: var(--color-text);
+  }
+  
+  .ai-desc {
+    font-size: var(--text-lg);
+    color: var(--color-text-secondary);
+    line-height: var(--leading-relaxed);
+    margin-bottom: var(--space-8);
+  }
+  
+  .ai-list {
+    display: grid;
+    gap: var(--space-4);
+  }
+  @media (min-width: 640px) {
+    .ai-list { grid-template-columns: 1fr 1fr; }
+  }
+  
+  .ai-list li {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    font-size: var(--text-base);
+    color: var(--color-text);
+  }
+  
+  .sparkle-icon {
+    width: 20px;
+    height: 20px;
+    color: var(--division-ai);
+    opacity: 0.7;
+  }
+
+  /* ── Value List ── */
+  .value-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+    width: 100%;
+  }
+
+  .value-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-4);
+    font-size: var(--text-lg);
+    color: var(--color-text-secondary);
+    line-height: var(--leading-relaxed);
+    padding: var(--space-4);
+    background: var(--color-bg-hover);
+    border-radius: var(--radius-md);
+  }
+
+  .value-icon {
+    width: 24px;
+    height: 24px;
+    color: var(--division-ai);
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  /* ── CTA Card ── */
+  .cta-card {
+    background: var(--color-bg-inverted);
+    color: var(--color-text-on-dark);
+    padding: var(--space-16) var(--space-10);
+    border-radius: var(--radius-xl);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cta-card h2 {
+    font-size: var(--text-4xl);
+    margin-bottom: var(--space-4);
+  }
+
+  .cta-card p {
+    color: var(--color-text-muted);
+    font-size: var(--text-lg);
+    margin: 0 auto var(--space-8);
+    max-width: 600px;
+  }
+  
+  .studio-areas {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--space-2);
+    margin-bottom: var(--space-8);
+  }
+  
+  .studio-area-tag {
+    font-size: var(--text-xs);
+    padding: var(--space-1) var(--space-3);
+    background: rgba(255,255,255,0.1);
+    border-radius: var(--radius-full);
+    color: rgba(255,255,255,0.8);
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    padding: var(--space-3) var(--space-6);
+    border-radius: var(--radius-md);
+    font-weight: var(--weight-medium);
+    transition: all var(--transition-base);
+    cursor: pointer;
+    text-decoration: none;
+  }
+
+  .btn--primary:hover {
+    filter: brightness(1.2);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px -10px var(--division-ai);
+  }
+
+  .btn--large {
+    padding: var(--space-4) var(--space-10);
+    font-size: var(--text-lg);
+  }
+
+  .btn .icon {
+    width: 18px;
+    height: 18px;
+    transition: transform var(--transition-fast);
+  }
+
+  .btn:hover .icon {
+    transform: translateX(3px);
+  }
+
+  .mt-8 { margin-top: var(--space-8); }
+  .mb-8 { margin-bottom: var(--space-8); }
+  .text-center { text-align: center; }
+
+  /* ── Scroll Reveal ── */
+  .reveal-el {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1), transform 1s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .reveal-active {
+    opacity: 1;
+    transform: translateY(0);
+  }
+</style>

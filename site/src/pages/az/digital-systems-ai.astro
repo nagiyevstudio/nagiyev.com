@@ -1,18 +1,18 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
-import { getCollection, getEntry } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
 import { Icon } from 'astro-icon/components';
 
-const divisionEntries = await getCollection('divisions', ({ data, id }) => data.key === 'digital-systems-ai' && id.startsWith('en/'));
+const divisionEntries = await getCollection('divisions', ({ data, id }) => data.key === 'digital-systems-ai' && id.startsWith('az/'));
 const divisionEntry = divisionEntries[0];
 const d = divisionEntry?.data;
 
 const aiProjects = await getCollection('projects', ({ data, id }) =>
-  data.division === 'digital-systems-ai' && id.startsWith('en/')
+  data.division === 'digital-systems-ai' && id.startsWith('az/')
 );
 
 const projects = aiProjects.map((p) => ({
-  slug: p.id.replace(/^en\//, ''),
+  slug: p.id.replace(/^az\//, ''),
   title: p.data.title,
   summary: p.data.summary,
   client: p.data.client,
@@ -22,7 +22,7 @@ const projects = aiProjects.map((p) => ({
 }));
 ---
 
-<BaseLayout title={d?.title || 'Digital Systems & AI'} lang="en">
+<BaseLayout title={d?.title || 'Rəqəmsal Sistemlər və AI'} lang="az">
   <!-- ── Hero Section ── -->
   <section class="hero">
     <div class="hero-background">
@@ -32,12 +32,12 @@ const projects = aiProjects.map((p) => ({
     
     <div class="container">
       <div class="hero-content">
-        <div class="hero-badge reveal-el">Division</div>
+        <div class="hero-badge reveal-el">İstiqamət</div>
         <h1 class="hero-title reveal-el" style="transition-delay: 100ms;">
-          {d?.hero_headline || "Digital systems built around real business logic."}
+          {d?.hero_headline || "Real biznes məntiqi əsasında qurulan rəqəmsal sistemlər."}
         </h1>
         <p class="hero-subtitle reveal-el" style="transition-delay: 200ms;">
-          {d?.hero_supporting || "We design and develop websites, platforms, internal tools, automation workflows and AI-assisted systems for businesses and organizations that need more than a visual online presence."}
+          {d?.hero_supporting || "Biz sadəcə vizual onlayn mövcudluqdan daha çoxuna ehtiyacı olan bizneslər və təşkilatlar üçün veb-saytlar, platformalar, daxili alətlər, avtomatlaşdırma və AI-dəstəkli sistemlər layihələndiririk və hazırlayırıq."}
         </p>
       </div>
     </div>
@@ -49,11 +49,11 @@ const projects = aiProjects.map((p) => ({
       <div class="philosophy-content" style="display: flex; flex-direction: column; align-items: center; text-align: center;">
         <Icon name="lucide:cpu" class="quote-icon" style="color: var(--division-ai);" />
         <p class="philosophy-text" style="max-width: 800px; margin: 0 auto;">
-          Digital Systems is about building practical digital infrastructure for businesses, organizations and public projects.
+          Rəqəmsal Sistemlər bizneslər, təşkilatlar və ictimai layihələr üçün praktik rəqəmsal infrastrukturun qurulmasıdır.
         </p>
         <div class="prose-text mt-8" style="max-width: 700px; margin: 2rem auto 0 auto; font-size: var(--text-lg); color: var(--color-text-secondary); line-height: var(--leading-relaxed);">
-          <p>This work is not limited to writing code or creating websites. In many cases, it includes understanding the client's real processes, designing business logic, structuring workflows, consulting, digitizing manual operations and building the software layer around those needs.</p>
-          <p style="margin-top: 1rem;"><strong>The goal is to create systems that are useful, maintainable and connected to how the organization actually works.</strong></p>
+          <p>Bu iş yalnız kod yazmaq və ya veb-sayt yaratmaqla məhdudlaşmır. Bir çox hallarda bura müştərinin real proseslərini anlamaq, biznes məntiqini layihələndirmək, iş axınlarını strukturlaşdırmaq, konsaltinq, mexaniki əməliyyatların rəqəmsallaşdırılması və proqram təminatı qatının bu ehtiyaclar ətrafında qurulması daxildir.</p>
+          <p style="margin-top: 1rem;"><strong>Məqsəd faydalı, idarə oluna bilən və təşkilatın real iş prinsipi ilə əlaqəli sistemlər yaratmaqdır.</strong></p>
         </div>
       </div>
     </div>
@@ -64,7 +64,7 @@ const projects = aiProjects.map((p) => ({
     <section class="services-strip reveal-el">
       <div class="container">
         <div class="services-list">
-          {d.services.map(s => (
+          {d.services.map((s: string) => (
             <span class="service-tag">{s}</span>
           ))}
         </div>
@@ -76,14 +76,14 @@ const projects = aiProjects.map((p) => ({
   <section class="section section--alt">
     <div class="container">
       <div class="section-header reveal-el">
-        <span class="section-tag" style="color: var(--division-ai);">Scope</span>
-        <h2 class="section-title">What This Direction Covers</h2>
-        <p class="section-subtitle">From websites and portals to CRM logic, production reporting, fintech products and AI workflows — Nagiyev Studio builds digital systems that support real operations.</p>
+        <span class="section-tag" style="color: var(--division-ai);">Məqsəd</span>
+        <h2 class="section-title">Bu istiqamət nələri əhatə edir</h2>
+        <p class="section-subtitle">Veb-saytlar və portallardan tutmuş CRM məntiqi, istehsalat hesabatları, fintech məhsulları və AI iş axınlarına qədər.</p>
       </div>
       
       {d?.capabilities && (
         <div class="capabilities-grid reveal-el" style="transition-delay: 100ms;">
-          {d.capabilities.map(cap => (
+          {d.capabilities.map((cap: string) => (
             <div class="capability-item">
               <Icon name="lucide:check-circle-2" class="cap-icon" />
               <span>{cap}</span>
@@ -98,68 +98,68 @@ const projects = aiProjects.map((p) => ({
   <section class="section">
     <div class="container">
       <div class="section-header reveal-el">
-        <span class="section-tag" style="color: var(--division-ai);">Background</span>
-        <h2 class="section-title">Experience & Focus Areas</h2>
+        <span class="section-tag" style="color: var(--division-ai);">Təcrübə</span>
+        <h2 class="section-title">Təcrübə və Fokus Sahələri</h2>
       </div>
 
       <div class="focus-areas">
         <!-- Area 1 -->
         <div class="focus-card reveal-el">
           <div class="focus-icon"><Icon name="lucide:history" /></div>
-          <h3>Experience Background</h3>
+          <h3>Təcrübə Keçmişi</h3>
           <p>{d?.experience_summary}</p>
         </div>
 
         <!-- Area 2 -->
         <div class="focus-card reveal-el" style="transition-delay: 100ms;">
           <div class="focus-icon"><Icon name="lucide:factory" /></div>
-          <h3>Industrial & Business Systems</h3>
-          <p>Informed by experience in complex operational environments, including systems for large production enterprises to track production, quality, quantity, technical progress and reporting for senior management.</p>
-          <p class="mt-4">Includes standardization work connected to ISO 9001 quality management and laboratory processes.</p>
+          <h3>Sənaye və Biznes Sistemləri</h3>
+          <p>Böyük istehsalat müəssisələri üçün istehsalatın izlənilməsi, keyfiyyətə nəzarət, texniki tərəqqi və rəhbərlik üçün hesabatlılıq sistemlərini əhatə edən mürəkkəb əməliyyat mühitləri üzrə təcrübəmiz var.</p>
+          <p class="mt-4">Bura ISO 9001 keyfiyyət idarəetməsi və laboratoriya prosesləri ilə bağlı standartlaşdırma işləri daxildir.</p>
         </div>
 
         <!-- Area 3 -->
         <div class="focus-card reveal-el" style="transition-delay: 200ms;">
           <div class="focus-icon"><Icon name="lucide:workflow" /></div>
-          <h3>CRM & Process Logic</h3>
-          <p>Many organizations don't just need a website; they need structured flows: requests, users, records, statuses, communication, reports, approvals and internal control.</p>
-          <p class="mt-4">We build business logic for CRM and educational management systems, internal workflows and structured operational tools.</p>
+          <h3>CRM və Proses Məntiqi</h3>
+          <p>Bir çox təşkilatın yalnız veb-sayta deyil, strukturlaşdırılmış axınlara ehtiyacı var: sorğular, istifadəçilər, qeydlər, statuslar, kommunikasiya, hesabatlar və daxili nəzarət.</p>
+          <p class="mt-4">Biz CRM və təhsil idarəetmə sistemləri, daxili iş axınları və strukturlaşdırılmış əməliyyat alətləri üçün biznes məntiqi qururuq.</p>
         </div>
 
         <!-- Area 4 -->
         <div class="focus-card reveal-el">
           <div class="focus-icon"><Icon name="lucide:bot" /></div>
-          <h3>AI & Automation</h3>
-          <p>AI is positioned as a practical layer inside a digital system, not as a separate magical product. We build AI workflows, AI assistant-based systems, and automated chains.</p>
+          <h3>AI və Avtomatlaşdırma</h3>
+          <p>AI rəqəmsal sistemin daxilində praktik bir qat kimi yerləşdirilir. Biz AI iş axınları, AI köməkçi əsaslı sistemlər və avtomatlaşdırılmış zəncirlər qururuq.</p>
           <ul class="clean-list mt-4">
-            <li>AI assistants for internal workflows</li>
-            <li>Document and text processing</li>
-            <li>Knowledge-base systems & summarization</li>
-            <li>AI-assisted financial tracking</li>
-            <li>Agent-based business systems & n8n automation</li>
+            <li>Daxili iş axınları üçün AI köməkçiləri</li>
+            <li>Sənəd və mətn emalı</li>
+            <li>Bilik bazası sistemləri və xülasələşdirmə</li>
+            <li>AI-dəstəkli maliyyə izləmə</li>
+            <li>Agent əsaslı biznes sistemləri və n8n avtomatlaşdırması</li>
           </ul>
         </div>
 
         <!-- Area 5 -->
         <div class="focus-card reveal-el" style="transition-delay: 100ms;">
           <div class="focus-icon"><Icon name="lucide:layout-template" /></div>
-          <h3>Product & Platform Experience</h3>
-          <p>Shaped by internal product work across various scopes:</p>
+          <h3>Məhsul və Platforma Təcrübəsi</h3>
+          <p>Müxtəlif sahələr üzrə daxili məhsul işləri:</p>
           <ul class="clean-list mt-4">
-            <li>Educational and scientific digital systems</li>
-            <li>Astronomy-related platforms</li>
-            <li>NGO digital transformation</li>
-            <li>Agent-agnostic AI-based operating systems</li>
-            <li>Automated AI chains for marketing</li>
+            <li>Təhsil və elmi rəqəmsal sistemlər</li>
+            <li>Astronomiya ilə bağlı platformalar</li>
+            <li>QHT rəqəmsal transformasiyası</li>
+            <li>Agent-aqnostik AI əsaslı əməliyyat sistemləri</li>
+            <li>Marketinq üçün avtomatlaşdırılmış AI zəncirləri</li>
           </ul>
         </div>
 
         <!-- Area 6 -->
         <div class="focus-card reveal-el" style="transition-delay: 200ms;">
           <div class="focus-icon"><Icon name="lucide:shield-alert" /></div>
-          <h3>What Not to Promise</h3>
-          <p>We do not present the studio as a bank-core developer, cybersecurity company, SAP/Oracle integrator or high-load enterprise infrastructure provider.</p>
-          <p class="mt-4">Complex integrations, regulated fintech, and enterprise ERP-level projects are presented only as custom-scoped work after rigorous analysis. We stay grounded and realistic.</p>
+          <h3>Nələri vəd etmirik</h3>
+          <p>Biz studiyanı bank-core tərtibatçısı, kibertəhlükəsizlik şirkəti, SAP/Oracle inteqratoru və ya yüksək yüklü müəssisə infrastruktur provayderi kimi təqdim etmirik.</p>
+          <p class="mt-4">Mürəkkəb inteqrasiyalar, tənzimlənən fintech və ERP səviyyəli layihələr yalnız ciddi analizdən sonra xüsusi tapşırıq kimi qəbul edilir. Biz real və praktik yanaşırıq.</p>
         </div>
       </div>
     </div>
@@ -169,14 +169,14 @@ const projects = aiProjects.map((p) => ({
   <section class="section section--philosophy">
     <div class="container container--narrow reveal-el">
       <div class="philosophy-content">
-        <h2 class="section-title mb-8" style="text-align: center;">Main Value for Clients</h2>
+        <h2 class="section-title mb-8" style="text-align: center;">Müştərilər üçün əsas dəyər</h2>
         <ul class="value-list">
-          <li><Icon name="lucide:arrow-right" class="value-icon" /> Turning business logic into a working digital system</li>
-          <li><Icon name="lucide:arrow-right" class="value-icon" /> Replacing manual, paper-based or chaotic processes with structured tools</li>
-          <li><Icon name="lucide:arrow-right" class="value-icon" /> Creating websites and platforms that can grow with the organization</li>
-          <li><Icon name="lucide:arrow-right" class="value-icon" /> Connecting content, users, operations and reporting</li>
-          <li><Icon name="lucide:arrow-right" class="value-icon" /> Using AI where it brings practical benefit</li>
-          <li><Icon name="lucide:arrow-right" class="value-icon" /> Building systems that are understandable and maintainable</li>
+          <li><Icon name="lucide:arrow-right" class="value-icon" /> Biznes məntiqini işlək rəqəmsal sistemə çevirmək</li>
+          <li><Icon name="lucide:arrow-right" class="value-icon" /> Mexaniki və ya nizamsız prosesləri strukturlaşdırılmış alətlərlə əvəz etmək</li>
+          <li><Icon name="lucide:arrow-right" class="value-icon" /> Təşkilatla birlikdə böyüyə bilən saytlar və platformalar yaratmaq</li>
+          <li><Icon name="lucide:arrow-right" class="value-icon" /> Məzmunu, istifadəçiləri, əməliyyatları və hesabatlılığı əlaqələndirmək</li>
+          <li><Icon name="lucide:arrow-right" class="value-icon" /> AI-dan praktik fayda gətirdiyi yerdə istifadə etmək</li>
+          <li><Icon name="lucide:arrow-right" class="value-icon" /> Anlaşılan və idarə oluna bilən sistemlər qurmaq</li>
         </ul>
       </div>
     </div>
@@ -186,14 +186,14 @@ const projects = aiProjects.map((p) => ({
   <section class="section section--alt">
     <div class="container">
       <div class="section-header reveal-el">
-        <span class="section-tag" style="color: var(--division-ai);">Case Studies</span>
-        <h2 class="section-title">Selected Work</h2>
+        <span class="section-tag" style="color: var(--division-ai);">Portfoliо</span>
+        <h2 class="section-title">Seçilmiş İşlər</h2>
       </div>
       
       {projects.length > 0 ? (
         <div class="grid grid--3">
-          {projects.map((p, i) => (
-            <a href={`/projects/${p.slug}`} class="project-card reveal-el" style={`transition-delay: ${i * 100}ms;`}>
+          {projects.map((p: any, i: number) => (
+            <a href={`/az/projects/${p.slug}`} class="project-card reveal-el" style={`transition-delay: ${i * 100}ms;`}>
               {p.cover ? (
                 <div class="project-card__image">
                   <img src={p.cover} alt={p.title} loading="lazy" />
@@ -212,7 +212,7 @@ const projects = aiProjects.map((p) => ({
                 <p>{p.summary}</p>
                 {p.tags && p.tags.length > 0 && (
                   <div class="project-tags">
-                    {p.tags.slice(0, 3).map(tag => (
+                    {p.tags.slice(0, 3).map((tag: string) => (
                       <span class="project-tag">{tag}</span>
                     ))}
                   </div>
@@ -223,7 +223,7 @@ const projects = aiProjects.map((p) => ({
         </div>
       ) : (
         <div class="reveal-el">
-          <p class="text-muted italic">Case studies coming soon.</p>
+          <p class="text-muted italic">Layihələr tezliklə əlavə olunacaq.</p>
         </div>
       )}
     </div>
@@ -235,13 +235,13 @@ const projects = aiProjects.map((p) => ({
       <div class="container">
         <div class="two-col-layout reveal-el">
           <div class="two-col-left">
-            <span class="section-tag" style="color: var(--division-ai);">Fit</span>
-            <h2 class="section-title">When this is a good fit</h2>
-            <p class="section-subtitle">This direction is suitable for clients who need:</p>
+            <span class="section-tag" style="color: var(--division-ai);">Uyğunluq</span>
+            <h2 class="section-title">Nə zaman bizimlə işləmək düzgündür</h2>
+            <p class="section-subtitle">Bu istiqamət aşağıdakı ehtiyacları olanlar üçün uyğundur:</p>
           </div>
           <div class="two-col-right">
             <ul class="fit-list">
-              {d.good_fit.map((item, i) => (
+              {d.good_fit.map((item: string, i: number) => (
                 <li class="fit-item reveal-el" style={`transition-delay: ${i * 50}ms;`}>
                   <Icon name="lucide:check" class="fit-check" />
                   <span>{item}</span>
@@ -259,11 +259,11 @@ const projects = aiProjects.map((p) => ({
     <div class="container reveal-el">
       <div class="cta-card">
         <div class="cta-card__content">
-          <span class="section-tag" style="color: rgba(255,255,255,0.7); margin-bottom: 1rem; display: block; text-align: center;">Contact</span>
-          <h2>{d?.cta_text || "Let's build something together"}</h2>
-          <p>{d?.cta_supporting || "Tell us what process, product or system you want to build. We can help structure the idea and turn it into a practical digital solution."}</p>
-          <a href="/contact" class="btn btn--primary btn--large" style="background: var(--division-ai);">
-            Get in touch
+          <span class="section-tag" style="color: rgba(255,255,255,0.7); margin-bottom: 1rem; display: block; text-align: center;">Əlaqə</span>
+          <h2>{d?.cta_text || "Sisteminizi quraq"}</h2>
+          <p>{d?.cta_supporting || "Hansı prosesi, məhsulu və ya sistemi qurmaq istədiyinizi bizə bildirin. Biz ideyanı strukturlaşdırmağa və onu praktik rəqəmsal həllə çevirməyə kömək edə bilərik."}</p>
+          <a href="/az/contact" class="btn btn--primary btn--large" style="background: var(--division-ai);">
+            Müzakirə edək
             <Icon name="lucide:arrow-right" class="icon" />
           </a>
         </div>
@@ -274,7 +274,7 @@ const projects = aiProjects.map((p) => ({
 </BaseLayout>
 
 <script>
-// Scroll reveal animation (same as homepage)
+// Scroll reveal animation
 const initReveal = () => {
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
@@ -295,13 +295,13 @@ initReveal();
 </script>
 
 <style>
-  /* ── Hero Section (Matches Homepage) ── */
+  /* ── Hero Section ── */
   .hero {
     position: relative;
     padding: var(--space-32) 0 var(--space-24);
     color: var(--color-text-on-dark);
     overflow: hidden;
-    min-height: 70vh; /* Slightly shorter than homepage */
+    min-height: 70vh;
     display: flex;
     align-items: center;
   }
@@ -457,7 +457,6 @@ initReveal();
   .mt-8 { margin-top: var(--space-8); }
   .mt-4 { margin-top: var(--space-4); }
   .mb-8 { margin-bottom: var(--space-8); }
-  .text-center { text-align: center; }
 
   /* ── Services Strip ── */
   .services-strip {
@@ -771,6 +770,7 @@ initReveal();
     transition: all var(--transition-base);
     cursor: pointer;
     text-decoration: none;
+    color: var(--color-text-on-dark);
   }
 
   .btn--primary:hover {
@@ -798,9 +798,8 @@ initReveal();
   .reveal-el {
     opacity: 0;
     transform: translateY(30px);
-    transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1), transform 1s cubic-bezier(0.16, 1, 0.3, 1);
+    transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
   }
-
   .reveal-active {
     opacity: 1;
     transform: translateY(0);

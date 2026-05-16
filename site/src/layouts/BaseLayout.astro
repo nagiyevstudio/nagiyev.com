@@ -11,6 +11,26 @@ export interface Props {
 
 const { title, description = 'Nagiyev Studio — AI-powered digital systems, product design and media production.', lang = 'en' } = Astro.props;
 const locale = lang || 'en';
+const prefix = locale === 'az' ? '/az' : '';
+const currentPath = Astro.url.pathname;
+
+// Determine which nav item is active
+function isActive(href: string): boolean {
+  const clean = currentPath.replace(/\/$/, '') || '/';
+  const target = href.replace(/\/$/, '') || '/';
+  if (target === '/' || target === '/az') {
+    return clean === target;
+  }
+  return clean.startsWith(target);
+}
+
+const navItems = [
+  { href: `${prefix}/`, label: locale === 'az' ? 'Ana Səhifə' : 'Home' },
+  { href: `${prefix}/digital-systems-ai/`, label: locale === 'az' ? 'Rəqəmsal Sistemlər' : 'Digital Systems' },
+  { href: `${prefix}/product-design/`, label: locale === 'az' ? 'Dizayn' : 'Design' },
+  { href: `${prefix}/media-production/`, label: locale === 'az' ? 'Media' : 'Media' },
+  { href: `${prefix}/about/`, label: locale === 'az' ? 'Haqqında' : 'About' },
+];
 ---
 
 <!doctype html>
@@ -63,23 +83,33 @@ const locale = lang || 'en';
     
     <header class="site-header">
       <div class="container header-inner">
-        <a href="/" class="logo" aria-label="Nagiyev Studio Home">
+        <a href={`${prefix}/`} class="logo" aria-label="Nagiyev Studio Home">
           <img src="/images/common/logo.svg" alt="Nagiyev Studio" class="logo-image" />
         </a>
         
         <nav class="main-nav" aria-label="Main navigation">
-          <a href="/" class="nav-link">Home</a>
-          <a href="/digital-systems-ai/" class="nav-link">Digital Systems</a>
-          <a href="/product-design/" class="nav-link">Design</a>
-          <a href="/media-production/" class="nav-link">Media</a>
-          <a href="/about/" class="nav-link">About</a>
+          {navItems.map(item => (
+            <a href={item.href} class={`nav-link${isActive(item.href) ? ' nav-link--active' : ''}`}>{item.label}</a>
+          ))}
         </nav>
         
         <LanguageSwitcher currentLocale={locale} />
         
-        <button class="mobile-menu-toggle" aria-label="Toggle menu">
+        <button class="mobile-menu-toggle" aria-label="Toggle menu" id="mobile-menu-toggle">
           <span class="hamburger"></span>
         </button>
+      </div>
+      
+      <!-- Mobile Menu Panel -->
+      <div class="mobile-menu" id="mobile-menu">
+        <nav class="mobile-nav" aria-label="Mobile navigation">
+          {navItems.map(item => (
+            <a href={item.href} class={`mobile-nav-link${isActive(item.href) ? ' mobile-nav-link--active' : ''}`}>{item.label}</a>
+          ))}
+        </nav>
+        <div class="mobile-menu-footer">
+          <LanguageSwitcher currentLocale={locale} />
+        </div>
       </div>
     </header>
     
@@ -95,12 +125,10 @@ const locale = lang || 'en';
         </div>
         
         <nav class="footer-nav" aria-label="Footer navigation">
-          <a href="/">Home</a>
-          <a href="/digital-systems-ai/">Digital Systems</a>
-          <a href="/product-design/">Design</a>
-          <a href="/media-production/">Media</a>
-          <a href="/about/">About</a>
-          <a href="/contact/">Contact</a>
+          {navItems.map(item => (
+            <a href={item.href}>{item.label}</a>
+          ))}
+          <a href={`${prefix}/contact/`}>{locale === 'az' ? 'Əlaqə' : 'Contact'}</a>
         </nav>
         
         <div class="footer-contact">
@@ -118,6 +146,40 @@ const locale = lang || 'en';
         <p class="footer-copyright">&copy; 2026 Nagiyev Studio. All rights reserved.</p>
       </div>
     </footer>
+    <!-- Mobile Menu Script -->
+    <script>
+      function initMobileMenu() {
+        const toggle = document.getElementById('mobile-menu-toggle');
+        const menu = document.getElementById('mobile-menu');
+        const header = document.querySelector('.site-header');
+        if (!toggle || !menu) return;
+
+        toggle.addEventListener('click', () => {
+          const isOpen = menu.classList.contains('mobile-menu--open');
+          if (isOpen) {
+            menu.classList.remove('mobile-menu--open');
+            toggle.classList.remove('mobile-menu-toggle--open');
+            document.body.style.overflow = '';
+          } else {
+            menu.classList.add('mobile-menu--open');
+            toggle.classList.add('mobile-menu-toggle--open');
+            document.body.style.overflow = 'hidden';
+          }
+        });
+
+        // Close menu when a link is clicked
+        menu.querySelectorAll('a').forEach(link => {
+          link.addEventListener('click', () => {
+            menu.classList.remove('mobile-menu--open');
+            toggle.classList.remove('mobile-menu-toggle--open');
+            document.body.style.overflow = '';
+          });
+        });
+      }
+
+      document.addEventListener('astro:page-load', initMobileMenu);
+      initMobileMenu();
+    </script>
   </body>
 </html>
 
@@ -170,18 +232,42 @@ const locale = lang || 'en';
     font-weight: var(--weight-medium);
     color: var(--color-text-secondary);
     transition: color var(--transition-fast);
+    position: relative;
   }
   
   .nav-link:hover {
     color: var(--color-text);
   }
   
+  .nav-link--active {
+    color: var(--color-text);
+  }
+  
+  .nav-link--active::after {
+    content: '';
+    position: absolute;
+    bottom: -6px;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: var(--color-accent);
+    border-radius: 1px;
+  }
+  
+  /* ── Mobile Menu Toggle ── */
+  
   .mobile-menu-toggle {
     display: flex;
+    align-items: center;
+    justify-content: center;
     padding: var(--space-2);
     background: transparent;
     border: none;
     cursor: pointer;
+    width: 36px;
+    height: 36px;
+    position: relative;
+    z-index: 110;
   }
   
   .hamburger {
@@ -190,6 +276,7 @@ const locale = lang || 'en';
     height: 2px;
     background: var(--color-text);
     position: relative;
+    transition: background 0.2s ease;
   }
   
   .hamburger::before,
@@ -200,10 +287,90 @@ const locale = lang || 'en';
     height: 2px;
     background: var(--color-text);
     left: 0;
+    transition: transform 0.3s ease, top 0.3s ease;
   }
   
   .hamburger::before { top: -6px; }
   .hamburger::after { top: 6px; }
+  
+  /* Hamburger → X animation */
+  .mobile-menu-toggle--open .hamburger {
+    background: transparent;
+  }
+  
+  .mobile-menu-toggle--open .hamburger::before {
+    top: 0;
+    transform: rotate(45deg);
+  }
+  
+  .mobile-menu-toggle--open .hamburger::after {
+    top: 0;
+    transform: rotate(-45deg);
+  }
+  
+  /* ── Mobile Menu Panel ── */
+  
+  .mobile-menu {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: var(--color-bg);
+    z-index: 99;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: var(--space-16) var(--space-6);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+  }
+  
+  .mobile-menu--open {
+    opacity: 1;
+    visibility: visible;
+  }
+  
+  .mobile-nav {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-6);
+  }
+  
+  .mobile-nav-link {
+    font-size: var(--text-2xl);
+    font-weight: var(--weight-semibold);
+    color: var(--color-text-secondary);
+    transition: color var(--transition-fast);
+    letter-spacing: var(--tracking-tight);
+  }
+  
+  .mobile-nav-link:hover {
+    color: var(--color-text);
+  }
+  
+  .mobile-nav-link--active {
+    color: var(--color-text);
+    position: relative;
+  }
+  
+  .mobile-nav-link--active::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 25%;
+    right: 25%;
+    height: 2px;
+    background: var(--color-accent);
+    border-radius: 1px;
+  }
+  
+  .mobile-menu-footer {
+    margin-top: var(--space-10);
+  }
   
   /* ── Footer ── */
   
@@ -302,6 +469,10 @@ const locale = lang || 'en';
     }
     
     .mobile-menu-toggle {
+      display: none;
+    }
+    
+    .mobile-menu {
       display: none;
     }
     
