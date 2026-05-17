@@ -34,23 +34,27 @@ const projects = mediaProjects.map((p) => ({
       <div class="hero-content">
         <div class="hero-badge reveal-el">İstiqamət</div>
         <h1 class="hero-title reveal-el" style="transition-delay: 100ms;">
-          {d?.title || "Media Production"}
+          {d?.hero_headline || "Ciddi vizual kommunikasiya üçün fotoqrafiya, video və səs."}
         </h1>
         <p class="hero-subtitle reveal-el" style="transition-delay: 200ms;">
-          {d?.subtitle || "Müasir brendlər üçün yüksək səviyyəli fotoqrafiya, video və kreativ istiqamət."}
+          {d?.hero_supporting || "Bizneslər, təşkilatlar, tədbirlər, mədəniyyət layihələri, elmi kommunikasiyalar və ictimai kampaniyalar üçün peşəkar media məzmunu yaradırıq."}
         </p>
       </div>
     </div>
   </section>
 
   <!-- ── Main Positioning ── -->
-  <section class="section">
+  <section class="section section--philosophy">
     <div class="container container--narrow reveal-el">
-      <div class="content-block" style="text-align: center;">
-        <h2 class="section-title">Hekayənizi vizuallaşdıraq</h2>
-        <p class="lead" style="font-size: var(--text-xl); line-height: var(--leading-relaxed); color: var(--color-text-secondary); margin-top: var(--space-6);">
-          {d?.description || "Müasir brendlər üçün vizual hekayələr. Mesajınızı təsirli və üslubla çatdıran premium media aktivləri hazırlayırıq."}
+      <div class="philosophy-content" style="display: flex; flex-direction: column; align-items: center; text-align: center;">
+        <Icon name="lucide:aperture" class="quote-icon" style="color: var(--division-media);" />
+        <p class="philosophy-text" style="max-width: 800px; margin: 0 auto;">
+          Media sadəcə boşluğu doldurmaq üçün məzmun deyil. Yaxşı fotoqrafiya, video və səs insanların bir biznesi, şəhəri, məhsulu, tədbiri və ya təşkilatı necə qavramasını formalaşdırır.
         </p>
+        <div class="prose-text mt-8" style="max-width: 700px; margin: 2rem auto 0 auto; font-size: var(--text-lg); color: var(--color-text-secondary); line-height: var(--leading-relaxed);">
+          <p>Bu istiqamət veb-saytlar, təqdimatlar, sənədlər, kitablar, sərgilər, sosial media, kataloqlar, kampaniyalar və ictimai kommunikasiyalarda istifadə edilə biləcək yüksək keyfiyyətli vizual və audio istehsala əsaslanır.</p>
+          <p style="margin-top: 1rem;"><strong>Ən güclü nəticələr medianın daha böyük brend, dizayn və ya rəqəmsal sistemin bir hissəsi kimi planlaşdırıldıqda əldə edilir.</strong></p>
+        </div>
       </div>
     </div>
   </section>
@@ -72,8 +76,9 @@ const projects = mediaProjects.map((p) => ({
   <section class="section section--alt">
     <div class="container">
       <div class="section-header reveal-el">
-        <span class="section-tag" style="color: var(--division-media);">İmkanlar</span>
-        <h2 class="section-title">Nə təklif edirik</h2>
+        <span class="section-tag" style="color: var(--division-media);">Məqsəd</span>
+        <h2 class="section-title">Bu istiqamət nələri əhatə edir</h2>
+        <p class="section-subtitle">Tədbir, şəhər, memarlıq, qonaqpərvərlik və məhsul fotoqrafiyasından tutmuş elmi təsvirlərə, video məzmuna və peşəkar səs istehsalına qədər.</p>
       </div>
       
       {d?.capabilities && (
@@ -89,12 +94,106 @@ const projects = mediaProjects.map((p) => ({
     </div>
   </section>
 
-  <!-- ── Selected Work ── -->
+  <!-- ── Deep Dive: Focus Areas ── -->
   <section class="section">
     <div class="container">
       <div class="section-header reveal-el">
+        <span class="section-tag" style="color: var(--division-media);">Fokus Sahələri</span>
+        <h2 class="section-title">Təcrübə və Yanaşma</h2>
+      </div>
+
+      <div class="focus-areas">
+        <div class="focus-card reveal-el">
+          <div class="focus-icon"><Icon name="lucide:camera" /></div>
+          <h3>Fotoqrafiya</h3>
+          <p>Fotoqrafiya bu istiqamətin ən güclü hissələrindən biridir. Təcrübəmiz peşəkar fotoqrafiyanın bir çox növlərini əhatə edir: tədbir fotoqrafiyası, beynəlxalq və korporativ tədbirlərin işıqlandırılması, şəhər və urban fotoqrafiyası, parklar, bulvarlar və ictimai məkanlar, memarlıq, interyer və eksteryer, otel və qonaqpərvərlik, məhsul, mədəniyyət, elmi fotoqrafiya, astrofotoqrafiya, sənaye fotoqrafiyası, habelə veb-saytlar, kataloqlar, kitablar, sərgilər və ictimai kampaniyalar üçün fotoşəkillər.</p>
+        </div>
+
+        <div class="focus-card reveal-el" style="transition-delay: 100ms;">
+          <div class="focus-icon"><Icon name="lucide:building-2" /></div>
+          <h3>Şəhər, Memarlıq və Qonaqpərvərlik</h3>
+          <p>Şəhər, memarlıq, interyer və eksteryer fotoqrafiyası sahəsində güclü təcrübə — dövlət layihələri, ictimai məkanlar, memarlıq strukturları, otellər, qonaqpərvərlik kompleksləri, butik otellər, interyerlər, eksteryerlər, habelə səyahət, bron və təqdimat platformaları üçün vizual məzmun.</p>
+          <p class="mt-4">Otellər, developerlər, turizm layihələri, şəhər layihələri və ictimai qurumlar üçün xüsusilə aktualdır.</p>
+        </div>
+
+        <div class="focus-card reveal-el" style="transition-delay: 200ms;">
+          <div class="focus-icon"><Icon name="lucide:package" /></div>
+          <h3>Məhsul və Brend Vizualları</h3>
+          <p>Biznes kommunikasiyasının bir hissəsi kimi məhsul və brend fotoqrafiyası: məhsul vizulları, premium və nadir məhsul fotoqrafiyası, kataloq çəkilişləri, kampaniya vizulları, veb-sayt vizulları, təqdimat sənədləri, sosial media məzmunu və brend kommunikasiyası üçün vizual aktivlər.</p>
+          <p class="mt-4">Məqsəd yalnız məhsulu göstərmək deyil, həm də onu düzgün keyfiyyət, kontekst və etibar səviyyəsində təqdim etməkdir.</p>
+        </div>
+
+        <div class="focus-card reveal-el">
+          <div class="focus-icon"><Icon name="lucide:telescope" /></div>
+          <h3>Elmi və Astrofotoqrafiya</h3>
+          <p>Elmi və astronomiya ilə bağlı vizuallar bu istiqamətin fərqləndirici hissəsidir: peşəkar astrofotoqrafiya, elmi vizual materiallar, astronomiya sərgiləri, elmi-tədris vizulları və ictimai elm kommunikasiyası.</p>
+          <p class="mt-4">Vizual materialın izah etməli, ilham verməli və ya mürəkkəb mövzuları geniş auditoriya üçün əlçatan etməli olduğu layihələr üçün xüsusilə faydalıdır.</p>
+        </div>
+
+        <div class="focus-card reveal-el" style="transition-delay: 100ms;">
+          <div class="focus-icon"><Icon name="lucide:factory" /></div>
+          <h3>Sənaye Fotoqrafiyası</h3>
+          <p>İstehsalat mühitləri üçün sənaye fotoqrafiyası: sənaye obyektləri, istehsal prosesləri, texnoloji xətlər, texniki mühitlər, proseslərin sənədləşdirilməsi, korporativ hesabat vizulları, idarəetmə səviyyəli təqdimat materialları, habelə investisiya və biznes kommunikasiyası materialları.</p>
+        </div>
+
+        <div class="focus-card reveal-el" style="transition-delay: 200ms;">
+          <div class="focus-icon"><Icon name="lucide:video" /></div>
+          <h3>Video İstehsalı (Video Production)</h3>
+          <p>Video istehsalı studiyanın istehsalat şəbəkəsi vasitəsilə həyata keçirilir və konsepsiya, çəkiliş, montaj, vizual istiqamət, müsahibə formatları, tanıtım məzmunu və tədbir çəkilişlərini əhatə edə bilər.</p>
+          <ul class="clean-list mt-4">
+            <li>Tədbir videoları və konfransların çəkilişi</li>
+            <li>Müsahibələr və promo videolar</li>
+            <li>Elmi-tədris video çarxları</li>
+            <li>Veb-saytlar və sosial media üçün videolar</li>
+            <li>Kampaniya və təqdimat materialları</li>
+          </ul>
+        </div>
+
+        <div class="focus-card reveal-el">
+          <div class="focus-icon"><Icon name="lucide:music" /></div>
+          <h3>Səs, Musiqi və Audio</h3>
+          <p>Səs bu istiqamətin ən böyük üstünlüklərindən biridir — video istehsalına sadəcə bir əlavə deyil, brend kommunikasiyasını, media məzmununu, kampaniyaları, tədbirləri və rəqəmsal məhsulları dəstəkləyə bilən ciddi peşəkar təcrübədir.</p>
+          <ul class="clean-list mt-4">
+            <li>Səs dizaynı və musiqi bəstəkarlığı</li>
+            <li>Korporativ saundtreklər və cingllər</li>
+            <li>Audio montaj, miksinq və masterinq</li>
+            <li>Səsyazma studiyası və musiqi leyblı təcrübəsi</li>
+            <li>İntro və identiklik səsləri</li>
+          </ul>
+        </div>
+
+        <div class="focus-card reveal-el" style="transition-delay: 100ms;">
+          <div class="focus-icon"><Icon name="lucide:compass" /></div>
+          <h3>Kreativ İstiqamət (Creative Direction)</h3>
+          <p>Studiyamız təcrid olunmuş aktivlər istehsal etməklə kifayətlənmir, həm də bütün media paketini bütöv bir konsepsiyada düşünür: konsepsiya, ideyanın inkişafı, ssenari, vizual üslub, foto və video çəkiliş istiqamətlərinin müəyyənləşdirilməsi, montaj nəzarəti, səs rejissorluğu, habelə veb-saytlar, sosial media, təqdimatlar və kampaniyalar üçün qablaşdırma.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Main Value ── -->
+  <section class="section section--philosophy">
+    <div class="container container--narrow reveal-el">
+      <div class="philosophy-content">
+        <h2 class="section-title mb-8" style="text-align: center;">Müştərilər üçün əsas dəyər</h2>
+        <ul class="value-list">
+          <li><Icon name="lucide:arrow-right" class="value-icon" /> İctimai istifadə üçün ciddi vizual materiallar yaratmaq</li>
+          <li><Icon name="lucide:arrow-right" class="value-icon" /> Biznes, məhsul, tədbir və ya təşkilatı daha yüksək səviyyədə təqdim etmək</li>
+          <li><Icon name="lucide:arrow-right" class="value-icon" /> Veb-saytlar, kataloqlar, kitablar, təqdimatlar və kampaniyalarda işləyən vahid media məzmunu hazırlamaq</li>
+          <li><Icon name="lucide:arrow-right" class="value-icon" /> Vizual və audio istehsalı vahid kreativ istiqamətdə birləşdirmək</li>
+          <li><Icon name="lucide:arrow-right" class="value-icon" /> Mürəkkəb mövzularla işləmək bacarığı: mədəniyyət, elm, sənaye, ictimai kommunikasiya</li>
+          <li><Icon name="lucide:arrow-right" class="value-icon" /> Media istehsalını dizayn, rəqəmsal sistemlər və biznes təqdimatı ile əlaqələndirmək</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Selected Work ── -->
+  <section class="section section--alt">
+    <div class="container">
+      <div class="section-header reveal-el">
         <span class="section-tag" style="color: var(--division-media);">Portfoliо</span>
-        <h2 class="section-title">Seçilmiş İşlər</h2>
+        <h2 class="section-title">Seçilmiş Media İşləri</h2>
       </div>
       
       {projects.length > 0 ? (
@@ -117,6 +216,13 @@ const projects = mediaProjects.map((p) => ({
                 </div>
                 {p.client && <span class="project-client" style="color: var(--division-media);">{p.client}</span>}
                 <p>{p.summary}</p>
+                {p.tags && p.tags.length > 0 && (
+                  <div class="project-tags">
+                    {p.tags.slice(0, 3).map((tag: string) => (
+                      <span class="project-tag">{tag}</span>
+                    ))}
+                  </div>
+                )}
               </div>
             </a>
           ))}
@@ -129,14 +235,39 @@ const projects = mediaProjects.map((p) => ({
     </div>
   </section>
 
+  <!-- ── Good Fit ── -->
+  {d?.good_fit && d.good_fit.length > 0 && (
+    <section class="section">
+      <div class="container">
+        <div class="two-col-layout reveal-el">
+          <div class="two-col-left">
+            <span class="section-tag" style="color: var(--division-media);">Uyğunluq</span>
+            <h2 class="section-title">Nə zaman bizimlə işləmək düzgündür</h2>
+            <p class="section-subtitle">Bu istiqamət aşağıdakı ehtiyacları olanlar üçün uyğundur:</p>
+          </div>
+          <div class="two-col-right">
+            <ul class="fit-list">
+              {d.good_fit.map((item: string, i: number) => (
+                <li class="fit-item reveal-el" style={`transition-delay: ${i * 50}ms;`}>
+                  <Icon name="lucide:check" class="fit-check" />
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+  )}
+
   <!-- ── Contact CTA ── -->
   <section class="section section--cta">
     <div class="container reveal-el">
       <div class="cta-card">
         <div class="cta-card__content">
           <span class="section-tag" style="color: rgba(255,255,255,0.7); margin-bottom: 1rem; display: block; text-align: center;">Əlaqə</span>
-          <h2>Hekayənizi bizimlə danışın</h2>
-          <p>Kreativ fotoqrafiya, video istehsalı və ya media kampaniyası üçün bizimlə əlaqə saxlayın.</p>
+          <h2>{d?.cta_text || "Bizimlə əlaqə"}</h2>
+          <p>{d?.cta_supporting || "Bizə nəyi təqdim etmək lazım olduğunu bildirin. Onun ətrafında vizual və audio məzmun yaratmağa kömək edə bilərik."}</p>
           <a href="/az/contact" class="btn btn--primary btn--large" style="background: var(--division-media);">
             Müzakirə edək
             <Icon name="lucide:arrow-right" class="icon" />
@@ -149,7 +280,6 @@ const projects = mediaProjects.map((p) => ({
 </BaseLayout>
 
 <script>
-// Scroll reveal animation
 const initReveal = () => {
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
@@ -180,33 +310,14 @@ initReveal();
     display: flex;
     align-items: center;
   }
-
-  .hero-background {
-    position: absolute;
-    inset: 0;
-    z-index: 0;
-  }
-
-  .hero-bg-image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center;
-  }
-
+  .hero-background { position: absolute; inset: 0; z-index: 0; }
+  .hero-bg-image { width: 100%; height: 100%; object-fit: cover; object-position: center; }
   .hero-overlay {
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0.8) 100%);
+    position: absolute; inset: 0;
+    background: linear-gradient(to bottom, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.8) 100%);
     z-index: 1;
   }
-
-  .hero-content {
-    position: relative;
-    z-index: 2;
-    max-width: 800px;
-  }
-
+  .hero-content { position: relative; z-index: 2; max-width: 800px; }
   .hero-badge {
     display: inline-block;
     padding: var(--space-1) var(--space-3);
@@ -218,7 +329,6 @@ initReveal();
     letter-spacing: var(--tracking-wide);
     margin-bottom: var(--space-6);
   }
-
   .hero-title {
     font-size: clamp(var(--text-4xl), 5vw, var(--text-6xl));
     font-weight: var(--weight-bold);
@@ -227,259 +337,149 @@ initReveal();
     letter-spacing: var(--tracking-tight);
     text-wrap: balance;
   }
-
   .hero-subtitle {
     font-size: var(--text-xl);
     line-height: var(--leading-relaxed);
-    color: rgba(255, 255, 255, 0.8);
+    color: rgba(255,255,255,0.8);
     max-width: 700px;
   }
 
   /* ── Sections ── */
-  .section {
-    padding: var(--space-24) 0;
-  }
-
-  .section--alt {
-    background: var(--color-bg-hover);
-  }
-
-  .section-header {
-    margin-bottom: var(--space-16);
-    max-width: 800px;
-  }
-
+  .section { padding: var(--space-24) 0; }
+  .section--alt { background: var(--color-bg-hover); }
+  .section-header { margin-bottom: var(--space-16); max-width: 800px; }
   .section-tag {
-    display: block;
-    font-size: var(--text-xs);
-    text-transform: uppercase;
-    font-weight: var(--weight-bold);
-    letter-spacing: var(--tracking-wide);
+    display: block; font-size: var(--text-xs); text-transform: uppercase;
+    font-weight: var(--weight-bold); letter-spacing: var(--tracking-wide);
     margin-bottom: var(--space-2);
   }
+  .section-title { font-size: var(--text-4xl); font-weight: var(--weight-bold); margin-bottom: var(--space-4); }
+  .section-subtitle { font-size: var(--text-lg); color: var(--color-text-secondary); line-height: var(--leading-relaxed); }
 
-  .section-title {
-    font-size: var(--text-4xl);
-    font-weight: var(--weight-bold);
-    margin-bottom: var(--space-4);
+  /* ── Philosophy ── */
+  .section--philosophy { border-top: var(--border-thin); border-bottom: var(--border-thin); background: var(--color-bg-card); }
+  .philosophy-content { padding: var(--space-10) 0; }
+  .quote-icon { width: 48px; height: 48px; margin: 0 auto var(--space-6); display: block; }
+  .philosophy-text {
+    font-size: var(--text-2xl); line-height: var(--leading-relaxed);
+    color: var(--color-text); font-weight: var(--weight-medium); text-align: center;
   }
+  .prose-text p { font-size: var(--text-lg); color: var(--color-text-secondary); line-height: var(--leading-relaxed); margin-bottom: var(--space-4); }
+  .value-list { display: flex; flex-direction: column; gap: var(--space-4); }
+  .value-list li {
+    display: flex; align-items: flex-start; gap: var(--space-4);
+    font-size: var(--text-lg); color: var(--color-text-secondary);
+    line-height: var(--leading-relaxed); padding: var(--space-4);
+    background: var(--color-bg-hover); border-radius: var(--radius-md);
+  }
+  .value-icon { width: 24px; height: 24px; color: var(--division-media); flex-shrink: 0; margin-top: 2px; }
+  .mt-8 { margin-top: var(--space-8); }
+  .mt-4 { margin-top: var(--space-4); }
+  .mb-8 { margin-bottom: var(--space-8); }
 
   /* ── Services Strip ── */
-  .services-strip {
-    padding: var(--space-8) 0;
-    background: var(--color-bg);
-    border-bottom: var(--border-thin);
-  }
-
-  .services-list {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--space-3);
-    justify-content: center;
-  }
-
+  .services-strip { padding: var(--space-8) 0; background: var(--color-bg); border-bottom: var(--border-thin); }
+  .services-list { display: flex; flex-wrap: wrap; gap: var(--space-3); justify-content: center; }
   .service-tag {
-    display: inline-block;
-    padding: var(--space-2) var(--space-4);
-    background: var(--color-bg-card);
-    border: var(--border-thin);
-    border-radius: var(--radius-full);
-    font-size: var(--text-sm);
-    color: var(--color-text-secondary);
-    font-weight: var(--weight-medium);
+    display: inline-block; padding: var(--space-2) var(--space-4);
+    background: var(--color-bg-card); border: var(--border-thin);
+    border-radius: var(--radius-full); font-size: var(--text-sm);
+    color: var(--color-text-secondary); font-weight: var(--weight-medium);
   }
 
   /* ── Capabilities Grid ── */
-  .capabilities-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: var(--space-4);
-  }
-  @media (min-width: 640px) {
-    .capabilities-grid { grid-template-columns: repeat(2, 1fr); }
-  }
-  @media (min-width: 1024px) {
-    .capabilities-grid { grid-template-columns: repeat(3, 1fr); }
-  }
-
+  .capabilities-grid { display: grid; grid-template-columns: 1fr; gap: var(--space-4); }
+  @media (min-width: 640px) { .capabilities-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (min-width: 1024px) { .capabilities-grid { grid-template-columns: repeat(3, 1fr); } }
   .capability-item {
-    display: flex;
-    align-items: center;
-    gap: var(--space-3);
-    padding: var(--space-4);
-    background: var(--color-bg-card);
-    border: var(--border-thin);
-    border-radius: var(--radius-md);
-    font-size: var(--text-sm);
-    font-weight: var(--weight-medium);
+    display: flex; align-items: center; gap: var(--space-3);
+    padding: var(--space-4); background: var(--color-bg-card);
+    border: var(--border-thin); border-radius: var(--radius-md);
+    font-size: var(--text-sm); font-weight: var(--weight-medium);
+  }
+  .cap-icon { width: 20px; height: 20px; color: var(--division-media); flex-shrink: 0; }
+
+  /* ── Focus Areas ── */
+  .focus-areas { display: grid; grid-template-columns: 1fr; gap: var(--space-6); }
+  @media (min-width: 768px) { .focus-areas { grid-template-columns: repeat(2, 1fr); } }
+  .focus-card { background: var(--color-bg-card); border: var(--border-thin); padding: var(--space-8); border-radius: var(--radius-lg); }
+  .focus-icon {
+    width: 48px; height: 48px;
+    background: color-mix(in srgb, var(--division-media) 10%, var(--color-bg-card));
+    color: var(--division-media); border-radius: var(--radius-md);
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: var(--space-6);
+  }
+  .focus-icon :global(svg) { width: 24px; height: 24px; }
+  .focus-card h3 { font-size: var(--text-xl); margin-bottom: var(--space-4); }
+  .focus-card p { color: var(--color-text-secondary); font-size: var(--text-base); line-height: var(--leading-relaxed); }
+  .clean-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: var(--space-2); }
+  .clean-list li { position: relative; padding-left: var(--space-4); color: var(--color-text-secondary); font-size: var(--text-sm); }
+  .clean-list li::before {
+    content: ''; position: absolute; left: 0; top: 8px;
+    width: 4px; height: 4px; border-radius: 50%; background: var(--division-media);
   }
 
-  .cap-icon {
-    width: 20px;
-    height: 20px;
-    flex-shrink: 0;
-  }
-
-  /* ── Project Cards ── */
-  .grid--3 {
-    display: grid;
-    gap: var(--space-6);
-    grid-template-columns: 1fr;
-  }
+  /* ── Selected Work Cards ── */
+  .grid--3 { display: grid; gap: var(--space-6); grid-template-columns: 1fr; }
   @media (min-width: 640px) { .grid--3 { grid-template-columns: repeat(2, 1fr); } }
   @media (min-width: 1024px) { .grid--3 { grid-template-columns: repeat(3, 1fr); } }
-
   .project-card {
-    background: var(--color-bg-card);
-    border-radius: var(--radius-lg);
-    overflow: hidden;
-    border: var(--border-thin);
-    transition: all var(--transition-base);
-    display: flex;
-    flex-direction: column;
+    background: var(--color-bg-card); border-radius: var(--radius-lg);
+    overflow: hidden; border: var(--border-thin);
+    transition: all var(--transition-base); display: flex; flex-direction: column;
   }
+  .project-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); border-color: var(--division-media); }
+  .project-card__image { aspect-ratio: 16/9; overflow: hidden; }
+  .project-card__image img { width: 100%; height: 100%; object-fit: cover; transition: transform var(--transition-slow); }
+  .project-card:hover .project-card__image img { transform: scale(1.05); }
+  .project-card__placeholder { aspect-ratio: 16/9; background: var(--color-bg-hover); display: flex; align-items: center; justify-content: center; }
+  .placeholder-icon { width: 48px; height: 48px; color: var(--color-border); }
+  .project-card__content { padding: var(--space-6); flex-grow: 1; display: flex; flex-direction: column; }
+  .project-card__header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: var(--space-2); }
+  .project-card h3 { font-size: var(--text-xl); margin: 0; }
+  .project-year { font-size: var(--text-xs); color: var(--color-text-muted); font-weight: var(--weight-medium); }
+  .project-client { font-size: var(--text-xs); text-transform: uppercase; color: var(--division-media); font-weight: var(--weight-bold); margin-bottom: var(--space-3); display: block; }
+  .project-card p { font-size: var(--text-sm); color: var(--color-text-secondary); margin-bottom: var(--space-4); flex-grow: 1; }
+  .project-tags { display: flex; flex-wrap: wrap; gap: var(--space-2); margin-top: auto; }
+  .project-tag { font-size: var(--text-xs); padding: 2px var(--space-2); background: var(--color-bg-hover); color: var(--color-text-secondary); border-radius: var(--radius-sm); }
 
-  .project-card:hover {
-    transform: translateY(-4px);
-    box-shadow: var(--shadow-md);
-    border-color: var(--division-media);
+  /* ── Two Column (Good Fit) ── */
+  .two-col-layout { display: grid; grid-template-columns: 1fr; gap: var(--space-12); }
+  @media (min-width: 768px) { .two-col-layout { grid-template-columns: 1fr 1fr; } }
+  .fit-list { display: flex; flex-direction: column; gap: var(--space-4); }
+  .fit-item {
+    display: flex; align-items: flex-start; gap: var(--space-4);
+    padding: var(--space-4); background: var(--color-bg-card);
+    border: var(--border-thin); border-radius: var(--radius-md);
   }
-
-  .project-card__image {
-    aspect-ratio: 16/9;
-    overflow: hidden;
-  }
-
-  .project-card__image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform var(--transition-slow);
-  }
-
-  .project-card:hover .project-card__image img {
-    transform: scale(1.05);
-  }
-
-  .project-card__placeholder {
-    aspect-ratio: 16/9;
-    background: var(--color-bg-hover);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .placeholder-icon {
-    width: 48px;
-    height: 48px;
-    color: var(--color-border);
-  }
-
-  .project-card__content {
-    padding: var(--space-6);
-    flex-grow: 1;
-    display: flex;
-    flex-direction: column;
-  }
-
-  .project-card__header {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    margin-bottom: var(--space-2);
-  }
-
-  .project-card h3 {
-    font-size: var(--text-xl);
-    margin: 0;
-  }
-
-  .project-year {
-    font-size: var(--text-xs);
-    color: var(--color-text-muted);
-    font-weight: var(--weight-medium);
-  }
-
-  .project-client {
-    font-size: var(--text-xs);
-    text-transform: uppercase;
-    font-weight: var(--weight-bold);
-    margin-bottom: var(--space-3);
-    display: block;
-  }
-
-  .project-card p {
-    font-size: var(--text-sm);
-    color: var(--color-text-secondary);
-    margin-bottom: var(--space-4);
-    flex-grow: 1;
-  }
+  .fit-check { width: 24px; height: 24px; color: var(--division-media); flex-shrink: 0; }
+  .fit-item span { font-size: var(--text-base); color: var(--color-text); line-height: var(--leading-snug); }
 
   /* ── CTA Card ── */
   .cta-card {
-    background: var(--color-bg-inverted);
-    color: var(--color-text-on-dark);
-    padding: var(--space-16) var(--space-10);
-    border-radius: var(--radius-xl);
-    text-align: center;
-    position: relative;
-    overflow: hidden;
+    background: var(--color-bg-inverted); color: var(--color-text-on-dark);
+    padding: var(--space-16) var(--space-10); border-radius: var(--radius-xl);
+    text-align: center; position: relative; overflow: hidden;
   }
-
-  .cta-card h2 {
-    font-size: var(--text-4xl);
-    margin-bottom: var(--space-4);
-  }
-
-  .cta-card p {
-    color: var(--color-text-muted);
-    font-size: var(--text-lg);
-    margin: 0 auto var(--space-10);
-    max-width: 600px;
-  }
-
+  .cta-card h2 { font-size: var(--text-4xl); margin-bottom: var(--space-4); }
+  .cta-card p { color: var(--color-text-muted); font-size: var(--text-lg); margin: 0 auto var(--space-10); max-width: 600px; }
   .btn {
-    display: inline-flex;
-    align-items: center;
-    gap: var(--space-2);
-    padding: var(--space-3) var(--space-6);
-    border-radius: var(--radius-md);
-    font-weight: var(--weight-medium);
-    transition: all var(--transition-base);
-    cursor: pointer;
-    text-decoration: none;
-    color: var(--color-text-on-dark);
+    display: inline-flex; align-items: center; gap: var(--space-2);
+    padding: var(--space-3) var(--space-6); border-radius: var(--radius-md);
+    font-weight: var(--weight-medium); transition: all var(--transition-base);
+    cursor: pointer; text-decoration: none; color: var(--color-text-on-dark);
   }
-
-  .btn--primary:hover {
-    filter: brightness(1.2);
-    transform: translateY(-2px);
-    box-shadow: 0 10px 20px -10px var(--division-media);
-  }
-
-  .btn--large {
-    padding: var(--space-4) var(--space-10);
-    font-size: var(--text-lg);
-  }
-
-  .btn .icon {
-    width: 18px;
-    height: 18px;
-    transition: transform var(--transition-fast);
-  }
-
-  .btn:hover .icon {
-    transform: translateX(3px);
-  }
+  .btn--primary:hover { filter: brightness(1.2); transform: translateY(-2px); box-shadow: 0 10px 20px -10px var(--division-media); }
+  .btn--large { padding: var(--space-4) var(--space-10); font-size: var(--text-lg); }
+  .btn .icon { width: 18px; height: 18px; transition: transform var(--transition-fast); }
+  .btn:hover .icon { transform: translateX(3px); }
 
   /* ── Scroll Reveal ── */
-  .reveal-el {
-    opacity: 0;
-    transform: translateY(30px);
-    transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-  }
-  .reveal-active {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  .reveal-el { opacity: 0; transform: translateY(30px); transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
+  .reveal-active { opacity: 1; transform: translateY(0); }
+
+  /* ── Utilities ── */
+  .text-muted { color: var(--color-text-secondary); }
+  .italic { font-style: italic; }
 </style>

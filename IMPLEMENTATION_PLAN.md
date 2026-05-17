@@ -357,6 +357,7 @@
 
 ### 4.3 Deploy
 
+- [x] Configure GitHub Actions FTP Deploy workflow (with build step, port 21, and FTP secrets)
 - [ ] `npm run build` → verify `/dist` output
 - [ ] Upload `/dist` contents to hosting (main domain root)
 - [ ] Configure `.htaccess` for clean URLs and 404 redirect

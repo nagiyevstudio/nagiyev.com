@@ -3,11 +3,43 @@ import BaseLayout from './BaseLayout.astro';
 import { Icon } from 'astro-icon/components';
 
 const { entry } = Astro.props;
-const { data, body } = entry;
+const { data } = entry;
 const d = data;
+
+const isAz = entry.id.startsWith('az/');
+
+const t = {
+  studio: isAz ? "Studiya" : "Studio",
+  role: isAz ? "Rol" : "Role",
+  platforms: isAz ? "Platformalar" : "Platforms",
+  status: isAz ? "Status" : "Status",
+  architecture: isAz ? "Arxitektura" : "Architecture",
+  coreSystems: isAz ? "Əsas Sistemlər" : "Core Systems",
+  interface: isAz ? "İnterfeys" : "Interface",
+  productScreens: isAz ? "Məhsul Ekranları" : "Product Screens",
+  technicalDepth: isAz ? "Texniki Dərinlik" : "Technical Depth",
+  behindInterface: isAz ? "İnterfeysin Arxasında" : "Behind the Interface",
+  technicalSubtitle: isAz ? "Bu, arxasında verilənlər, məntiq və məzmun dayanan işlək rəqəmsal sistemdir." : "This is a working digital system with data, logic, and content behind it.",
+  aiLayer: isAz ? "AI-Dəstəkli Qat" : "AI-Assisted Layer",
+  design: isAz ? "Dizayn" : "Design",
+  designDirection: isAz ? "Dizayn İstiqaməti" : "Design Direction",
+  whyItMatters: isAz ? "Bu Niyə Vacibdir" : "Why It Matters",
+  projectMeta: isAz ? "Layihə Metası" : "Project Meta",
+  studioRole: isAz ? "Nagiyev Studio-nun Rolu" : "Nagiyev Studio Role",
+  viewMore: isAz ? "Digər layihələrə baxın" : "View more projects"
+};
+
+const getLocalizedDivision = (div: string) => {
+  if (isAz) {
+    if (div === 'digital-systems-ai') return 'Rəqəmsal Sistemlər və AI';
+    if (div === 'product-design') return 'Məhsul Dizaynı';
+    if (div === 'media-production') return 'Media İstehsalı';
+  }
+  return div.replace('-', ' ');
+};
 ---
 
-<BaseLayout title={d.title} description={d.summary} lang={entry.id.startsWith('az/') ? 'az' : 'en'}>
+<BaseLayout title={d.title} description={d.summary} lang={isAz ? 'az' : 'en'}>
   
   <!-- Hero Section -->
   <section class="hero">
@@ -19,7 +51,7 @@ const d = data;
     <div class="container">
       <div class="hero-content">
         <div class="hero-meta reveal-el">
-          <span class="hero-badge">{d.division.replace('-', ' ')}</span>
+          <span class="hero-badge">{getLocalizedDivision(d.division)}</span>
           {d.year && <span class="hero-year">{d.year}</span>}
           {d.client && <span class="hero-client">{d.client}</span>}
         </div>
@@ -49,25 +81,25 @@ const d = data;
       <div class="meta-grid">
         {d.company && (
           <div class="meta-item">
-            <span class="meta-label">Studio</span>
+            <span class="meta-label">{t.studio}</span>
             <span class="meta-value">{d.company}</span>
           </div>
         )}
         {d.role && (
           <div class="meta-item">
-            <span class="meta-label">Role</span>
+            <span class="meta-label">{t.role}</span>
             <span class="meta-value">{d.role}</span>
           </div>
         )}
         {d.platforms && d.platforms.length > 0 && (
           <div class="meta-item">
-            <span class="meta-label">Platforms</span>
+            <span class="meta-label">{t.platforms}</span>
             <span class="meta-value">{d.platforms.join(', ')}</span>
           </div>
         )}
         {d.status && (
           <div class="meta-item">
-            <span class="meta-label">Status</span>
+            <span class="meta-label">{t.status}</span>
             <span class="meta-value">{d.status}</span>
           </div>
         )}
@@ -101,8 +133,8 @@ const d = data;
     <section class="section section--alt">
       <div class="container">
         <div class="section-header reveal-el">
-          <span class="section-tag" style="color: var(--division-ai);">Architecture</span>
-          <h2 class="section-title">Core Systems</h2>
+          <span class="section-tag" style="color: var(--division-ai);">{t.architecture}</span>
+          <h2 class="section-title">{t.coreSystems}</h2>
         </div>
         
         <div class="grid grid--3">
@@ -129,8 +161,8 @@ const d = data;
     <section class="section">
       <div class="container">
         <div class="section-header reveal-el">
-          <span class="section-tag" style="color: var(--division-ai);">Interface</span>
-          <h2 class="section-title">Product Screens</h2>
+          <span class="section-tag" style="color: var(--division-ai);">{t.interface}</span>
+          <h2 class="section-title">{t.productScreens}</h2>
         </div>
         
         <div class="screenshot-grid">
@@ -153,11 +185,11 @@ const d = data;
       <div class="container">
         <div class="two-col-layout reveal-el">
           <div class="two-col-left">
-            <span class="section-tag" style="color: var(--division-ai);">Technical Depth</span>
-            <h2 class="section-title">Behind the Interface</h2>
-            <p class="section-subtitle">This is a working digital system with data, logic, and content behind it.</p>
+            <span class="section-tag" style="color: var(--division-ai);">{t.technicalDepth}</span>
+            <h2 class="section-title">{t.behindInterface}</h2>
+            <p class="section-subtitle">{t.technicalSubtitle}</p>
             <div class="decorative-image-wrapper mt-8 reveal-el">
-              <img src={d.architecture_image || "https://placehold.co/800x1000/1c1917/a8a29e?text=System\\nArchitecture"} alt="Architecture" class="decorative-image" loading="lazy" />
+              <img src={d.architecture_image || "/images/projects/nobo/sa.png"} alt="Architecture" class="decorative-image" loading="lazy" />
             </div>
           </div>
           <div class="two-col-right">
@@ -182,7 +214,7 @@ const d = data;
         <div class="ai-box">
           <div class="ai-header">
             <Icon name="lucide:bot" class="ai-icon" />
-            <h3>AI-Assisted Layer</h3>
+            <h3>{t.aiLayer}</h3>
           </div>
           <p class="ai-desc">{d.ai_description}</p>
           {d.ai_features && d.ai_features.length > 0 && (
@@ -203,8 +235,8 @@ const d = data;
       <div class="container">
         <div class="two-col-layout reveal-el">
           <div class="two-col-left">
-            <span class="section-tag" style="color: var(--division-design);">Design</span>
-            <h2 class="section-title">Design Direction</h2>
+            <span class="section-tag" style="color: var(--division-design);">{t.design}</span>
+            <h2 class="section-title">{t.designDirection}</h2>
             <p class="section-subtitle">{d.design_description}</p>
             <div class="decorative-image-wrapper mt-8 reveal-el">
               <img src={d.design_image || "https://placehold.co/800x1000/1c1917/a8a29e?text=Design\\nSystem"} alt="Design System" class="decorative-image" loading="lazy" />
@@ -232,7 +264,7 @@ const d = data;
     <section class="section section--philosophy">
       <div class="container container--narrow reveal-el">
         <div class="philosophy-content">
-          <h2 class="section-title mb-8 text-center">Why It Matters</h2>
+          <h2 class="section-title mb-8 text-center">{t.whyItMatters}</h2>
           <ul class="value-list">
             {d.value_delivered.map((val, i) => (
               <li class="reveal-el" style={`transition-delay: ${i * 100}ms;`}><Icon name="lucide:arrow-right" class="value-icon" /> {val}</li>
@@ -248,8 +280,8 @@ const d = data;
     <div class="container reveal-el">
       <div class="cta-card">
         <div class="cta-card__content">
-          <span class="section-tag" style="color: rgba(255,255,255,0.7); margin-bottom: 1rem; display: block; text-align: center;">Project Meta</span>
-          <h2>Nagiyev Studio Role</h2>
+          <span class="section-tag" style="color: rgba(255,255,255,0.7); margin-bottom: 1rem; display: block; text-align: center;">{t.projectMeta}</span>
+          <h2>{t.studioRole}</h2>
           <p>{d.studio_role_summary}</p>
           
           {d.studio_areas && d.studio_areas.length > 0 && (
@@ -261,8 +293,8 @@ const d = data;
           )}
           
           <div class="mt-8">
-            <a href={d.cta_link || "/digital-systems-ai/"} class="btn btn--primary btn--large" style="background: var(--division-ai);">
-              {d.cta_text || "View more projects"}
+            <a href={d.cta_link || (isAz ? "/az/digital-systems-ai/" : "/digital-systems-ai/")} class="btn btn--primary btn--large" style="background: var(--division-ai);">
+              {d.cta_text || t.viewMore}
               <Icon name="lucide:arrow-right" class="icon" />
             </a>
           </div>

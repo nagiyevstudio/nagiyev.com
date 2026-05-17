@@ -29,7 +29,7 @@ const navItems = [
   { href: `${prefix}/digital-systems-ai/`, label: locale === 'az' ? 'Rəqəmsal Sistemlər' : 'Digital Systems' },
   { href: `${prefix}/product-design/`, label: locale === 'az' ? 'Dizayn' : 'Design' },
   { href: `${prefix}/media-production/`, label: locale === 'az' ? 'Media' : 'Media' },
-  { href: `${prefix}/about/`, label: locale === 'az' ? 'Haqqında' : 'About' },
+  { href: `${prefix}/contact/`, label: locale === 'az' ? 'Əlaqə' : 'Contact' },
 ];
 ---
 
@@ -128,7 +128,7 @@ const navItems = [
           {navItems.map(item => (
             <a href={item.href}>{item.label}</a>
           ))}
-          <a href={`${prefix}/contact/`}>{locale === 'az' ? 'Əlaqə' : 'Contact'}</a>
+
         </nav>
         
         <div class="footer-contact">

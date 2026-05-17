@@ -7,7 +7,7 @@ client: "FinTech Startup"
 summary: "End-to-end product design and UI system for a personal finance management application."
 cover: "/images/projects/finance-tracker/cover.jpg"
 tags: ["UI/UX", "Design System", "Fintech"]
-featured: true
+featured: false
 ---
 
 ## 1. Context & Objective
