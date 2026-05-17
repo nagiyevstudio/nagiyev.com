@@ -1,324 +1,200 @@
-# CONTENT_GUIDE.md — Nagiyev Studio
+# CONTENT_GUIDE.md — Nagiyev Studio Website
 
-> **Для Faik.** Как писать контент для сайта.  
-> Все страницы — это Markdown-файлы с frontmatter.  
-> Написал → запушил → `npm run build` → сайт обновился.
-
----
-
-## 1. Где лежат файлы
-
-```
-src/content/
-├── projects/        ← кейсы (все три контура)
-├── divisions/       ← контент для landing-страниц контуров
-└── pages/           ← about, contact, home
-```
-
-Картинки лежат здесь:
-
-```
-public/images/
-├── projects/
-│   ├── azerscope/
-│   │   ├── cover.jpg
-│   │   ├── screen-1.jpg
-│   │   └── screen-2.jpg
-│   └── branding-system/
-│       ├── cover.jpg
-│       └── mockup-1.jpg
-├── divisions/
-│   └── ...
-└── common/
-    ├── logo.svg
-    ├── founder.jpg
-    └── og-default.jpg
-```
+This guide explains how to add and edit content on the Nagiyev Studio website. 
+The site is built with Astro and uses **Markdown Collections**. This means you don't need an admin panel—you just edit `.md` files in the project folder.
 
 ---
 
-## 2. Projects (Кейсы)
+## 1. Directory Structure
 
-**Путь:** `src/content/projects/azerscope.md`
+All content lives inside `site/src/content/`. There are three main collections:
+- `projects/` — Your case studies and portfolio works.
+- `divisions/` — Landing pages for your 3 core directions.
+- `pages/` — Static pages like Home, Contact, etc.
 
-**Frontmatter — обязательно:**
+Inside each of these folders, there are `en/` and `az/` subfolders. **Every piece of content must have an English and Azerbaijani version** with the exact same filename.
+
+Example:
+- `site/src/content/projects/en/azerscope.md`
+- `site/src/content/projects/az/azerscope.md`
+
+---
+
+## 2. Managing Images
+
+All images must be placed inside `site/public/images/`.
+
+- `public/images/projects/` — For case studies. Create a subfolder for each project (e.g., `projects/azerscope/`).
+- `public/images/divisions/` — For division hero images.
+- `public/images/common/` — For global assets (logo, default OG image, etc.).
+
+**Referencing images in Markdown:**
+Always use absolute paths starting with `/images/...`.
+*Example:* `cover: "/images/projects/azerscope/cover.png"`
+
+---
+
+## 3. How to Add a New Project
+
+1. Create a new `.md` file in `site/src/content/projects/en/` (e.g., `my-project.md`).
+2. Add the **frontmatter** (metadata between `---` lines) at the top.
+3. Write the body content below the frontmatter.
+4. Copy the file to `site/src/content/projects/az/my-project.md` and translate the text values.
+
+### Project Frontmatter Schema
+
+Here is a full template of the fields you can use for a project. You can copy this and fill in the blanks.
 
 ```yaml
 ---
-title: "AzerScope"
-title_az: "AzerScope"
-slug: "azerscope"
-division: "digital-systems-ai"
-type: "case-study"
-year: 2026
-client: "Azerbaijan Astronomical Society"
-summary: "Astronomy platform and mobile app for community, events and observation planning."
-summary_az: "Astronomiya platforması və mobil tətbiq — icma, tədbirlər və müşahidələrin planlaşdırılması."
-cover: "/images/projects/azerscope/cover.jpg"
+title: "Project Name"
+division: "digital-systems-ai" # Must be one of: 'digital-systems-ai', 'product-design', 'media-production'
+type: "case-study" # Optional. E.g., 'case-study', 'design-showcase'
+category: "Web Platform" # Optional
+year: 2026 # Optional
+summary: "A short 1-2 sentence description of the project."
+cover: "/images/projects/my-project/cover.png" # Required for project cards
 tags:
   - AI
-  - Mobile App
-  - Astronomy
-  - Community Platform
-featured: true
+  - Dashboard
+  - React
+featured: true # Set to true to show on the Homepage
+
+# --- Extended fields for premium project pages ---
+status: "Released" # E.g., "In Development", "Released"
+platforms:
+  - "Web"
+  - "iOS"
+role: "Product strategy, UI/UX"
+company: "Nagiyev Studio" # Or client name
+
+hero_description: "A slightly longer description for the top of the project page."
+positioning_statement: "Why this project matters and what Nagiyev Studio did."
+
+# Core Systems (Used primarily for AI / Digital Systems)
+core_systems:
+  - title: "System Module 1"
+    description: "What this module does."
+    items:
+      - "Feature A"
+      - "Feature B"
+
+# Gallery / Screenshots
+screenshots:
+  - image: "/images/projects/my-project/screen1.png"
+    caption: "Dashboard view showing user analytics."
+  - image: "/images/projects/my-project/screen2.png"
+    caption: "Mobile view."
+
+# Technical & AI fields
+technical_layers:
+  - "Real-time data synchronization"
+  - "Role-based access control"
+
+ai_description: "How AI is used in this project."
+ai_features:
+  - "Automated categorization"
+  - "Recommendation engine"
+
+# Design fields
+design_description: "The visual language used."
+design_image: "/images/projects/my-project/design-system.png"
+design_principles:
+  - "Dark theme optimized"
+  - "High contrast typography"
+
+# Value & Outcomes
+value_delivered:
+  - "Increased user retention by 20%"
+  - "Automated 5 hours of manual work per week"
+
+# Architecture
+architecture_image: "/images/projects/my-project/architecture.png"
+
+# Studio Role
+studio_role_summary: "Nagiyev Studio handled everything from A to Z."
+studio_areas:
+  - "UX Research"
+  - "Frontend Development"
+
+cta_text: "View more Design projects"
+cta_link: "/product-design/"
 ---
+
+Body content goes here. You can write any markdown you want. It will be rendered at the bottom of the project layout.
 ```
 
-**Тело — Markdown:**
-
-```md
-## The Challenge
-
-The Azerbaijani astronomical community needed a centralized platform...
-
-## What We Built
-
-A comprehensive system consisting of three main parts:
-
-- **Mobile App** — observation planning, event calendar, sky maps
-- **Web Platform** — community hub, project management, data sharing
-- **AI Layer** — weather prediction, observation scheduling, object recognition
-
-## Technical Architecture
-
-[description...]
-
-## Results
-
-[description...]
-```
-
-### Типы кейсов по контурам
-
-| Контур               | `type`            | Структура тела (рекомендация)                                  |
-| -------------------- | ----------------- | -------------------------------------------------------------- |
-| Digital Systems & AI | `case-study`      | Challenge → Solution → Architecture → Screenshots → Results    |
-| Product & Design     | `design-showcase` | Context → Visual Direction → Screens → Design System → Outcome |
-| Media Production     | `media-portfolio` | Client → Scope → Selected Visuals → Deliverables               |
-
-### Правила:
-
-- **slug** — lowercase, латиница, дефисы вместо пробелов: `azerscope`, `finance-tracker`
-- **title_az** — обязательно, даже если совпадает с title
-- **summary_az** — обязательно
-- **cover** — абсолютный путь к картинке, начиная с `/images/...` (без указания папки public)
-- **featured: true** — проект попадёт на главную страницу (3–6 проектов)
-- **tags** — короткие, на английском
-- **Тело** — можно писать на одном языке, если контент одинаковый по смыслу. Но лучше EN + AZ в отдельных файлах (см. i18n ниже)
-- **client** — можно пропустить, если NDA: просто не указывай поле
+*Note: You do not have to use all the extended fields. The layout will adapt dynamically and hide sections if fields are missing.*
 
 ---
 
-## 3. Divisions (Контурные landing-страницы)
+## 4. Editing Division Pages
 
-**Путь:** `src/content/divisions/digital-systems-ai.md`
+Divisions (`digital-systems-ai.md`, `product-design.md`, `media-production.md`) use a different schema tailored for landing pages.
 
 ```yaml
 ---
-key: "digital-systems-ai"
+key: "digital-systems-ai" # Must match exactly
 title: "Digital Systems & AI"
-title_az: "Rəqəmsal Sistemlər və Süni İntellekt"
-subtitle: "Enterprise-grade AI systems, SaaS platforms and intelligent automation."
-subtitle_az: "Müəssisə səviyyəli AI sistemləri, SaaS platformaları və ağıllı avtomatlaşdırma."
-description: "We design and build AI-powered digital systems that solve real business problems. From intelligent dashboards to complex SaaS platforms, every system is engineered for reliability, clarity and scale."
-description_az: "Biz real biznes problemlərini həll edən AI ilə işləyən rəqəmsal sistemlər dizayn edir və qururuq. Ağıllı dashboardlardan mürəkkəb SaaS platformalarına qədər hər bir sistem etibarlılıq, aydınlıq və miqyas üçün mühəndislik edilir."
+subtitle: "Digital infrastructure built around real business logic."
+description: "Short meta description for SEO."
+
+hero_headline: "Digital systems built around real business logic."
+hero_supporting: "We design and develop platforms..."
+
 capabilities:
-  - AI Systems & Agents
-  - SaaS Platforms
-  - Dashboards & Internal Tools
-  - Web & Mobile Applications
-  - Automation & Workflow
-  - API Integrations
-capabilities_az:
-  - AI Sistemləri və Agentlər
-  - SaaS Platformaları
-  - Dashboardlar və Daxili Alətlər
-  - Veb və Mobil Tətbiqlər
-  - Avtomatlaşdırma və İş Axını
-  - API İnteqrasiyaları
-approach: "Every system starts with understanding the problem. We map workflows, identify automation opportunities, and design architectures that grow with your organization."
-approach_az: "Hər bir sistem problemi anlamaqdan başlayır. İş axınlarını xəritələşdiririk, avtomatlaşdırma imkanlarını müəyyən edirik və təşkilatınızla birlikdə böyüyən arxitekturalar dizayn edirik."
+  - "Corporate websites"
+  - "CRM systems"
+  - "Internal dashboards"
+
+services:
+  - "Web Development"
+  - "Platform Architecture"
+
+experience_summary: "A paragraph about our deep experience in this field..."
+
+good_fit:
+  - "A serious website or digital presentation"
+  - "Automation of repeated internal processes"
+
+cta_text: "Let's build your system"
+cta_supporting: "Tell us what process you want to build."
+
 cover: "/images/divisions/ai-hero.jpg"
 ---
 ```
 
-### Три файла:
-
-| Файл                    | `key`                |
-| ----------------------- | -------------------- |
-| `digital-systems-ai.md` | `digital-systems-ai` |
-| `product-design.md`     | `product-design`     |
-| `media-production.md`   | `media-production`   |
-
 ---
 
-## 4. Pages (About, Contact, Home)
+## 5. Editing Static Pages (Home, Contact)
 
-### About
-
-**Путь:** `src/content/pages/about.md`
-
-```yaml
----
-key: "about"
-title: "About Nagiyev Studio"
-title_az: "Nagiyev Studio Haqqında"
----
-
-Nagiyev Studio is a multidisciplinary digital practice based in Baku, Azerbaijan.
-
-We combine expertise in AI systems, product design and media production to build complete digital ecosystems — not just websites or apps.
-
-## Who We Are
-
-[founder bio, studio positioning, philosophy...]
-
-## What We Believe
-
-[approach, values...]
-```
-
-### Contact
-
-**Путь:** `src/content/pages/contact.md`
-
-```yaml
----
-key: "contact"
-title: "Contact"
-title_az: "Əlaqə"
----
-
-[Короткий текст — остальное будет кнопками WA/TG/phone в шаблоне]
-
-Let's discuss your project. Reach out through any channel below.
-```
-
-### Homepage
-
-**Путь:** `src/content/pages/home.md`
+These live in `site/src/content/pages/`.
+For example, the homepage content (`home.md`):
 
 ```yaml
 ---
 key: "home"
 title: "Nagiyev Studio"
-title_az: "Nagiyev Studio"
-hero_headline: "AI-powered digital systems, product design and media production for modern organizations."
-hero_headline_az: "Müasir təşkilatlar üçün AI ilə işləyən rəqəmsal sistemlər, məhsul dizaynı və media istehsalı."
+hero_headline: "AI-powered digital systems..."
+hero_supporting_text: "Nagiyev Studio is a multidisciplinary practice..."
 hero_cta: "Discuss a project"
-hero_cta_az: "Layihəni müzakirə edin"
-philosophy: "We build complete digital ecosystems — not just websites or apps. Every project combines strategic thinking, technical excellence and design craft."
-philosophy_az: "Biz sadəcə veb-sayt və ya tətbiq deyil, tam rəqəmsal ekosistemlər qururuq. Hər bir layihə strateji düşüncə, texniki mükəmməllik və dizayn sənətkarlığını birləşdirir."
+philosophy: "We don't just write code, we build business logic."
+bottom_cta_title: "Ready to start?"
+bottom_cta_text: "Send us a message directly via WhatsApp or Telegram."
+bottom_cta_button: "Contact Us"
 ---
 ```
 
 ---
 
-## 5. i18n — Как писать два языка
+## 6. How to Deploy Updates
 
-### Для frontmatter:
+When you edit, add, or delete any Markdown file or image, you simply commit the changes and push them to the `main` branch.
 
-Каждое текстовое поле имеет пару:
-
-```yaml
-title: "English text"
-title_az: "Azərbaycan mətni"
+```bash
+git add .
+git commit -m "Added new project X"
+git push origin main
 ```
 
-### Для тела (body content):
-
-**Вариант A (рекомендуемый):** Два файла.
-
-```
-src/content/projects/azerscope.md         ← EN
-src/content/projects/azerscope-az.md      ← AZ (slug: "azerscope")
-```
-
-В frontmatter AZ-версии добавляешь `locale: "az"`.
-
-**Вариант B (простой):** Один файл, оба языка в теле.
-
-```md
-<!-- en -->
-## The Challenge
-...
-
-<!-- az -->
-## Çağırış
-...
-```
-
-Шаблон сам покажет нужный блок.
-
-**Для division/pages** — аналогично.
-
----
-
-## 6. Картинки
-
-### Где хранить:
-
-```
-public/images/projects/<project-slug>/
-  cover.jpg          ← обложка для листинга
-  screen-1.jpg       ← скриншот 1
-  screen-2.jpg       ← скриншот 2
-```
-
-### Как подключать в frontmatter:
-
-```yaml
-cover: "/images/projects/azerscope/cover.jpg"
-```
-
-### Формат:
-
-- JPG для фото, PNG для скриншотов/графики
-- Оптимальный размер cover: 1200×630px (OG-размер)
-- Названия файлов: lowercase, дефисы, латиница
-
-### Не нужно:
-
-- Создавать поддомен cdn — всё в проекте
-- Указывать папку `public` в путях — для браузера корень сайта начинается внутри `public`.
-
----
-
-## 7. Галереи и скриншоты в теле кейса
-
-Для вставки картинок прямо в тело кейса — Markdown:
-
-```md
-![Dashboard interface showing real-time analytics](/images/projects/azerscope/screen-1.jpg)
-
-*The main dashboard with live data visualization.*
-```
-
-Астро автоматически обработает `<img>` и оптимизирует.
-
----
-
-## 8. Quick Reference
-
-| Что хочешь добавить | Куда писать                          | Пример файла            |
-| ------------------- | ------------------------------------ | ----------------------- |
-| Новый кейс          | `site/src/content/projects/<slug>.md`| `azerscope.md`          |
-| Контент контура     | `site/src/content/divisions/<key>.md`| `digital-systems-ai.md` |
-| О себе              | `site/src/content/pages/about.md`    | `about.md`              |
-| Контакты            | `site/src/content/pages/contact.md`  | `contact.md`            |
-| Картинку кейса      | `site/public/images/projects/<slug>/`| `cover.jpg`             |
-
----
-
-## 9. Workflow
-
-```
-1. Пишешь markdown-файл
-2. Кидаешь картинки в public/images/projects/<slug>/
-3. Указываешь пути в frontmatter (например `/images/...`)
-4. git add → git commit → git push
-5. npm run build
-6. Заливаешь /dist на хостинг
-```
-
-Готово. Ни базы, ни API, ни админки. Просто файлы.
+Our configured **GitHub Actions Workflow** will automatically detect the push, rebuild the static Astro site, and upload it directly to the FTP server. The changes will be live on `nagiyevstudio.com` within a couple of minutes!

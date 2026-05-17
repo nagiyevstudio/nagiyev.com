@@ -1,0 +1,50 @@
+---
+export interface Props {
+  name: string;
+  logoSrc: string;
+  url?: string;
+}
+
+const { name, logoSrc, url } = Astro.props;
+---
+
+<div class="client-logo">
+  {url ? (
+    <a href={url} target="_blank" rel="noopener noreferrer" aria-label={name}>
+      <img src={logoSrc} alt={name} loading="lazy" />
+    </a>
+  ) : (
+    <img src={logoSrc} alt={name} loading="lazy" />
+  )}
+</div>
+
+<style>
+  .client-logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-6);
+    background: var(--color-bg-card);
+    border: var(--border-thin);
+    border-radius: var(--radius-md);
+    transition: all var(--transition-fast);
+  }
+  
+  .client-logo:hover {
+    border-color: var(--color-border-hover);
+    background: var(--color-bg-hover);
+  }
+
+  .client-logo img {
+    max-height: 40px;
+    width: auto;
+    opacity: 0.6;
+    filter: grayscale(100%);
+    transition: all var(--transition-fast);
+  }
+  
+  .client-logo:hover img {
+    opacity: 1;
+    filter: grayscale(0%);
+  }
+</style>

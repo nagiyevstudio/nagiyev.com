@@ -1,0 +1,60 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { Icon } from 'astro-icon/components';
+---
+
+<BaseLayout title="404: Page Not Found" lang="en">
+  <section class="section error-page">
+    <div class="container reveal-el">
+      <div class="error-content">
+        <h1 class="error-code">404</h1>
+        <h2 class="error-title">Page Not Found</h2>
+        <p class="error-text">The page you are looking for doesn't exist or has been moved.</p>
+        <a href="/" class="btn btn--primary">
+          Return to Homepage
+          <Icon name="lucide:arrow-right" class="icon" />
+        </a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .error-page {
+    min-height: 70vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+  
+  .error-content {
+    max-width: 500px;
+    margin: 0 auto;
+  }
+  
+  .error-code {
+    font-size: var(--text-7xl);
+    font-weight: var(--weight-bold);
+    color: var(--color-accent);
+    margin-bottom: var(--space-4);
+    line-height: 1;
+  }
+  
+  .error-title {
+    font-size: var(--text-3xl);
+    margin-bottom: var(--space-4);
+  }
+  
+  .error-text {
+    color: var(--color-text-secondary);
+    margin-bottom: var(--space-8);
+    font-size: var(--text-lg);
+  }
+  
+  .btn .icon {
+    width: 18px;
+    height: 18px;
+    margin-left: var(--space-2);
+  }
+</style>

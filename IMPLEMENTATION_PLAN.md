@@ -133,25 +133,25 @@
 
 ### 0.5 i18n Routing
 
-- [ ] Configure i18n routing:
+- [x] Configure i18n routing:
   - Default locale: `en` (root paths: `/`, `/about/`, etc.)
   - Secondary locale: `az` (prefixed: `/az/`, `/az/about/`, etc.)
   - Use `astro:i18n` or manual routing via `[...slug].astro` + locale detection
-- [ ] Language switcher data: current locale, available locales
-- [ ] Test: `/about/` shows EN, `/az/about/` shows AZ
-- [ ] Test: language switcher renders on all pages
-- [ ] Verify all content collections support EN/AZ variants
+- [x] Language switcher data: current locale, available locales
+- [x] Test: `/about/` shows EN, `/az/about/` shows AZ
+- [x] Test: language switcher renders on all pages
+- [x] Verify all content collections support EN/AZ variants
 
 ### 0.6 SEO Infrastructure
 
-- [ ] Create `<SEO />` component:
+- [x] Create `<SEO />` component:
   - Accepts: `title`, `description`, `ogImage`, `canonicalUrl`
   - Renders: `<title>`, `<meta name="description">`, OG tags, Twitter cards
-- [ ] Set default OG image (placeholder)
-- [ ] Add canonical URL logic (base URL + path)
-- [ ] Create `public/robots.txt`
-- [ ] Create sitemap generation (use `@astrojs/sitemap` or manual)
-- [ ] Add JSON-LD structured data: `Organization` schema in BaseLayout
+- [x] Set default OG image (placeholder)
+- [x] Add canonical URL logic (base URL + path)
+- [x] Create `public/robots.txt`
+- [x] Create sitemap generation (use `@astrojs/sitemap` or manual)
+- [x] Add JSON-LD structured data: `Organization` schema in BaseLayout
 
 ---
 
@@ -164,35 +164,35 @@
 
 ### 1.1 Design Tokens 🎨
 
-- [ ] Wait for design direction from Faik (colors, typography, spacing)
-- [ ] Implement as CSS custom properties in `global.css`:
+- [x] Wait for design direction from Faik (colors, typography, spacing)
+- [x] Implement as CSS custom properties in `global.css`:
   - Colors: `--color-primary`, `--color-bg`, `--color-text`, `--color-accent`, etc.
   - Typography: `--font-heading`, `--font-body`, sizes, weights, line-heights
   - Spacing: `--space-xs` through `--space-2xl`
   - Borders: `--radius-sm/md/lg`, `--border-width`
   - Breakpoints: mobile-first media queries
-- [ ] Division-specific accent colors (AI / Design / Media)
+- [x] Division-specific accent colors (AI / Design / Media)
 
 ### 1.2 Base Layout
 
-- [ ] Create `BaseLayout.astro`:
+- [x] Create `BaseLayout.astro`:
   - `<html>` with lang attribute
   - SEO component
   - Header + Footer slots
   - Global CSS import
   - Skip-to-content link (accessibility)
-- [ ] Header: logo, navigation (Home, 3 divisions, About, Contact), language switcher
-- [ ] Mobile header: burger menu, language switcher ALWAYS visible (outside burger)
-- [ ] Footer: logo, division links, contact links (WA/TG/phone), copyright
+- [x] Header: logo, navigation (Home, 3 divisions, About, Contact), language switcher
+- [x] Mobile header: burger menu, language switcher ALWAYS visible (outside burger)
+- [x] Footer: logo, division links, contact links (WA/TG/phone), copyright
 
 ### 1.3 Division Layout
 
-- [ ] Create `DivisionLayout.astro`:
+- [x] Create `DivisionLayout.astro`:
   - Division hero section
   - Navigation to sub-sections (What We Build, Capabilities, Approach, Work)
   - Content slot
   - CTA section
-- [ ] Division-specific accent styling (border, subtle background tint)
+- [x] Division-specific accent styling (border, subtle background tint)
 
 ### 1.4 Project Layout
 - [x] Create `ProjectLayout.astro`:
@@ -209,21 +209,21 @@
 
 ### 1.5 Core Components
 
-- [ ] `Hero.astro` — headline, subtitle, CTA, optional background image, CSS animation
-- [ ] `DivisionCard.astro` — division preview card for homepage
-- [ ] `ProjectCard.astro` — project card for listing (cover, title, summary, tags, year)
-- [ ] `CTA.astro` — call-to-action block (text + WA/TG/phone links)
-- [ ] `ClientLogo.astro` — client logo in grid
-- [ ] `LanguageSwitcher.astro` — EN/AZ toggle, always visible
-- [ ] `Gallery.astro` — image grid with lightbox (pure CSS/JS, no React)
-- [ ] `TagList.astro` — project tags display
+- [x] `Hero.astro` — headline, subtitle, CTA, optional background image, CSS animation
+- [x] `DivisionCard.astro` — division preview card for homepage
+- [x] `ProjectCard.astro` — project card for listing (cover, title, summary, tags, year)
+- [x] `CTA.astro` — call-to-action block (text + WA/TG/phone links)
+- [x] `ClientLogo.astro` — client logo in grid
+- [x] `LanguageSwitcher.astro` — EN/AZ toggle, always visible
+- [x] `Gallery.astro` — image grid with lightbox (pure CSS/JS, no React)
+- [x] `TagList.astro` — project tags display
 
 ### 1.6 Responsive & Mobile
 
-- [ ] Mobile-first approach throughout
-- [ ] Burger menu (pure CSS checkbox hack or vanilla JS)
-- [ ] Responsive images (srcset, sizes)
-- [ ] Test: all layouts at 320px, 768px, 1024px, 1440px
+- [x] Mobile-first approach throughout
+- [x] Burger menu (pure CSS checkbox hack or vanilla JS)
+- [x] Responsive images (srcset, sizes)
+- [x] Test: all layouts at 320px, 768px, 1024px, 1440px
 
 ---
 
@@ -234,39 +234,39 @@
 ### 2.1 Homepage
 
 - [x] Build from `home.md` content + collections
-- [ ] Sections:
+- [~] Sections:
   1. Hero (headline, subtitle, single CTA, CSS animation) [x]
   2. Core Divisions (3 division cards → link to division landings) [x]
-  3. Selected Work (3–6 featured projects from collections)
-  4. Studio Approach (philosophy block)
+  3. Selected Work (3–6 featured projects from collections) [x]
+  4. Studio Approach (philosophy block) [x]
   5. Clients / Collaborations (logo grid)
   6. About Preview (lead text + link to About)
-  7. Final CTA (WA/TG/phone)
-- [ ] Featured projects pulled from `projects` collection where `featured: true`
-- [ ] Test: both languages, responsive
+  7. Final CTA (WA/TG/phone) [x]
+- [x] Featured projects pulled from `projects` collection where `featured: true`
+- [x] Test: both languages, responsive
 
 ### 2.2 Division Landing Pages
 
-- [ ] `/digital-systems-ai/` — AI division landing
-- [ ] `/product-design/` — Design division landing
-- [ ] `/media-production/` — Media division landing
-- [ ] Each pulls from `divisions` collection + related projects
-- [ ] Sections per landing:
-  1. Hero / Intro
-  2. What We Build (capabilities list)
-  3. Selected Work (division's featured projects)
-  4. Approach / Philosophy
-  5. CTA
-- [ ] Test: all 3 divisions, both languages
+- [x] `/digital-systems-ai/` — AI division landing
+- [x] `/product-design/` — Design division landing
+- [x] `/media-production/` — Media division landing
+- [x] Each pulls from `divisions` collection + related projects
+- [~] Sections per landing:
+  1. Hero / Intro [x]
+  2. What We Build (capabilities list) [x]
+  3. Selected Work (division's featured projects) [x]
+  4. Approach / Philosophy [x]
+  5. CTA [x]
+- [x] Test: all 3 divisions, both languages
 
 ### 2.3 Project Listing Pages
 
-- [ ] `/work/` — all projects (optional: may skip if divisions handle listing)
+- [x] `/work/` — all projects (optional: may skip if divisions handle listing)
 - [ ] `/digital-systems-ai/work/` — AI projects only
 - [ ] `/product-design/work/` — Design projects only
 - [ ] `/media-production/work/` — Media projects only
-- [ ] Grid of `ProjectCard` components
-- [ ] Sort by year descending, featured first
+- [x] Grid of `ProjectCard` components
+- [x] Sort by year descending, featured first
 
 ### 2.4 Project Detail Pages
 - [x] Dynamic route: `/projects/[slug].astro`
@@ -277,25 +277,25 @@
 
 ### 2.5 About Page 🎨
 
-- [ ] `/about/` from `pages/about.md`
+- [!] `/about/` from `pages/about.md` (Note: Contact page is prioritized over About page in navigation)
 - [ ] Founder section, studio positioning, philosophy
 - [ ] Test: both languages
 
 ### 2.6 Contact Page
 
-- [ ] `/contact/` from `pages/contact.md`
-- [ ] Clean layout with direct links:
+- [x] `/contact/` from `pages/contact.md`
+- [x] Clean layout with direct links:
   - WhatsApp → `wa.me/...`
   - Telegram → `t.me/...`
   - Phone → `tel:...`
   - Email → `mailto:...`
-- [ ] No form, no PHP
-- [ ] Test: both languages, links work on mobile
+- [x] No form, no PHP
+- [x] Test: both languages, links work on mobile
 
 ### 2.7 404 Page
 
-- [ ] Create `404.astro`
-- [ ] Simple page with logo, "Page not found", link to home
+- [x] Create `404.astro`
+- [x] Simple page with logo, "Page not found", link to home
 
 ---
 
@@ -305,14 +305,14 @@
 
 ### 3.1 Content Guide for Faik
 
-- [ ] Create `CONTENT_GUIDE.md` with:
+- [x] Create `CONTENT_GUIDE.md` with:
   - How to write project markdown (frontmatter schema + examples)
   - How to write division content
   - How to write about/contact content
   - How to add images (where to place, naming convention)
   - How to handle EN/AZ pairs
   - What triggers a rebuild
-- [ ] Create `content-examples/` with filled sample files:
+- [x] Create `content-examples/` with filled sample files:
   - 1 AI case study (complete example)
   - 1 Design case study (complete example)
   - 1 Media project (complete example)
@@ -321,11 +321,11 @@
 
 ### 3.2 Content Integration
 
-- [ ] Integrate Faik's real content as it arrives
-- [ ] Add all images to `/src/assets/images/`
-- [ ] Verify all frontmatter validates against schemas
-- [ ] Verify all EN/AZ pairs present
-- [ ] Check broken links between pages
+- [x] Integrate Faik's real content as it arrives
+- [x] Add all images to `/src/assets/images/`
+- [x] Verify all frontmatter validates against schemas
+- [x] Verify all EN/AZ pairs present
+- [x] Check broken links between pages
 
 ---
 
@@ -358,11 +358,11 @@
 ### 4.3 Deploy
 
 - [x] Configure GitHub Actions FTP Deploy workflow (with build step, port 21, and FTP secrets)
-- [ ] `npm run build` → verify `/dist` output
-- [ ] Upload `/dist` contents to hosting (main domain root)
-- [ ] Configure `.htaccess` for clean URLs and 404 redirect
-- [ ] Verify all routes work on live domain
-- [ ] Verify SSL is active
+- [x] `npm run build` → verify `/dist` output
+- [x] Upload `/dist` contents to hosting (main domain root)
+- [x] Configure `.htaccess` for clean URLs and 404 redirect
+- [x] Verify all routes work on live domain
+- [x] Verify SSL is active
 
 ### 4.4 Post-Launch
 

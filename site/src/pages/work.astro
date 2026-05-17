@@ -1,0 +1,143 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+// Fetch all projects for EN locale
+const projects = await getCollection('projects', ({ id }) => id.startsWith('en/'));
+
+// Sort by year (descending), then featured first
+projects.sort((a, b) => {
+  if (a.data.featured && !b.data.featured) return -1;
+  if (!a.data.featured && b.data.featured) return 1;
+  const yearA = a.data.year || 0;
+  const yearB = b.data.year || 0;
+  return yearB - yearA;
+});
+
+const formattedProjects = projects.map((p) => ({
+  slug: p.id.replace(/^en\//, '').replace(/\.md$/, ''),
+  title: p.data.title,
+  summary: p.data.summary,
+  division: p.data.division,
+  cover: p.data.cover,
+}));
+---
+
+<BaseLayout title="All Work — Nagiyev Studio" description="Explore all our selected projects across AI, Design, and Media." lang="en">
+  <section class="section page-header">
+    <div class="container reveal-el">
+      <h1 class="page-title">Selected Work</h1>
+      <p class="page-subtitle">A collection of our projects across Digital Systems & AI, Product Design, and Media Production.</p>
+    </div>
+  </section>
+
+  <section class="section section--alt work-grid-section">
+    <div class="container">
+      <div class="grid grid--3">
+        {formattedProjects.map((p, i) => (
+          <a href={`/projects/${p.slug}`} class="project-card reveal-el" style={`transition-delay: ${(i % 3) * 100}ms;`}>
+            {p.cover ? (
+              <div class="project-card__image">
+                <img src={p.cover} alt={p.title} loading="lazy" />
+              </div>
+            ) : (
+              <div class="project-card__placeholder"></div>
+            )}
+            <div class="project-card__content">
+              <span class="project-card__division">{p.division.replace('-', ' ')}</span>
+              <h3>{p.title}</h3>
+              <p>{p.summary}</p>
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .page-header {
+    padding: var(--space-24) 0 var(--space-16);
+    text-align: center;
+  }
+  
+  .page-title {
+    font-size: var(--text-5xl);
+    margin-bottom: var(--space-4);
+  }
+  
+  .page-subtitle {
+    font-size: var(--text-xl);
+    color: var(--color-text-secondary);
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  
+  .work-grid-section {
+    padding-top: var(--space-16);
+    padding-bottom: var(--space-32);
+  }
+
+  /* Duplicated Project Card Styles from Index - normally would be in a component */
+  .project-card {
+    background: var(--color-bg-card);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    border: var(--border-thin);
+    transition: all var(--transition-base);
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+
+  .project-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-md);
+    border-color: var(--color-text);
+  }
+
+  .project-card__image {
+    aspect-ratio: 16/9;
+    overflow: hidden;
+  }
+
+  .project-card__placeholder {
+    aspect-ratio: 16/9;
+    background: var(--color-bg-hover);
+  }
+
+  .project-card__image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform var(--transition-slow);
+  }
+
+  .project-card:hover .project-card__image img {
+    transform: scale(1.05);
+  }
+
+  .project-card__content {
+    padding: var(--space-6);
+    flex-grow: 1;
+  }
+
+  .project-card__division {
+    font-size: var(--text-xs);
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+    font-weight: var(--weight-bold);
+    margin-bottom: var(--space-2);
+    display: block;
+  }
+
+  .project-card h3 {
+    font-size: var(--text-xl);
+    margin-bottom: var(--space-2);
+  }
+
+  .project-card p {
+    font-size: var(--text-sm);
+    color: var(--color-text-secondary);
+  }
+</style>
