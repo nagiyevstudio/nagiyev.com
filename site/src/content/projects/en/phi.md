@@ -5,7 +5,7 @@ type: "case-study"
 category: "AI System"
 year: 2026
 summary: "Phi is a personal finance tracker built around fast income and expense recording, category-based analysis, voice input, receipt recognition and AI-assisted data processing."
-cover: "/images/projects/phi/cover.svg"
+cover: "/images/projects/phi/cover.png"
 tags:
   - Mobile App
   - AI System
@@ -49,14 +49,14 @@ core_systems:
       - "Adapt to real local financial behavior"
 
 screenshots:
-  - image: "/images/projects/phi/dashboard.svg"
-    caption: "A compact overview of income, expenses, balance and category distribution. Recommended size: 1200x800px"
-  - image: "/images/projects/phi/add-operation.svg"
-    caption: "Manual and voice-assisted entry for quick financial logging. Recommended size: 1200x800px"
-  - image: "/images/projects/phi/receipt-scanner.svg"
-    caption: "A camera-based flow for scanning paper receipts and extracting structured financial data. Recommended size: 1200x800px"
-  - image: "/images/projects/phi/qr-recognition.svg"
-    caption: "A dedicated flow for scanning Azerbaijan electronic receipt QR codes. Recommended size: 1200x800px"
+  - image: "/images/projects/phi/dashboard.png"
+    caption: "A compact and informative view of daily financial operations and recent activity."
+  - image: "/images/projects/phi/add-operation.png"
+    caption: "Category-based analysis and expense distribution to understand spending patterns at a glance."
+  - image: "/images/projects/phi/receipt-scanner.png"
+    caption: "Voice-assisted operation entry for fast, hands-free financial logging."
+  - image: "/images/projects/phi/qr-recognition.png"
+    caption: "A unified scanning interface for paper receipts and electronic QR codes, powered by AI processing."
 
 technical_layers:
   - "Mobile-first finance tracking interface"
@@ -71,7 +71,7 @@ technical_layers:
   - "Structured expense database"
   - "Reduced AI usage over time through backend learning"
 
-architecture_image: "/images/projects/phi/architecture.svg"
+architecture_image: "/images/projects/phi/architecture.png"
 
 ai_description: "Phi does not rely on a single AI call. The system uses several AI contours, each responsible for a separate part of the pipeline. AI handles ambiguity, while the backend stores stable knowledge."
 ai_features:
@@ -82,7 +82,7 @@ ai_features:
   - "Future operations become cheaper and less AI-dependent over time"
 
 design_description: "The interface is designed for everyday use: fast input, clear amount entry, category selection and minimal friction. The product is intentionally simple on the surface while managing complex AI tasks underneath."
-design_image: "/images/projects/phi/design.svg"
+design_image: "/images/projects/phi/design.png"
 design_principles:
   - "Compact dashboard overview"
   - "Minimal friction for daily use"
