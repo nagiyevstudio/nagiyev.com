@@ -366,10 +366,10 @@
 
 ### 4.4 Post-Launch
 
-- [ ] Submit to Google Search Console
-- [ ] Submit to Yandex Webmaster
-- [ ] Verify structured data (Rich Results Test)
-- [ ] Monitor for 404s (first week)
+- [x] Submit to Google Search Console
+- [x] Submit to Yandex Webmaster
+- [x] Verify structured data (Rich Results Test)
+- [x] Monitor for 404s (first week)
 
 ---
 

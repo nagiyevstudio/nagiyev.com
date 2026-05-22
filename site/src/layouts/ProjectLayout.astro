@@ -121,7 +121,7 @@ const getLocalizedDivision = (div: string) => {
 
   <!-- Prose Content (What we built) -->
   <section class="section">
-    <div class="container container--narrow reveal-el">
+    <div class="container reveal-el">
       <div class="prose-content">
         <slot />
       </div>
@@ -166,14 +166,17 @@ const getLocalizedDivision = (div: string) => {
         </div>
         
         <div class="screenshot-grid">
-          {d.screenshots.map((screen, i) => (
-            <div class="screenshot-item reveal-el" style={`transition-delay: ${i * 100}ms;`}>
-              <div class="screenshot-wrapper">
-                <img src={screen.image} alt={screen.caption} class="screenshot-img" loading="lazy" />
+          {d.screenshots.map((screen, i) => {
+            const aspect = screen.aspect || d.screenshot_aspect || 'vertical';
+            return (
+              <div class={`screenshot-item reveal-el`} style={`transition-delay: ${i * 100}ms;`}>
+                <div class={`screenshot-wrapper screenshot-wrapper--${aspect}`}>
+                  <img src={screen.image} alt={screen.caption} class="screenshot-img" loading="lazy" />
+                </div>
+                <p class="screenshot-caption">{screen.caption}</p>
               </div>
-              <p class="screenshot-caption">{screen.caption}</p>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
     </section>
@@ -320,8 +323,36 @@ const initReveal = () => {
   });
 };
 
-document.addEventListener('astro:page-load', initReveal);
+/* ── Split prose into visual blocks ── */
+const initProseBlocks = () => {
+  document.querySelectorAll('.prose-content').forEach(prose => {
+    if (prose.dataset.split) return;
+    prose.dataset.split = 'true';
+    const children = [...prose.children];
+    if (children.length === 0) return;
+    const sections = [];
+    let current = [];
+    children.forEach(child => {
+      if (child.tagName === 'H2' && current.length > 0) {
+        sections.push(current);
+        current = [];
+      }
+      current.push(child);
+    });
+    if (current.length > 0) sections.push(current);
+    while (prose.firstChild) prose.removeChild(prose.firstChild);
+    sections.forEach((section, i) => {
+      const block = document.createElement('div');
+      block.className = 'prose-block' + (i % 2 !== 0 ? ' prose-block--alt' : '');
+      section.forEach(el => block.appendChild(el));
+      prose.appendChild(block);
+    });
+  });
+};
+
+document.addEventListener('astro:page-load', () => { initReveal(); initProseBlocks(); });
 initReveal();
+initProseBlocks();
 </script>
 
 <style>
@@ -515,15 +546,86 @@ initReveal();
   
   .prose-content {
     font-size: var(--text-lg);
-    line-height: var(--leading-relaxed);
+    line-height: 1.85;
     color: var(--color-text-secondary);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
   }
-  
-  .prose-content :global(p) { margin-bottom: var(--space-4); }
+
+  /* ── Prose Blocks ── */
+  .prose-content :global(.prose-block) {
+    padding: var(--space-12) var(--space-10);
+    border-radius: var(--radius-xl);
+    border: var(--border-thin);
+    background: var(--color-bg-card);
+  }
+
+  .prose-content :global(.prose-block--alt) {
+    background: var(--color-bg-hover);
+    border-color: var(--color-border-light);
+  }
+
+  /* Lead paragraph — opening statement */
+  .prose-content :global(.prose-block:first-child > p:first-child) {
+    font-size: var(--text-xl);
+    line-height: 1.75;
+    color: var(--color-text);
+    font-weight: var(--weight-medium);
+  }
+
+  .prose-content :global(.prose-block:first-child > p:first-child::first-letter) {
+    font-size: 3.2em;
+    float: left;
+    line-height: 0.8;
+    margin-right: 0.08em;
+    margin-top: 0.05em;
+    font-weight: var(--weight-bold);
+    color: var(--color-text);
+  }
+
+  .prose-content :global(p) { 
+    margin-bottom: var(--space-6);
+    max-width: none;
+  }
   .prose-content :global(p:last-child) { margin-bottom: 0; }
+
+  /* Section headings inside blocks */
   .prose-content :global(h2) { 
     color: var(--color-text);
-    margin: var(--space-10) 0 var(--space-4) 0;
+    font-size: var(--text-3xl);
+    font-weight: var(--weight-bold);
+    letter-spacing: var(--tracking-tight);
+    margin: 0 0 var(--space-8) 0;
+  }
+
+  .prose-content :global(h2::before) {
+    content: '';
+    display: block;
+    width: 48px;
+    height: 3px;
+    background: var(--division-ai);
+    margin-bottom: var(--space-6);
+    border-radius: 2px;
+  }
+
+  /* Paragraph right after h2 gets subtle emphasis */
+  .prose-content :global(h2 + p) {
+    font-size: var(--text-lg);
+    color: var(--color-text);
+    font-weight: var(--weight-normal);
+  }
+
+  /* Inline strong text */
+  .prose-content :global(strong) {
+    color: var(--color-text);
+    font-weight: var(--weight-semibold);
+  }
+
+  @media (max-width: 640px) {
+    .prose-content :global(.prose-block) {
+      padding: var(--space-8) var(--space-6);
+    }
   }
 
   /* ── Core Systems ── */
@@ -589,10 +691,17 @@ initReveal();
     background: var(--color-bg-inverted);
     border-radius: var(--radius-lg);
     overflow: hidden;
-    aspect-ratio: 9/16;
     display: flex;
     align-items: center;
     justify-content: center;
+  }
+  
+  .screenshot-wrapper--vertical {
+    aspect-ratio: 9/16;
+  }
+  
+  .screenshot-wrapper--horizontal {
+    aspect-ratio: 16/10;
   }
   
   .screenshot-img {

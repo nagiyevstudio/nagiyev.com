@@ -23,9 +23,9 @@ const accentColor = accentColors[divisionKey];
   <div class="division-hero" style={`--division-accent: ${accentColor}`}>
     <div class="container">
       <span class="division-label">
-        {divisionKey === 'digital-systems-ai' && 'Digital Systems & AI'}
-        {divisionKey === 'product-design' && 'Product & Design'}
-        {divisionKey === 'media-production' && 'Media Production'}
+        {divisionKey === 'digital-systems-ai' && (lang === 'az' ? 'Rəqəmsal Sistemlər və AI' : 'Digital Systems & AI')}
+        {divisionKey === 'product-design' && (lang === 'az' ? 'Məhsul və Dizayn' : 'Product & Design')}
+        {divisionKey === 'media-production' && (lang === 'az' ? 'Media İstehsalı' : 'Media Production')}
       </span>
       <slot name="hero" />
     </div>

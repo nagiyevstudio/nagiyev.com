@@ -9,7 +9,11 @@ export interface Props {
   lang?: string; // 'en' | 'az'
 }
 
-const { title, description = 'Nagiyev Studio — AI-powered digital systems, product design and media production.', lang = 'en' } = Astro.props;
+const { lang = 'en' } = Astro.props;
+const defaultDesc = lang === 'az'
+  ? 'Nagiyev Studio — AI-dəstəkli rəqəmsal sistemlər, məhsul dizaynı və media istehsalı.'
+  : 'Nagiyev Studio — AI-powered digital systems, product design and media production.';
+const { title, description = defaultDesc } = Astro.props;
 const locale = lang || 'en';
 const prefix = locale === 'az' ? '/az' : '';
 const currentPath = Astro.url.pathname;
@@ -121,7 +125,11 @@ const navItems = [
       <div class="container footer-content">
         <div class="footer-brand">
           <img src="/images/common/logo.svg" alt="Nagiyev Studio" class="footer-logo-image" />
-          <p class="footer-tagline">AI-powered digital systems, product design and media production.</p>
+          <p class="footer-tagline">
+            {locale === 'az'
+              ? 'AI-dəstəkli rəqəmsal sistemlər, məhsul dizaynı və media istehsalı.'
+              : 'AI-powered digital systems, product design and media production.'}
+          </p>
         </div>
         
         <nav class="footer-nav" aria-label="Footer navigation">
@@ -143,7 +151,7 @@ const navItems = [
           </a>
         </div>
         
-        <p class="footer-copyright">&copy; 2026 Nagiyev Studio. All rights reserved.</p>
+        <p class="footer-copyright">&copy; 2026 Nagiyev Studio. {locale === 'az' ? 'Bütün hüquqlar qorunur.' : 'All rights reserved.'}</p>
       </div>
     </footer>
     <!-- Mobile Menu Script -->

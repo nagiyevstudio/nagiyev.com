@@ -22,8 +22,8 @@ const alternatePath = getAlternatePath(currentLocale === 'en' ? 'az' : 'en', pat
 
 <div class="lang-switcher">
   <a 
-    href={alternatePath} 
-    class={`lang-link ${currentLocale === 'en' ? '' : ''}`}
+    href={currentLocale === 'az' ? path : getAlternatePath('az', path)} 
+    class={`lang-link ${currentLocale === 'az' ? 'active' : ''}`}
     aria-label="Switch to Azerbaijani"
   >
     AZ

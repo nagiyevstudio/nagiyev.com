@@ -30,9 +30,11 @@ const projectsCollection = defineCollection({
       description: z.string(),
       items: z.array(z.string()).optional(),
     })).optional(),
+    screenshot_aspect: z.enum(['vertical', 'horizontal']).optional(),
     screenshots: z.array(z.object({
       image: z.string(),
       caption: z.string(),
+      aspect: z.enum(['vertical', 'horizontal']).optional(),
     })).optional(),
     technical_layers: z.array(z.string()).optional(),
     ai_description: z.string().optional(),

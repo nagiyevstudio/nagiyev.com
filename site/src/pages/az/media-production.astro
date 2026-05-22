@@ -7,14 +7,14 @@ const divisionEntries = await getCollection('divisions', ({ data, id }) => data.
 const divisionEntry = divisionEntries[0];
 const d = divisionEntry?.data;
 
-const mediaProjects = await getCollection('projects', ({ data }) =>
-  data.division === 'media-production'
+const mediaProjects = await getCollection('projects', ({ data, id }) =>
+  data.division === 'media-production' && id.startsWith('az/')
 );
 
 const projects = mediaProjects.map((p) => ({
-  slug: p.id,
-  title: p.data.title,
-  summary: p.data.summary,
+  slug: p.id.replace(/^az\//, ''),
+  title: p.data.title_az || p.data.title,
+  summary: p.data.summary_az || p.data.summary,
   client: p.data.client,
   year: p.data.year,
   cover: p.data.cover,
@@ -184,6 +184,37 @@ const projects = mediaProjects.map((p) => ({
           <li><Icon name="lucide:arrow-right" class="value-icon" /> Mürəkkəb mövzularla işləmək bacarığı: mədəniyyət, elm, sənaye, ictimai kommunikasiya</li>
           <li><Icon name="lucide:arrow-right" class="value-icon" /> Media istehsalını dizayn, rəqəmsal sistemlər və biznes təqdimatı ile əlaqələndirmək</li>
         </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Clients & Partners ── -->
+  <section class="section">
+    <div class="container">
+      <div class="section-header reveal-el" style="text-align: center; margin: 0 auto var(--space-12);">
+        <span class="section-tag" style="color: var(--division-media);">Şəbəkə</span>
+        <h2 class="section-title">Müştərilər və Tərəfdaşlar</h2>
+      </div>
+      
+      <div class="clients-grid reveal-el">
+        <div class="client-logo">
+          <img src="/images/clients/media/media_client_1.png" alt="Müştəri 1" loading="lazy" />
+        </div>
+        <div class="client-logo">
+          <img src="/images/clients/media/media_client_2.png" alt="Müştəri 2" loading="lazy" />
+        </div>
+        <div class="client-logo">
+          <img src="/images/clients/media/media_client_3.png" alt="Müştəri 3" loading="lazy" />
+        </div>
+        <div class="client-logo">
+          <img src="/images/clients/media/media_client_4.png" alt="Müştəri 4" loading="lazy" />
+        </div>
+        <div class="client-logo">
+          <img src="/images/clients/media/media_client_5.png" alt="Müştəri 5" loading="lazy" />
+        </div>
+        <div class="client-logo">
+          <img src="/images/clients/media/media_client_6.png" alt="Müştəri 6" loading="lazy" />
+        </div>
       </div>
     </div>
   </section>
@@ -474,6 +505,46 @@ initReveal();
   .btn--large { padding: var(--space-4) var(--space-10); font-size: var(--text-lg); }
   .btn .icon { width: 18px; height: 18px; transition: transform var(--transition-fast); }
   .btn:hover .icon { transform: translateX(3px); }
+
+  /* ── Clients Grid ── */
+  .clients-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--space-8);
+    align-items: center;
+  }
+  @media (min-width: 768px) {
+    .clients-grid {
+      gap: var(--space-12);
+    }
+  }
+
+  .client-logo {
+    width: 120px;
+    height: auto;
+    opacity: 0.4;
+    transition: all var(--transition-base);
+    filter: grayscale(100%);
+  }
+  @media (min-width: 768px) {
+    .client-logo {
+      width: 160px;
+    }
+  }
+
+  .client-logo:hover {
+    opacity: 1;
+    filter: grayscale(0%);
+    transform: scale(1.05);
+  }
+
+  .client-logo img {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    display: block;
+  }
 
   /* ── Scroll Reveal ── */
   .reveal-el { opacity: 0; transform: translateY(30px); transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
