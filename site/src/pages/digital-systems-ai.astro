@@ -203,6 +203,9 @@ const projects = aiProjects.map((p) => ({
         <div class="client-logo">
           <img src="/images/clients/ai/ai_client_4.png" alt="Client 4" loading="lazy" />
         </div>
+        <div class="client-logo">
+          <img src="/images/clients/ai/ai_client_5.png" alt="Client 5" loading="lazy" />
+        </div>
       </div>
     </div>
   </section>
@@ -821,29 +824,31 @@ initReveal();
 
   /* ── Clients Grid ── */
   .clients-grid {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
     gap: var(--space-8);
     align-items: center;
+    justify-items: center;
   }
-  @media (min-width: 768px) {
+  @media (min-width: 640px) {
     .clients-grid {
-      gap: var(--space-12);
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+  @media (min-width: 1024px) {
+    .clients-grid {
+      grid-template-columns: repeat(5, 1fr);
+      gap: var(--space-10);
     }
   }
 
   .client-logo {
-    width: 120px;
+    width: 100%;
+    max-width: 160px;
     height: auto;
     opacity: 0.4;
     transition: all var(--transition-base);
     filter: grayscale(100%);
-  }
-  @media (min-width: 768px) {
-    .client-logo {
-      width: 160px;
-    }
   }
 
   .client-logo:hover {
