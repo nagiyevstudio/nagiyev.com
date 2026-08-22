@@ -2,6 +2,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { getCollection } from 'astro:content';
 import { Icon } from 'astro-icon/components';
+import ClientCardsGrid from '../components/ClientCardsGrid.astro';
 
 const divisionEntries = await getCollection('divisions', ({ data, id }) => data.key === 'product-design' && id.startsWith('en/'));
 const divisionEntry = divisionEntries[0];
@@ -173,14 +174,7 @@ const projects = designProjects.map((p) => ({
         <h2 class="section-title">Clients & Partners</h2>
       </div>
       
-      <div class="clients-grid reveal-el">
-        <div class="client-logo">
-          <img src="/images/clients/design/1.jpg" alt="Client 1" loading="lazy" />
-        </div>
-        <div class="client-logo">
-          <img src="/images/clients/design/3.jpg" alt="Client 3" loading="lazy" />
-        </div>
-      </div>
+      <ClientCardsGrid division="product-design" lang="en" />
     </div>
   </section>
 

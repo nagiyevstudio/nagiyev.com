@@ -97,8 +97,24 @@ const pagesCollection = defineCollection({
   }),
 });
 
+// ─── Clients ───
+const clientsCollection = defineCollection({
+  loader: glob({ pattern: '**/*.md', base: './src/content/clients' }),
+  schema: z.object({
+    name: z.string(),
+    logo: z.string(),
+    divisions: z.array(z.enum(['digital-systems-ai', 'product-design', 'media-production'])),
+    industry: z.string(),
+    format: z.string(),
+    tech: z.array(z.string()).optional(),
+    projectSlug: z.string().optional(),
+    order: z.number().default(0),
+  }),
+});
+
 export const collections = {
   projects: projectsCollection,
   divisions: divisionsCollection,
   pages: pagesCollection,
+  clients: clientsCollection,
 };

@@ -2,6 +2,7 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { getCollection } from 'astro:content';
 import { Icon } from 'astro-icon/components';
+import ClientCardsGrid from '../../components/ClientCardsGrid.astro';
 
 const divisionEntries = await getCollection('divisions', ({ data, id }) => data.key === 'digital-systems-ai' && id.startsWith('az/'));
 const divisionEntry = divisionEntries[0];
@@ -190,26 +191,7 @@ const projects = aiProjects.map((p) => ({
         <h2 class="section-title">Müştərilər və Tərəfdaşlar</h2>
       </div>
       
-      <div class="clients-grid reveal-el">
-        <div class="client-logo">
-          <img src="/images/clients/ai/4.jpg" alt="Müştəri 4" loading="lazy" />
-        </div>
-        <div class="client-logo">
-          <img src="/images/clients/ai/5.jpg" alt="Müştəri 5" loading="lazy" />
-        </div>
-        <div class="client-logo">
-          <img src="/images/clients/ai/6.jpg" alt="Müştəri 6" loading="lazy" />
-        </div>
-        <div class="client-logo">
-          <img src="/images/clients/ai/7.jpg" alt="Müştəri 7" loading="lazy" />
-        </div>
-        <div class="client-logo">
-          <img src="/images/clients/ai/8.jpg" alt="Müştəri 8" loading="lazy" />
-        </div>
-        <div class="client-logo">
-          <img src="/images/clients/ai/10.jpg" alt="Müştəri 10" loading="lazy" />
-        </div>
-      </div>
+      <ClientCardsGrid division="digital-systems-ai" lang="az" />
     </div>
   </section>
 
